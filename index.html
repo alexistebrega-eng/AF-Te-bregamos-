@@ -1,307 +1,152 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>AF Te Bregamos</title>
 
 <style>
 
 body{
-font-family:Arial;
-margin:0;
+font-family: Arial;
 background:#0d0d0d;
 color:white;
+margin:0;
 }
 
 header{
 background:black;
 padding:20px;
 text-align:center;
-border-bottom:3px solid purple;
-}
-
-h1{
-color:violet;
-}
-
-nav{
-display:flex;
-justify-content:center;
-gap:20px;
-background:#141414;
-padding:10px;
-}
-
-nav a{
-color:white;
-text-decoration:none;
-font-weight:bold;
+color:#a855f7;
 }
 
 section{
-padding:30px;
-text-align:center;
-}
-
-.servicios{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-gap:20px;
+padding:25px;
 }
 
 .card{
 background:#1a1a1a;
 padding:20px;
+margin:15px 0;
 border-radius:10px;
-border:1px solid #333;
 }
 
-.card img{
-width:100%;
-border-radius:8px;
-}
-
-.boton{
-background:purple;
+button{
+background:#a855f7;
+border:none;
+padding:12px;
 color:white;
-padding:10px 20px;
-border-radius:6px;
-text-decoration:none;
-display:inline-block;
-margin-top:10px;
-cursor:pointer;
+border-radius:8px;
+width:100%;
 }
 
-input, textarea{
-width:80%;
+input,select{
+width:100%;
 padding:10px;
-margin:5px;
+margin:8px 0;
 border-radius:6px;
 border:none;
 }
 
-.reseña{
-background:#1a1a1a;
-margin:10px;
-padding:10px;
-border-radius:6px;
-}
-
-footer{
-background:black;
-padding:20px;
-margin-top:40px;
-}
-
-.admin{
-background:#111;
-padding:20px;
-border-top:2px solid purple;
-}
-
 </style>
-
 </head>
 
 <body>
 
 <header>
-
 <h1>AF Te Bregamos</h1>
-<p>No te compliques que nosotros te bregamos</p>
-
+<p>No te compliques que te bregamos</p>
 </header>
 
-<nav>
+<section>
 
-<a href="#servicios">Servicios</a>
-<a href="#pedidos">Pedidos</a>
-<a href="#reseñas">Reseñas</a>
-<a href="#contacto">Contacto</a>
+<h2>Biografía</h2>
 
-</nav>
+<div class="card">
+Somos una plataforma de servicios digitales creada para facilitar soluciones rápidas a nuestros clientes.
+</div>
 
-<section id="servicios">
+<h2>Valores</h2>
+
+<div class="card">
+✔ Responsabilidad  
+✔ Confianza  
+✔ Rapidez  
+✔ Servicio de calidad
+</div>
 
 <h2>Servicios</h2>
 
-<div class="servicios" id="listaServicios">
-
 <div class="card">
-<img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39">
-<h3>Seguros de motores</h3>
-<button class="boton" onclick="ordenar('Seguro de motor')">Pedir</button>
+<h3>Seguros</h3>
+
+<select>
+<option>Pasola</option>
+<option>Motor</option>
+</select>
+
+<input placeholder="Nombre completo">
+<input placeholder="Número de cédula">
+<input placeholder="Documento del vehículo">
+
+<button onclick="enviarSeguro()">Solicitar seguro</button>
+
 </div>
 
 <div class="card">
-<img src="https://images.unsplash.com/photo-1586899028174-e7098604235b">
+
 <h3>Streaming</h3>
-<button class="boton" onclick="ordenar('Cuenta streaming')">Comprar</button>
+
+<select id="plataforma">
+<option>Netflix</option>
+<option>HBO</option>
+</select>
+
+<select id="tipo">
+<option>Pantalla</option>
+<option>Cuenta privada</option>
+</select>
+
+<input type="number" min="1" max="5" placeholder="Cantidad">
+
+<button onclick="enviarStreaming()">Solicitar</button>
+
 </div>
+
+<h2>Reseñas</h2>
 
 <div class="card">
-<img src="https://images.unsplash.com/photo-1607083206968-13611e3d76db">
-<h3>Pedidos Temu / Shein</h3>
-<button class="boton" onclick="ordenar('Pedido internacional')">Ordenar</button>
-</div>
 
-<div class="card">
-<img src="https://images.unsplash.com/photo-1625047509168-a7026f36de04">
-<h3>Repuestos motores</h3>
-<button class="boton" onclick="ordenar('Repuesto motor')">Consultar</button>
-</div>
+<input placeholder="Tu nombre">
+<textarea placeholder="Escribe tu reseña"></textarea>
+
+<button>Publicar</button>
 
 </div>
 
 </section>
-
-<section id="pedidos">
-
-<h2>Hacer Pedido</h2>
-
-<input id="nombre" placeholder="Tu nombre">
-
-<input id="producto" placeholder="Servicio o producto">
-
-<textarea id="detalle" placeholder="Detalles"></textarea>
-
-<br>
-
-<button class="boton" onclick="enviarPedido()">Enviar Pedido</button>
-
-<p id="mensajePedido"></p>
-
-</section>
-
-<section id="reseñas">
-
-<h2>Reseñas de Clientes</h2>
-
-<input id="cliente" placeholder="Tu nombre">
-
-<textarea id="comentario" placeholder="Escribe tu reseña"></textarea>
-
-<br>
-
-<button class="boton" onclick="guardarReseña()">Publicar</button>
-
-<div id="listaReseñas"></div>
-
-</section>
-
-<section id="contacto">
-
-<h2>Contacto</h2>
-
-<p>WhatsApp: 849-434-9505</p>
-
-<p>Email: kevinsilver112@gmail.com</p>
-
-<p>Cuenta BHD</p>
-
-<b>38730270012</b>
-
-</section>
-
-<section class="admin">
-
-<h2>Panel básico administrador</h2>
-
-<p>Este panel sirve para ver pedidos recibidos.</p>
-
-<button class="boton" onclick="verPedidos()">Ver pedidos</button>
-
-<div id="listaPedidos"></div>
-
-</section>
-
-<footer>
-
-© 2026 AF Te Bregamos
-
-</footer>
 
 <script>
 
-function ordenar(servicio){
-document.getElementById("producto").value=servicio
-window.location="#pedidos"
-}
+function enviarSeguro(){
 
-function enviarPedido(){
+let telefono="1809TUWHATSAPP"
 
-let nombre=document.getElementById("nombre").value
-let producto=document.getElementById("producto").value
-let detalle=document.getElementById("detalle").value
+let mensaje="Hola quiero solicitar un seguro desde la página AF Te Bregamos"
 
-let pedidos=JSON.parse(localStorage.getItem("pedidos"))||[]
-
-pedidos.push({nombre,producto,detalle})
-
-localStorage.setItem("pedidos",JSON.stringify(pedidos))
-
-document.getElementById("mensajePedido").innerText="Pedido enviado correctamente"
+window.open("https://wa.me/"+telefono+"?text="+encodeURIComponent(mensaje))
 
 }
 
-function verPedidos(){
+function enviarStreaming(){
 
-let pedidos=JSON.parse(localStorage.getItem("pedidos"))||[]
+let telefono="1809TUWHATSAPP"
 
-let html=""
+let mensaje="Hola quiero comprar un servicio de streaming desde la página AF Te Bregamos"
 
-pedidos.forEach(p=>{
-
-html+=`<div class="reseña">
-<b>${p.nombre}</b><br>
-${p.producto}<br>
-${p.detalle}
-</div>`
-
-})
-
-document.getElementById("listaPedidos").innerHTML=html
+window.open("https://wa.me/"+telefono+"?text="+encodeURIComponent(mensaje))
 
 }
-
-function guardarReseña(){
-
-let nombre=document.getElementById("cliente").value
-let comentario=document.getElementById("comentario").value
-
-let reseñas=JSON.parse(localStorage.getItem("reseñas"))||[]
-
-reseñas.push({nombre,comentario})
-
-localStorage.setItem("reseñas",JSON.stringify(reseñas))
-
-mostrarReseñas()
-
-}
-
-function mostrarReseñas(){
-
-let reseñas=JSON.parse(localStorage.getItem("reseñas"))||[]
-
-let html=""
-
-reseñas.forEach(r=>{
-
-html+=`<div class="reseña">
-<b>${r.nombre}</b><br>
-${r.comentario}
-</div>`
-
-})
-
-document.getElementById("listaReseñas").innerHTML=html
-
-}
-
-mostrarReseñas()
 
 </script>
 
