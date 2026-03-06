@@ -1,51 +1,80 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>AF Te Bregamos</title>
 
 <style>
 
 body{
-font-family: Arial;
-background:#0d0d0d;
-color:white;
+font-family:Arial;
 margin:0;
+background:#0b0b0b;
+color:white;
 }
 
 header{
 background:black;
 padding:20px;
 text-align:center;
-color:#a855f7;
+border-bottom:3px solid purple;
 }
 
-section{
-padding:25px;
+h1{
+color:#b16cff;
 }
 
-.card{
-background:#1a1a1a;
+.menu{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+gap:10px;
 padding:20px;
-margin:15px 0;
-border-radius:10px;
 }
 
-button{
-background:#a855f7;
+.menu button{
+padding:15px;
+background:#1a1a1a;
 border:none;
-padding:12px;
+border-radius:10px;
 color:white;
-border-radius:8px;
-width:100%;
 }
 
-input,select{
+.panel{
+display:none;
+padding:20px;
+}
+
+input,select,textarea{
+
 width:100%;
 padding:10px;
 margin:8px 0;
 border-radius:6px;
 border:none;
+
+}
+
+.boton{
+
+background:purple;
+color:white;
+padding:12px;
+border:none;
+border-radius:8px;
+width:100%;
+
+}
+
+.card{
+
+background:#1a1a1a;
+padding:15px;
+border-radius:10px;
+margin-top:10px;
+
 }
 
 </style>
@@ -54,97 +83,258 @@ border:none;
 <body>
 
 <header>
+
 <h1>AF Te Bregamos</h1>
-<p>No te compliques que te bregamos</p>
+
+<p>No te compliques que nosotros te bregamos</p>
+
 </header>
 
-<section>
+<div class="menu">
 
-<h2>Biografía</h2>
+<button onclick="abrirPanel('seguros')">Seguros</button>
 
-<div class="card">
-Somos una plataforma de servicios digitales creada para facilitar soluciones rápidas a nuestros clientes.
+<button onclick="abrirPanel('streaming')">Streaming</button>
+
+<button onclick="abrirPanel('temu')">Pedidos Temu / Shein</button>
+
+<button onclick="abrirPanel('repuestos')">Repuestos</button>
+
+<button onclick="abrirPanel('delivery')">Delivery</button>
+
+<button onclick="abrirPanel('belleza')">Belleza</button>
+
+<button onclick="abrirPanel('cosmeticos')">Cosméticos</button>
+
+<button onclick="abrirPanel('accesorios')">Accesorios</button>
+
+<button onclick="abrirPanel('peinados')">Peinados</button>
+
 </div>
 
-<h2>Valores</h2>
+<!-- SEGUROS -->
 
-<div class="card">
-✔ Responsabilidad  
-✔ Confianza  
-✔ Rapidez  
-✔ Servicio de calidad
-</div>
+<div id="seguros" class="panel">
 
-<h2>Servicios</h2>
+<h2>Seguro de Vehículo</h2>
 
-<div class="card">
-<h3>Seguros</h3>
+<select id="tipoVehiculo">
 
-<select>
 <option>Pasola</option>
 <option>Motor</option>
+
 </select>
 
-<input placeholder="Nombre completo">
-<input placeholder="Número de cédula">
-<input placeholder="Documento del vehículo">
+<input id="nombreSeguro" placeholder="Nombre">
 
-<button onclick="enviarSeguro()">Solicitar seguro</button>
+<input id="cedulaSeguro" placeholder="Cédula">
+
+<button class="boton" onclick="enviarSeguro()">
+
+Solicitar Seguro
+
+</button>
 
 </div>
 
-<div class="card">
+<!-- STREAMING -->
 
-<h3>Streaming</h3>
+<div id="streaming" class="panel">
+
+<h2>Streaming</h2>
 
 <select id="plataforma">
+
 <option>Netflix</option>
 <option>HBO</option>
+
 </select>
 
-<select id="tipo">
-<option>Pantalla</option>
-<option>Cuenta privada</option>
+<select id="tipoCuenta" onchange="cambiarTipo()">
+
+<option value="pantalla">Pantalla</option>
+<option value="privada">Cuenta privada</option>
+
 </select>
 
-<input type="number" min="1" max="5" placeholder="Cantidad">
+<div id="pantallas">
 
-<button onclick="enviarStreaming()">Solicitar</button>
+<input type="number" min="1" max="5" placeholder="Cantidad pantallas" id="cantidad">
 
 </div>
+
+<div id="privada" style="display:none">
+
+<select id="tipoPrivada">
+
+<option>Basic</option>
+<option>Estándar</option>
+<option>Premium</option>
+
+</select>
+
+</div>
+
+<button class="boton" onclick="enviarStreaming()">
+
+Comprar Streaming
+
+</button>
+
+</div>
+
+<!-- TEMU -->
+
+<div id="temu" class="panel">
+
+<h2>Pedido Temu / Shein</h2>
+
+<input id="linkPedido" placeholder="Pega el link del producto">
+
+<button class="boton" onclick="enviarTemu()">
+
+Enviar Pedido
+
+</button>
+
+</div>
+
+<!-- REPUESTOS -->
+
+<div id="repuestos" class="panel">
+
+<h2>Repuestos de Motor</h2>
+
+<input id="pieza" placeholder="Nombre del repuesto">
+
+<button class="boton" onclick="enviarRepuesto()">
+
+Consultar
+
+</button>
+
+</div>
+
+<!-- DELIVERY -->
+
+<div id="delivery" class="panel">
+
+<h2>Delivery</h2>
+
+<input id="direccion" placeholder="Dirección">
+
+<button class="boton" onclick="enviarDelivery()">
+
+Solicitar Delivery
+
+</button>
+
+</div>
+
+<!-- BELLEZA -->
+
+<div id="belleza" class="panel">
+
+<h2>Productos de Belleza</h2>
+
+<input id="productoBelleza" placeholder="Producto">
+
+<button class="boton" onclick="enviarBelleza()">
+
+Comprar
+
+</button>
+
+</div>
+
+<!-- RESEÑAS -->
+
+<div style="padding:20px">
 
 <h2>Reseñas</h2>
 
-<div class="card">
+<input id="cliente">
 
-<input placeholder="Tu nombre">
-<textarea placeholder="Escribe tu reseña"></textarea>
+<textarea id="comentario"></textarea>
 
-<button>Publicar</button>
+<button class="boton" onclick="guardarReseña()">
+
+Publicar
+
+</button>
+
+<div id="listaReseñas"></div>
 
 </div>
 
-</section>
-
 <script>
+
+function abrirPanel(id){
+
+let paneles=document.querySelectorAll(".panel")
+
+paneles.forEach(p=>p.style.display="none")
+
+document.getElementById(id).style.display="block"
+
+}
+
+function cambiarTipo(){
+
+let tipo=document.getElementById("tipoCuenta").value
+
+if(tipo=="pantalla"){
+
+document.getElementById("pantallas").style.display="block"
+document.getElementById("privada").style.display="none"
+
+}
+
+else{
+
+document.getElementById("pantallas").style.display="none"
+document.getElementById("privada").style.display="block"
+
+}
+
+}
 
 function enviarSeguro(){
 
-let telefono="1809TUWHATSAPP"
+let tipo=document.getElementById("tipoVehiculo").value
+let nombre=document.getElementById("nombreSeguro").value
+let cedula=document.getElementById("cedulaSeguro").value
 
-let mensaje="Hola quiero solicitar un seguro desde la página AF Te Bregamos"
+let mensaje=`Seguro
+Nombre: ${nombre}
+Cedula: ${cedula}
+Vehiculo: ${tipo}`
 
-window.open("https://wa.me/"+telefono+"?text="+encodeURIComponent(mensaje))
+window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
 
 }
 
 function enviarStreaming(){
 
-let telefono="1809TUWHATSAPP"
+let plataforma=document.getElementById("plataforma").value
+let tipo=document.getElementById("tipoCuenta").value
 
-let mensaje="Hola quiero comprar un servicio de streaming desde la página AF Te Bregamos"
+let mensaje=`Streaming
+Plataforma: ${plataforma}
+Tipo: ${tipo}`
 
-window.open("https://wa.me/"+telefono+"?text="+encodeURIComponent(mensaje))
+window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
+
+}
+
+function guardarReseña(){
+
+let nombre=document.getElementById("cliente").value
+let comentario=document.getElementById("comentario").value
+
+let html=`<div class="card"><b>${nombre}</b><br>${comentario}</div>`
+
+document.getElementById("listaReseñas").innerHTML+=html
 
 }
 
