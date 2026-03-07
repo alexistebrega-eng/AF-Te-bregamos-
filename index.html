@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>AF Te Bregamos</title>
+<title>Alexis Te Brega</title>
 
 <style>
 
@@ -24,7 +24,7 @@ border-bottom:3px solid purple;
 }
 
 h1{
-color:#b16cff;
+color:#bb86fc;
 }
 
 .menu{
@@ -77,6 +77,13 @@ margin-top:10px;
 
 }
 
+.admin{
+background:#111;
+padding:20px;
+margin-top:30px;
+border-top:2px solid purple;
+}
+
 </style>
 </head>
 
@@ -102,13 +109,7 @@ margin-top:10px;
 
 <button onclick="abrirPanel('delivery')">Delivery</button>
 
-<button onclick="abrirPanel('belleza')">Belleza</button>
-
-<button onclick="abrirPanel('cosmeticos')">Cosméticos</button>
-
-<button onclick="abrirPanel('accesorios')">Accesorios</button>
-
-<button onclick="abrirPanel('peinados')">Peinados</button>
+<button onclick="abrirPanel('reseñas')">Reseñas</button>
 
 </div>
 
@@ -221,7 +222,7 @@ Consultar
 
 <h2>Delivery</h2>
 
-<input id="direccion" placeholder="Dirección">
+<input id="direccion" placeholder="Dirección de entrega">
 
 <button class="boton" onclick="enviarDelivery()">
 
@@ -231,27 +232,11 @@ Solicitar Delivery
 
 </div>
 
-<!-- BELLEZA -->
-
-<div id="belleza" class="panel">
-
-<h2>Productos de Belleza</h2>
-
-<input id="productoBelleza" placeholder="Producto">
-
-<button class="boton" onclick="enviarBelleza()">
-
-Comprar
-
-</button>
-
-</div>
-
 <!-- RESEÑAS -->
 
-<div style="padding:20px">
+<div id="reseñas" class="panel">
 
-<h2>Reseñas</h2>
+<h2>Reseñas de Clientes</h2>
 
 <input id="cliente">
 
@@ -259,11 +244,29 @@ Comprar
 
 <button class="boton" onclick="guardarReseña()">
 
-Publicar
+Publicar Reseña
 
 </button>
 
 <div id="listaReseñas"></div>
+
+</div>
+
+<!-- PANEL ADMIN -->
+
+<div class="admin">
+
+<h2>Panel Administrador</h2>
+
+<p>Aquí puedes ver pedidos enviados desde la página.</p>
+
+<button class="boton" onclick="verPedidos()">
+
+Ver Pedidos
+
+</button>
+
+<div id="listaPedidos"></div>
 
 </div>
 
@@ -310,6 +313,8 @@ Nombre: ${nombre}
 Cedula: ${cedula}
 Vehiculo: ${tipo}`
 
+guardarPedido(mensaje)
+
 window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
 
 }
@@ -323,7 +328,74 @@ let mensaje=`Streaming
 Plataforma: ${plataforma}
 Tipo: ${tipo}`
 
+guardarPedido(mensaje)
+
 window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
+
+}
+
+function enviarTemu(){
+
+let link=document.getElementById("linkPedido").value
+
+let mensaje=`Pedido Temu/Shein
+Link: ${link}`
+
+guardarPedido(mensaje)
+
+window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
+
+}
+
+function enviarRepuesto(){
+
+let pieza=document.getElementById("pieza").value
+
+let mensaje=`Consulta Repuesto
+Pieza: ${pieza}`
+
+guardarPedido(mensaje)
+
+window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
+
+}
+
+function enviarDelivery(){
+
+let direccion=document.getElementById("direccion").value
+
+let mensaje=`Solicitud Delivery
+Direccion: ${direccion}`
+
+guardarPedido(mensaje)
+
+window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
+
+}
+
+function guardarPedido(texto){
+
+let pedidos=JSON.parse(localStorage.getItem("pedidos"))||[]
+
+pedidos.push(texto)
+
+localStorage.setItem("pedidos",JSON.stringify(pedidos))
+
+}
+
+function verPedidos(){
+
+let pedidos=JSON.parse(localStorage.getItem("pedidos"))||[]
+
+let html=""
+
+pedidos.forEach(p=>{
+
+html+=`<div class="card">${p}</div>`
+
+})
+
+document.getElementById("listaPedidos").innerHTML=html
 
 }
 
@@ -341,4 +413,4 @@ document.getElementById("listaReseñas").innerHTML+=html
 </script>
 
 </body>
-</html>
+  </html>
