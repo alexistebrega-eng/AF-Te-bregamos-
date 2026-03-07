@@ -5,86 +5,71 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Alexis Te Brega</title>
+<title>AF Te Bregamos</title>
 
 <style>
 
 body{
 font-family:Arial;
-margin:0;
-background:#0b0b0b;
+background:black;
 color:white;
+margin:0;
 }
 
 header{
-background:black;
+background:#6a0dad;
 padding:20px;
 text-align:center;
-border-bottom:3px solid purple;
 }
 
-h1{
-color:#bb86fc;
-}
-
-.menu{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-gap:10px;
-padding:20px;
-}
-
-.menu button{
-padding:15px;
-background:#1a1a1a;
-border:none;
-border-radius:10px;
-color:white;
-}
-
-.panel{
-display:none;
-padding:20px;
-}
-
-input,select,textarea{
-
-width:100%;
-padding:10px;
-margin:8px 0;
-border-radius:6px;
-border:none;
-
-}
-
-.boton{
-
-background:purple;
-color:white;
-padding:12px;
-border:none;
-border-radius:8px;
-width:100%;
-
-}
-
-.card{
-
-background:#1a1a1a;
-padding:15px;
-border-radius:10px;
+header img{
 margin-top:10px;
-
 }
 
-.admin{
+section{
+padding:20px;
+}
+
+.servicio{
 background:#111;
 padding:20px;
-margin-top:30px;
-border-top:2px solid purple;
+margin:15px 0;
+border-radius:10px;
+}
+
+button{
+background:#6a0dad;
+color:white;
+border:none;
+padding:10px;
+border-radius:5px;
+margin-top:10px;
+cursor:pointer;
+}
+
+input,select{
+width:100%;
+padding:8px;
+margin:5px 0;
+border-radius:5px;
+border:none;
+}
+
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+}
+
+.reseña{
+background:#1c1c1c;
+padding:10px;
+margin:10px 0;
+border-radius:5px;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -92,57 +77,51 @@ border-top:2px solid purple;
 <header>
 
 <h1>AF Te Bregamos</h1>
+<p>No te compliques, nosotros te bregamos</p>
 
-<p>No te compliques que nosotros te bregamos</p>
+<a href="https://www.instagram.com/alexis_tebrega?igsh=MWo3ZWNpcWloOWU2bQ==" target="_blank">
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width="40">
+
+</a>
 
 </header>
 
-<div class="menu">
+<section>
 
-<button onclick="abrirPanel('seguros')">Seguros</button>
+<h2>Servicios</h2>
 
-<button onclick="abrirPanel('streaming')">Streaming</button>
+<div class="servicio">
 
-<button onclick="abrirPanel('temu')">Pedidos Temu / Shein</button>
+<h3>Seguros</h3>
 
-<button onclick="abrirPanel('repuestos')">Repuestos</button>
-
-<button onclick="abrirPanel('delivery')">Delivery</button>
-
-<button onclick="abrirPanel('reseñas')">Reseñas</button>
-
-</div>
-
-<!-- SEGUROS -->
-
-<div id="seguros" class="panel">
-
-<h2>Seguro de Vehículo</h2>
+<label>Tipo de vehículo</label>
 
 <select id="tipoVehiculo">
-
 <option>Pasola</option>
 <option>Motor</option>
-
 </select>
 
-<input id="nombreSeguro" placeholder="Nombre">
+<input id="nombreSeguro" placeholder="Nombre completo">
 
 <input id="cedulaSeguro" placeholder="Cédula">
 
-<button class="boton" onclick="enviarSeguro()">
+<label>Método de pago</label>
 
-Solicitar Seguro
+<select id="pagoSeguro">
+<option>Efectivo</option>
+<option>Transferencia</option>
+</select>
 
-</button>
+<button onclick="enviarSeguro()">Solicitar</button>
 
 </div>
 
-<!-- STREAMING -->
+<div class="servicio">
 
-<div id="streaming" class="panel">
+<h3>Streaming</h3>
 
-<h2>Streaming</h2>
+<label>Plataforma</label>
 
 <select id="plataforma">
 
@@ -151,20 +130,25 @@ Solicitar Seguro
 
 </select>
 
-<select id="tipoCuenta" onchange="cambiarTipo()">
+<label>Tipo</label>
 
+<select id="tipoCuenta" onchange="mostrarOpciones()">
+
+<option value="">Seleccionar</option>
 <option value="pantalla">Pantalla</option>
 <option value="privada">Cuenta privada</option>
 
 </select>
 
-<div id="pantallas">
+<div id="pantallas" style="display:none">
 
-<input type="number" min="1" max="5" placeholder="Cantidad pantallas" id="cantidad">
+<label>Cantidad de pantallas</label>
+
+<input type="number" min="1" max="5" id="cantidadPantallas">
 
 </div>
 
-<div id="privada" style="display:none">
+<div id="cuentas" style="display:none">
 
 <select id="tipoPrivada">
 
@@ -176,127 +160,103 @@ Solicitar Seguro
 
 </div>
 
-<button class="boton" onclick="enviarStreaming()">
+<label>Método de pago</label>
 
-Comprar Streaming
+<select id="pagoStreaming">
+<option>Efectivo</option>
+<option>Transferencia</option>
+</select>
 
-</button>
-
-</div>
-
-<!-- TEMU -->
-
-<div id="temu" class="panel">
-
-<h2>Pedido Temu / Shein</h2>
-
-<input id="linkPedido" placeholder="Pega el link del producto">
-
-<button class="boton" onclick="enviarTemu()">
-
-Enviar Pedido
-
-</button>
+<button onclick="enviarStreaming()">Solicitar</button>
 
 </div>
 
-<!-- REPUESTOS -->
+<div class="servicio">
 
-<div id="repuestos" class="panel">
+<h3>Pedidos Temu / Shein</h3>
 
-<h2>Repuestos de Motor</h2>
+<input id="productoPedido" placeholder="Producto a pedir">
 
-<input id="pieza" placeholder="Pieza a solicitar">
+<label>Método de pago</label>
 
-<button class="boton" onclick="enviarRepuesto()">
+<select id="pagoPedido">
+<option>Efectivo</option>
+<option>Transferencia</option>
+</select>
 
-Consultar
-
-</button>
-
-</div>
-
-<!-- DELIVERY -->
-
-<div id="delivery" class="panel">
-
-<h2>Delivery</h2>
-
-<input id="direccion" placeholder="Dirección de entrega">
-
-<button class="boton" onclick="enviarDelivery()">
-
-Solicitar Delivery
-
-</button>
+<button onclick="enviarPedido()">Solicitar</button>
 
 </div>
 
-<!-- RESEÑAS -->
+<div class="servicio">
 
-<div id="reseñas" class="panel">
+<h3>Repuestos</h3>
 
-<h2>Reseñas de Clientes</h2>
+<input id="repuesto" placeholder="Repuesto que necesitas">
 
-<input id="cliente">
+<label>Método de pago</label>
 
-<textarea id="comentario"></textarea>
+<select id="pagoRepuesto">
+<option>Efectivo</option>
+<option>Transferencia</option>
+</select>
 
-<button class="boton" onclick="guardarReseña()">
+<button onclick="enviarRepuesto()">Solicitar</button>
 
-Publicar Reseña
+</div>
 
-</button>
+</section>
+
+<section>
+
+<h2>Reseñas</h2>
+
+<div class="reseña">
+
+⭐⭐⭐⭐⭐  
+"Excelente servicio"
+
+</div>
+
+<div class="reseña">
+
+⭐⭐⭐⭐⭐  
+"Entrega rápida"
+
+</div>
+
+<input id="nuevaReseña" placeholder="Escribe tu reseña">
+
+<button onclick="agregarReseña()">Publicar</button>
 
 <div id="listaReseñas"></div>
 
-</div>
+</section>
 
-<!-- PANEL ADMIN -->
+<a class="whatsapp" href="https://wa.me/18494349505" target="_blank">
 
-<div class="admin">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="60">
 
-<h2>Panel Administrador</h2>
-
-<p>Aquí puedes ver pedidos enviados desde la página.</p>
-
-<button class="boton" onclick="verPedidos()">
-
-Ver Pedidos
-
-</button>
-
-<div id="listaPedidos"></div>
-
-</div>
+</a>
 
 <script>
 
-function abrirPanel(id){
-
-let paneles=document.querySelectorAll(".panel")
-
-paneles.forEach(p=>p.style.display="none")
-
-document.getElementById(id).style.display="block"
-
-}
-
-function cambiarTipo(){
+function mostrarOpciones(){
 
 let tipo=document.getElementById("tipoCuenta").value
+
+document.getElementById("pantallas").style.display="none"
+document.getElementById("cuentas").style.display="none"
 
 if(tipo=="pantalla"){
 
 document.getElementById("pantallas").style.display="block"
-document.getElementById("privada").style.display="none"
 
 }
 
-else{
+if(tipo=="privada"){
 
-document.getElementById("pantallas").style.display="none"
-document.getElementById("privada").style.display="block"
+document.getElementById("cuentas").style.display="block"
 
 }
 
@@ -307,13 +267,13 @@ function enviarSeguro(){
 let tipo=document.getElementById("tipoVehiculo").value
 let nombre=document.getElementById("nombreSeguro").value
 let cedula=document.getElementById("cedulaSeguro").value
+let pago=document.getElementById("pagoSeguro").value
 
-let mensaje=`Seguro
+let mensaje=`Solicitud Seguro
 Nombre: ${nombre}
 Cedula: ${cedula}
-Vehiculo: ${tipo}`
-
-guardarPedido(mensaje)
+Vehiculo: ${tipo}
+Pago: ${pago}`
 
 window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
 
@@ -323,25 +283,29 @@ function enviarStreaming(){
 
 let plataforma=document.getElementById("plataforma").value
 let tipo=document.getElementById("tipoCuenta").value
+let pantallas=document.getElementById("cantidadPantallas").value
+let privada=document.getElementById("tipoPrivada").value
+let pago=document.getElementById("pagoStreaming").value
+
+let detalle=tipo=="pantalla" ? pantallas+" pantallas" : privada
 
 let mensaje=`Streaming
 Plataforma: ${plataforma}
-Tipo: ${tipo}`
-
-guardarPedido(mensaje)
+Tipo: ${detalle}
+Pago: ${pago}`
 
 window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
 
 }
 
-function enviarTemu(){
+function enviarPedido(){
 
-let link=document.getElementById("linkPedido").value
+let producto=document.getElementById("productoPedido").value
+let pago=document.getElementById("pagoPedido").value
 
 let mensaje=`Pedido Temu/Shein
-Link: ${link}`
-
-guardarPedido(mensaje)
+Producto: ${producto}
+Pago: ${pago}`
 
 window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
 
@@ -349,68 +313,32 @@ window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
 
 function enviarRepuesto(){
 
-let pieza=document.getElementById("pieza").value
+let repuesto=document.getElementById("repuesto").value
+let pago=document.getElementById("pagoRepuesto").value
 
-let mensaje=`Consulta Repuesto
-Pieza: ${pieza}`
-
-guardarPedido(mensaje)
-
-window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
-
-}
-
-function enviarDelivery(){
-
-let direccion=document.getElementById("direccion").value
-
-let mensaje=`Solicitud Delivery
-Direccion: ${direccion}`
-
-guardarPedido(mensaje)
+let mensaje=`Solicitud Repuesto
+Repuesto: ${repuesto}
+Pago: ${pago}`
 
 window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
 
 }
 
-function guardarPedido(texto){
+function agregarReseña(){
 
-let pedidos=JSON.parse(localStorage.getItem("pedidos"))||[]
+let texto=document.getElementById("nuevaReseña").value
 
-pedidos.push(texto)
+let div=document.createElement("div")
 
-localStorage.setItem("pedidos",JSON.stringify(pedidos))
+div.className="reseña"
 
-}
+div.innerText="⭐⭐⭐⭐⭐ "+texto
 
-function verPedidos(){
-
-let pedidos=JSON.parse(localStorage.getItem("pedidos"))||[]
-
-let html=""
-
-pedidos.forEach(p=>{
-
-html+=`<div class="card">${p}</div>`
-
-})
-
-document.getElementById("listaPedidos").innerHTML=html
-
-}
-
-function guardarReseña(){
-
-let nombre=document.getElementById("cliente").value
-let comentario=document.getElementById("comentario").value
-
-let html=`<div class="card"><b>${nombre}</b><br>${comentario}</div>`
-
-document.getElementById("listaReseñas").innerHTML+=html
+document.getElementById("listaReseñas").appendChild(div)
 
 }
 
 </script>
 
 </body>
-  </html>
+</html>
