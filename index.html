@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>AF Te Bregamos</title>
+<title>Alexis Te Brega</title>
 
 <style>
 
@@ -40,6 +40,7 @@ background:#111;
 overflow-x:hidden;
 transition:0.3s;
 padding-top:60px;
+z-index:10;
 }
 
 .menu a{
@@ -53,15 +54,13 @@ text-decoration:none;
 background:#6a0dad;
 }
 
-section{
+.seccion{
+display:none;
 padding:20px;
 }
 
-.servicio{
-background:#111;
-padding:20px;
-margin-top:20px;
-border-radius:10px;
+#inicio{
+display:block;
 }
 
 input,select{
@@ -96,15 +95,11 @@ right:20px;
 
 <div id="menu" class="menu">
 
-<a href="#inicio" onclick="cerrarMenu()">Inicio</a>
-
-<a href="#seguros" onclick="cerrarMenu()">Seguros</a>
-
-<a href="#streaming" onclick="cerrarMenu()">Streaming</a>
-
-<a href="#pedidos" onclick="cerrarMenu()">Pedidos Temu / Shein</a>
-
-<a href="#repuestos" onclick="cerrarMenu()">Repuestos</a>
+<a onclick="mostrarSeccion('inicio')">Inicio</a>
+<a onclick="mostrarSeccion('seguros')">Seguros</a>
+<a onclick="mostrarSeccion('streaming')">Streaming</a>
+<a onclick="mostrarSeccion('pedidos')">Pedidos Temu / Shein</a>
+<a onclick="mostrarSeccion('repuestos')">Repuestos</a>
 
 </div>
 
@@ -116,15 +111,17 @@ right:20px;
 
 </header>
 
-<section id="inicio">
+<!-- INICIO -->
+
+<div id="inicio" class="seccion">
 
 <h2>Bienvenido</h2>
 
-<p>AF Te Bregamos es una plataforma creada para ayudarte a resolver servicios de forma rápida y sencilla.</p>
+<p>AF Te Bregamos es un servicio diseñado para facilitar gestiones digitales, compras y solicitudes de manera rápida.</p>
 
 <h3>Biografía</h3>
 
-<p>Somos un emprendimiento dedicado a facilitar servicios digitales, compras y gestiones para nuestros clientes.</p>
+<p>Somos un emprendimiento dedicado a resolver necesidades digitales, pedidos en línea y servicios rápidos para nuestros clientes.</p>
 
 <h3>Valores</h3>
 
@@ -145,13 +142,13 @@ right:20px;
 
 </a>
 
-</section>
+</div>
 
-<section id="seguros" class="servicio">
+<!-- SEGUROS -->
 
-<h3>Seguro de Motor / Pasola</h3>
+<div id="seguros" class="seccion">
 
-<label>Tipo de vehículo</label>
+<h2>Seguro de Motor / Pasola</h2>
 
 <select id="tipoVehiculo">
 
@@ -164,8 +161,6 @@ right:20px;
 
 <input id="cedulaSeguro" placeholder="Cédula">
 
-<label>Método de pago</label>
-
 <select id="pagoSeguro">
 
 <option>Efectivo</option>
@@ -173,15 +168,15 @@ right:20px;
 
 </select>
 
-<button onclick="enviarSeguro()">Solicitar</button>
+<button onclick="enviarSeguro()">Enviar solicitud</button>
 
-</section>
+</div>
 
-<section id="streaming" class="servicio">
+<!-- STREAMING -->
 
-<h3>Streaming</h3>
+<div id="streaming" class="seccion">
 
-<label>Plataforma</label>
+<h2>Streaming</h2>
 
 <select id="plataforma">
 
@@ -190,11 +185,9 @@ right:20px;
 
 </select>
 
-<label>Tipo</label>
-
 <select id="tipoCuenta" onchange="mostrarOpciones()">
 
-<option value="">Seleccionar</option>
+<option value="">Tipo</option>
 <option value="pantalla">Pantalla</option>
 <option value="privada">Cuenta privada</option>
 
@@ -202,7 +195,7 @@ right:20px;
 
 <div id="pantallas" style="display:none">
 
-<input type="number" id="cantidadPantallas" min="1" max="5" placeholder="Cantidad de pantallas">
+<input type="number" id="cantidadPantallas" min="1" max="5" placeholder="Cantidad pantallas">
 
 </div>
 
@@ -218,8 +211,6 @@ right:20px;
 
 </div>
 
-<label>Método de pago</label>
-
 <select id="pagoStreaming">
 
 <option>Efectivo</option>
@@ -227,17 +218,17 @@ right:20px;
 
 </select>
 
-<button onclick="enviarStreaming()">Solicitar</button>
+<button onclick="enviarStreaming()">Enviar solicitud</button>
 
-</section>
+</div>
 
-<section id="pedidos" class="servicio">
+<!-- PEDIDOS -->
 
-<h3>Pedidos Temu / Shein</h3>
+<div id="pedidos" class="seccion">
 
-<input id="productoPedido" placeholder="Producto que deseas pedir">
+<h2>Pedidos Temu / Shein</h2>
 
-<label>Método de pago</label>
+<input id="productoPedido" placeholder="Producto">
 
 <select id="pagoPedido">
 
@@ -246,17 +237,17 @@ right:20px;
 
 </select>
 
-<button onclick="enviarPedido()">Solicitar</button>
+<button onclick="enviarPedido()">Enviar solicitud</button>
 
-</section>
+</div>
 
-<section id="repuestos" class="servicio">
+<!-- REPUESTOS -->
 
-<h3>Repuestos</h3>
+<div id="repuestos" class="seccion">
+
+<h2>Repuestos</h2>
 
 <input id="repuesto" placeholder="Repuesto que necesitas">
-
-<label>Método de pago</label>
 
 <select id="pagoRepuesto">
 
@@ -265,9 +256,9 @@ right:20px;
 
 </select>
 
-<button onclick="enviarRepuesto()">Solicitar</button>
+<button onclick="enviarRepuesto()">Enviar solicitud</button>
 
-</section>
+</div>
 
 <a class="whatsapp" href="https://wa.me/18494349505">
 
@@ -283,6 +274,18 @@ document.getElementById("menu").style.width="250px";
 
 function cerrarMenu(){
 document.getElementById("menu").style.width="0";
+}
+
+function mostrarSeccion(id){
+
+let secciones=document.querySelectorAll(".seccion")
+
+secciones.forEach(sec=>sec.style.display="none")
+
+document.getElementById(id).style.display="block"
+
+cerrarMenu()
+
 }
 
 function mostrarOpciones(){
@@ -309,7 +312,11 @@ let nombre=document.getElementById("nombreSeguro").value
 let cedula=document.getElementById("cedulaSeguro").value
 let pago=document.getElementById("pagoSeguro").value
 
-let mensaje=`Seguro\nNombre:${nombre}\nCedula:${cedula}\nVehiculo:${tipo}\nPago:${pago}`
+let mensaje=`Seguro
+Nombre:${nombre}
+Cedula:${cedula}
+Vehiculo:${tipo}
+Pago:${pago}`
 
 window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
 
@@ -325,7 +332,10 @@ let pago=document.getElementById("pagoStreaming").value
 
 let detalle=tipo=="pantalla"?pantallas+" pantallas":privada
 
-let mensaje=`Streaming\nPlataforma:${plataforma}\nTipo:${detalle}\nPago:${pago}`
+let mensaje=`Streaming
+Plataforma:${plataforma}
+Tipo:${detalle}
+Pago:${pago}`
 
 window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
 
@@ -336,7 +346,9 @@ function enviarPedido(){
 let producto=document.getElementById("productoPedido").value
 let pago=document.getElementById("pagoPedido").value
 
-let mensaje=`Pedido Temu/Shein\nProducto:${producto}\nPago:${pago}`
+let mensaje=`Pedido Temu/Shein
+Producto:${producto}
+Pago:${pago}`
 
 window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
 
@@ -347,7 +359,9 @@ function enviarRepuesto(){
 let repuesto=document.getElementById("repuesto").value
 let pago=document.getElementById("pagoRepuesto").value
 
-let mensaje=`Repuesto\nProducto:${repuesto}\nPago:${pago}`
+let mensaje=`Repuesto
+Producto:${repuesto}
+Pago:${pago}`
 
 window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
 
