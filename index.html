@@ -17,6 +17,7 @@ background:black;
 color:white;
 }
 
+/* HEADER */
 header{
 background:#6a0dad;
 padding:15px;
@@ -30,6 +31,7 @@ cursor:pointer;
 margin-right:15px;
 }
 
+/* MENU */
 .menu{
 height:100%;
 width:0;
@@ -54,6 +56,7 @@ text-decoration:none;
 background:#6a0dad;
 }
 
+/* SECCIONES */
 .seccion{
 display:none;
 padding:20px;
@@ -63,6 +66,7 @@ padding:20px;
 display:block;
 }
 
+/* INPUTS */
 input,select{
 width:100%;
 padding:8px;
@@ -71,6 +75,7 @@ border-radius:5px;
 border:none;
 }
 
+/* BOTONES */
 button{
 background:#6a0dad;
 color:white;
@@ -81,10 +86,29 @@ border-radius:5px;
 cursor:pointer;
 }
 
+/* WHATSAPP */
 .whatsapp{
 position:fixed;
 bottom:20px;
 right:20px;
+}
+
+/* STREAMING STYLE */
+.card{
+background:#111;
+margin:15px 0;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.btn{
+background:#25D366;
+padding:10px 20px;
+border:none;
+border-radius:10px;
+color:white;
+cursor:pointer;
 }
 
 </style>
@@ -93,12 +117,13 @@ right:20px;
 
 <body>
 
+<!-- MENU -->
 <div id="menu" class="menu">
 
 <a onclick="mostrarSeccion('inicio')">Inicio</a>
 <a onclick="mostrarSeccion('seguros')">Seguros</a>
 <a onclick="mostrarSeccion('streaming')">Streaming</a>
-<a onclick="mostrarSeccion('pedidos')">Pedidos Temu / Shein</a>
+<a onclick="mostrarSeccion('pedidos')">Pedidos</a>
 <a onclick="mostrarSeccion('repuestos')">Repuestos</a>
 
 </div>
@@ -112,118 +137,90 @@ right:20px;
 </header>
 
 <!-- INICIO -->
-
 <div id="inicio" class="seccion">
 
 <h2>Bienvenido</h2>
 
-<p>AF Te Bregamos es un servicio diseñado para facilitar gestiones digitales, compras y solicitudes de manera rápida.</p>
-
-<h3>Biografía</h3>
-
-<p>Somos un emprendimiento dedicado a resolver necesidades digitales, pedidos en línea y servicios rápidos para nuestros clientes.</p>
+<p>AF Te Bregamos es una plataforma de servicios rápidos y confiables.</p>
 
 <h3>Valores</h3>
 
 <ul>
-
 <li>Responsabilidad</li>
 <li>Confianza</li>
 <li>Rapidez</li>
-<li>Buen servicio</li>
-
 </ul>
 
-<h3>Síguenos</h3>
-
 <a href="https://www.instagram.com/alexis_tebrega?igsh=MWo3ZWNpcWloOWU2bQ==" target="_blank">
-
 <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width="40">
-
 </a>
 
 </div>
 
 <!-- SEGUROS -->
-
 <div id="seguros" class="seccion">
 
-<h2>Seguro de Motor / Pasola</h2>
+<h2>Seguros</h2>
 
 <select id="tipoVehiculo">
-
 <option>Pasola</option>
 <option>Motor</option>
-
 </select>
 
-<input id="nombreSeguro" placeholder="Nombre completo">
+<input id="nombreSeguro" placeholder="Nombre">
 
 <input id="cedulaSeguro" placeholder="Cédula">
 
 <select id="pagoSeguro">
-
 <option>Efectivo</option>
 <option>Transferencia</option>
-
 </select>
 
-<button onclick="enviarSeguro()">Enviar solicitud</button>
+<button onclick="enviarSeguro()">Enviar</button>
 
 </div>
 
-<!-- STREAMING -->
-
+<!-- STREAMING (TU CODIGO INTEGRADO) -->
 <div id="streaming" class="seccion">
 
-<h2>Streaming</h2>
+<h2 style="color:#e50914;">NETFLIX</h2>
 
-<select id="plataforma">
-
-<option>Netflix</option>
-<option>HBO</option>
-
-</select>
-
-<select id="tipoCuenta" onchange="mostrarOpciones()">
-
-<option value="">Tipo</option>
-<option value="pantalla">Pantalla</option>
-<option value="privada">Cuenta privada</option>
-
-</select>
-
-<div id="pantallas" style="display:none">
-
-<input type="number" id="cantidadPantallas" min="1" max="5" placeholder="Cantidad pantallas">
-
+<div class="card">
+<h2>🔥 Pantalla Premium</h2>
+<p>4K + HDR</p>
+<h1>RD$300</h1>
+<button class="btn" onclick="comprar('Pantalla Netflix RD$300')">Comprar</button>
 </div>
 
-<div id="cuentas" style="display:none">
-
-<select id="tipoPrivada">
-
-<option>Basic</option>
-<option>Estándar</option>
-<option>Premium</option>
-
-</select>
-
+<div class="card">
+<h2>🔒 Cuenta Privada</h2>
+<p>Plan Premium</p>
+<h1>RD$1200</h1>
+<button class="btn" onclick="comprar('Cuenta Privada RD$1200')">Comprar</button>
 </div>
 
-<select id="pagoStreaming">
+<div style="text-align:center;">
+<button class="btn" onclick="mostrarLogin()">👤 Acceso Cliente</button>
+</div>
 
-<option>Efectivo</option>
-<option>Transferencia</option>
+<div id="login" style="display:none;">
+<h3>Login Cliente</h3>
+<input type="text" id="user" placeholder="Usuario">
+<input type="password" id="pass" placeholder="Contraseña">
+<button class="btn" onclick="entrar()">Entrar</button>
+</div>
 
-</select>
-
-<button onclick="enviarStreaming()">Enviar solicitud</button>
+<div id="panel" style="display:none;">
+<h3>📊 Panel Cliente</h3>
+<p>Estado: Activo</p>
+<p>Plan: Netflix Premium</p>
+<p>Vence: 30 días</p>
+<button class="btn" onclick="renovar()">Renovar</button>
+</div>
 
 </div>
 
 <!-- PEDIDOS -->
-
 <div id="pedidos" class="seccion">
 
 <h2>Pedidos Temu / Shein</h2>
@@ -231,39 +228,33 @@ right:20px;
 <input id="productoPedido" placeholder="Producto">
 
 <select id="pagoPedido">
-
 <option>Efectivo</option>
 <option>Transferencia</option>
-
 </select>
 
-<button onclick="enviarPedido()">Enviar solicitud</button>
+<button onclick="enviarPedido()">Enviar</button>
 
 </div>
 
 <!-- REPUESTOS -->
-
 <div id="repuestos" class="seccion">
 
 <h2>Repuestos</h2>
 
-<input id="repuesto" placeholder="Repuesto que necesitas">
+<input id="repuesto" placeholder="Repuesto">
 
 <select id="pagoRepuesto">
-
 <option>Efectivo</option>
 <option>Transferencia</option>
-
 </select>
 
-<button onclick="enviarRepuesto()">Enviar solicitud</button>
+<button onclick="enviarRepuesto()">Enviar</button>
 
 </div>
 
+<!-- WHATSAPP -->
 <a class="whatsapp" href="https://wa.me/18494349505">
-
 <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="60">
-
 </a>
 
 <script>
@@ -288,83 +279,62 @@ cerrarMenu()
 
 }
 
-function mostrarOpciones(){
+/* FUNCIONES STREAMING */
 
-let tipo=document.getElementById("tipoCuenta").value
-
-document.getElementById("pantallas").style.display="none"
-document.getElementById("cuentas").style.display="none"
-
-if(tipo=="pantalla"){
-document.getElementById("pantallas").style.display="block"
+function comprar(plan){
+let mensaje="Hola, quiero comprar: "+plan;
+window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje));
 }
 
-if(tipo=="privada"){
-document.getElementById("cuentas").style.display="block"
+function mostrarLogin(){
+document.getElementById("login").style.display="block";
 }
 
+function entrar(){
+let user=document.getElementById("user").value;
+let pass=document.getElementById("pass").value;
+
+if(user && pass){
+document.getElementById("login").style.display="none";
+document.getElementById("panel").style.display="block";
+}else{
+alert("Completa los datos");
 }
+}
+
+function renovar(){
+window.open("https://wa.me/18494349505?text=Quiero renovar mi Netflix");
+}
+
+/* OTROS SERVICIOS */
 
 function enviarSeguro(){
-
 let tipo=document.getElementById("tipoVehiculo").value
 let nombre=document.getElementById("nombreSeguro").value
 let cedula=document.getElementById("cedulaSeguro").value
 let pago=document.getElementById("pagoSeguro").value
 
-let mensaje=`Seguro
-Nombre:${nombre}
-Cedula:${cedula}
-Vehiculo:${tipo}
-Pago:${pago}`
+let mensaje=`Seguro\nNombre:${nombre}\nCedula:${cedula}\nVehiculo:${tipo}\nPago:${pago}`
 
 window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
-
-}
-
-function enviarStreaming(){
-
-let plataforma=document.getElementById("plataforma").value
-let tipo=document.getElementById("tipoCuenta").value
-let pantallas=document.getElementById("cantidadPantallas").value
-let privada=document.getElementById("tipoPrivada").value
-let pago=document.getElementById("pagoStreaming").value
-
-let detalle=tipo=="pantalla"?pantallas+" pantallas":privada
-
-let mensaje=`Streaming
-Plataforma:${plataforma}
-Tipo:${detalle}
-Pago:${pago}`
-
-window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
-
 }
 
 function enviarPedido(){
-
 let producto=document.getElementById("productoPedido").value
 let pago=document.getElementById("pagoPedido").value
 
-let mensaje=`Pedido Temu/Shein
-Producto:${producto}
-Pago:${pago}`
+let mensaje=`Pedido\nProducto:${producto}\nPago:${pago}`
 
 window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
-
 }
 
 function enviarRepuesto(){
-
 let repuesto=document.getElementById("repuesto").value
 let pago=document.getElementById("pagoRepuesto").value
 
-let mensaje=`Repuesto
-Producto:${repuesto}
-Pago:${pago}`
+let mensaje=`Repuesto\nProducto:${repuesto}\nPago:${pago}`
 
 window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
-
 }
 
 </script>
