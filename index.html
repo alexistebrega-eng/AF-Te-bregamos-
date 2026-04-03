@@ -4,72 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ALEXIS TE BREGA - Premium</title>
-<style>
-body{margin:0;font-family:Arial,sans-serif;background:#0a0a0a;color:white;overflow-x:hidden;}
-h2{margin-bottom:15px;}
-button{cursor:pointer;border:none;font-family:inherit;}
 
-/* HEADER */
-header{background:#6a0dad;padding:15px;display:flex;align-items:center;position:sticky;top:0;z-index:1000;}
-.menuBtn{font-size:25px;cursor:pointer;margin-right:15px;}
+<link rel="stylesheet" href="css/styles.css">
 
-/* MENU */
-.menu{position:fixed;top:0;left:-260px;width:260px;height:100%;background:#111;transition:0.3s;z-index:1000;padding-top:60px;}
-.menu.active{left:0;}
-.overlay{position:fixed;width:100%;height:100%;background:rgba(0,0,0,0.6);display:none;z-index:999;}
-.overlay.active{display:block;}
-.menu a{display:block;padding:15px;color:white;text-decoration:none;}
-.menu a:hover{background:#6a0dad;}
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
 
-/* SECCIONES */
-.seccion{display:none;padding:20px;opacity:0;transform:translateY(20px);transition:0.4s;}
-.seccion.activa{display:block;opacity:1;transform:translateY(0);}
-
-/* CARRUSEL */
-.carrusel-container{position:relative;margin-bottom:30px;}
-.carrusel{display:flex;gap:15px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 0;scroll-behavior:smooth;}
-.carrusel::-webkit-scrollbar{display:none;}
-.pelicula{min-width:180px;height:270px;border-radius:10px;overflow:hidden;scroll-snap-align:start;position:relative;flex-shrink:0;transition:0.3s;cursor:pointer;}
-.pelicula img{width:100%;height:100%;object-fit:cover;display:block;transition:0.3s;}
-.pelicula:hover{transform:scale(1.2);z-index:5;box-shadow:0 0 25px #6a0dad;}
-
-/* INFO OVERLAY */
-.info-overlay{position:absolute;bottom:0;left:0;width:100%;background:linear-gradient(transparent,#111);padding:10px;color:white;opacity:0;transition:0.3s;text-align:center;}
-.pelicula:hover .info-overlay{opacity:1;}
-.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:none;font-size:25px;background:rgba(255,255,255,0.9);color:black;border-radius:50%;padding:10px 15px;z-index:10;}
-.pelicula:hover .play-btn{display:block;}
-
-/* BOTONES CARRUSEL */
-.btn-carrusel{position:absolute;top:50%;transform:translateY(-50%);background:rgba(106,13,173,0.7);border:none;color:white;font-size:30px;padding:10px;cursor:pointer;border-radius:50%;z-index:10;}
-.btn-left{left:0;}
-.btn-right{right:0;}
-
-/* STREAMING */
-.card{background:#111;margin:15px 0;padding:20px;border-radius:15px;text-align:center;transition:0.3s;}
-.card:hover{transform:scale(1.05);}
-.logo{width:60px;margin-bottom:10px;}
-.btn{background:#25D366;padding:12px;border-radius:10px;color:white;transition:0.3s;}
-.btn:hover{background:#00ffae;}
-.combo-card{position:relative;border:2px solid #00ffae;box-shadow:0 0 20px rgba(0,255,174,0.4);animation:glow 2s infinite alternate;}
-@keyframes glow{from{box-shadow:0 0 10px rgba(0,255,174,0.3);}to{box-shadow:0 0 30px rgba(0,255,174,0.9);}}
-.badge{position:absolute;top:-10px;left:-10px;background:red;padding:5px 10px;border-radius:10px;font-size:12px;font-weight:bold;animation:pulse 1.5s infinite;}
-@keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}}
-.logos-combo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;}
-.plus{font-size:25px;color:#00ffae;}
-.combo-btn{background:#00ffae;color:black;font-weight:bold;}
-.combo-btn:active{transform:scale(0.9);}
-.price{font-size:22px;font-weight:bold;color:#00ffae;}
-
-/* MODAL TRAILER */
-#modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);display:none;justify-content:center;align-items:center;z-index:10000;animation:fadeIn 0.3s;}
-#modal iframe{width:80%;height:80%;border:none;border-radius:10px;}
-#modal .close{position:absolute;top:20px;right:30px;font-size:30px;color:white;cursor:pointer;}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-
-/* TOAST */
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#6a0dad;padding:10px 20px;border-radius:10px;opacity:0;transition:0.3s;z-index:10000;}
-.toast.show{opacity:1;}
-</style>
 </head>
 <body>
 
@@ -81,7 +22,9 @@ header{background:#6a0dad;padding:15px;display:flex;align-items:center;position:
 <div id="menu" class="menu">
   <a onclick="mostrar('inicio')">Inicio</a>
   <a onclick="mostrar('streaming')">Streaming</a>
+  <a onclick="login()">Admin</a>
 </div>
+
 <div id="overlay" class="overlay" onclick="cerrarMenu()"></div>
 
 <!-- INICIO -->
@@ -106,115 +49,44 @@ header{background:#6a0dad;padding:15px;display:flex;align-items:center;position:
 <!-- STREAMING -->
 <div id="streaming" class="seccion">
 <h2>🔥 Streaming Premium</h2>
+
 <div class="card">
-  <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg">
   <h2>Netflix</h2>
   <p>RD$300</p>
   <button class="btn" onclick="comprar('Netflix',300)">Comprar</button>
 </div>
+
 <div class="card">
-  <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg">
   <h2>YouTube Music</h2>
   <p>RD$250</p>
   <button class="btn" onclick="comprar('YouTube Music',250)">Comprar</button>
 </div>
+
 <div class="card combo-card">
   <div class="badge">🔥 MÁS VENDIDO</div>
-  <div class="logos-combo">
-    <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg">
-    <span class="plus">+</span>
-    <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg">
-  </div>
   <h2>Combo Premium</h2>
   <p class="price">RD$500</p>
   <button class="btn combo-btn" onclick="comprar('Combo',500)">🔥 Lo Quiero</button>
 </div>
+
 </div>
 
-<!-- MODAL TRAILER -->
+<!-- ADMIN -->
+<div id="admin" class="seccion">
+  <h2>📊 Clientes</h2>
+  <div id="listaClientes"></div>
+</div>
+
+<!-- MODAL -->
 <div id="modal">
   <span class="close" onclick="cerrarTrailer()">✖</span>
-  <iframe src="" id="iframeTrailer" allowfullscreen></iframe>
+  <iframe id="iframeTrailer"></iframe>
 </div>
 
 <div id="toast" class="toast"></div>
 
-<script>
-// DATOS PELÍCULAS
-const peliculasData=[
-  {nombre:"Wonder Woman 1984",imagen:"https://image.tmdb.org/t/p/w300/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",calificacion:"7.4",trailer:"https://www.youtube.com/embed/8ugaeA-nMTc"},
-  {nombre:"Black Panther",imagen:"https://image.tmdb.org/t/p/w300/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",calificacion:"7.3",trailer:"https://www.youtube.com/embed/QwievZ1Tx-8"},
-  {nombre:"Joker",imagen:"https://image.tmdb.org/t/p/w300/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",calificacion:"8.5",trailer:"https://www.youtube.com/embed/zAGVQLHvwOY"},
-  {nombre:"The Batman",imagen:"https://image.tmdb.org/t/p/w300/5kNnBx3h3vVZ4gWqXxA5V3nIu9L.jpg",calificacion:"8.2",trailer:"https://www.youtube.com/embed/mqqft2x_Aa4"},
-  {nombre:"Dune",imagen:"https://image.tmdb.org/t/p/w300/d5NXSklXo0qyIYkgV94XAgMIckC.jpg",calificacion:"8.1",trailer:"https://www.youtube.com/embed/8g18jFHCLXk"}
-];
-
-// DATOS ANIME
-const animeData=[
-  {nombre:"Attack on Titan",imagen:"https://upload.wikimedia.org/wikipedia/en/9/9d/Attack_on_Titan_S3.jpg",calificacion:"9.0",trailer:"https://www.youtube.com/embed/MGRm4IzK1SQ"},
-  {nombre:"One Piece",imagen:"https://upload.wikimedia.org/wikipedia/en/2/2e/One_Piece_Anime.png",calificacion:"8.9",trailer:"https://www.youtube.com/embed/uaeY3kVfZCo"},
-  {nombre:"Demon Slayer",imagen:"https://upload.wikimedia.org/wikipedia/en/3/3e/Kimetsu_no_Yaiba_poster.jpg",calificacion:"8.7",trailer:"https://www.youtube.com/embed/VQGCKyvzIM4"},
-  {nombre:"Jujutsu Kaisen",imagen:"https://upload.wikimedia.org/wikipedia/en/7/7a/Jujutsu_Kaisen_Poster.jpg",calificacion:"8.8",trailer:"https://www.youtube.com/embed/TG5XzR5w8kA"},
-  {nombre:"My Hero Academia",imagen:"https://upload.wikimedia.org/wikipedia/en/1/13/My_Hero_Academia.jpg",calificacion:"8.6",trailer:"https://www.youtube.com/embed/ABkA2M1tzPA"},
-  {nombre:"Tokyo Revengers",imagen:"https://upload.wikimedia.org/wikipedia/en/9/9a/Tokyo_Revengers_key_visual.jpg",calificacion:"8.4",trailer:"https://www.youtube.com/embed/V56V5sF8EVE"},
-  {nombre:"Chainsaw Man",imagen:"https://upload.wikimedia.org/wikipedia/en/e/e7/Chainsaw_Man_poster.jpg",calificacion:"8.5",trailer:"https://www.youtube.com/embed/F26ZvgXy8Oc"}
-];
-
-// GENERAR CARRUSEL
-function generarCarrusel(id,data){
-  const cont=document.getElementById(id);
-  cont.innerHTML="";
-  data.forEach(d=>{
-    const div=document.createElement("div");
-    div.className="pelicula";
-    div.innerHTML=`
-      <img src="${d.imagen}">
-      <button class="play-btn" onclick="abrirTrailer('${d.trailer}')">▶</button>
-      <div class="info-overlay">
-        <h3>${d.nombre}</h3>
-        <p>⭐ ${d.calificacion}</p>
-        <button onclick="abrirTrailer('${d.trailer}')">Ver Trailer</button>
-      </div>
-    `;
-    cont.appendChild(div);
-  });
-}
-
-// MENU
-function abrirMenu(){document.getElementById("menu").classList.add("active");document.getElementById("overlay").classList.add("active");}
-function cerrarMenu(){document.getElementById("menu").classList.remove("active");document.getElementById("overlay").classList.remove("active");}
-function mostrar(id){document.querySelectorAll(".seccion").forEach(s=>s.classList.remove("activa"));document.getElementById(id).classList.add("activa");cerrarMenu();}
-
-// COMPRA
-function comprar(plan,precio){
-  let clientes=JSON.parse(localStorage.getItem("clientes"))||[];
-  let hoy=new Date();let vence=new Date();vence.setDate(hoy.getDate()+30);
-  clientes.push({plan,precio,vence:vence.toLocaleDateString()});
-  localStorage.setItem("clientes",JSON.stringify(clientes));
-  toast("✅ Cliente agregado");
-  location.href="https://wa.me/18494349505?text="+encodeURIComponent("Quiero "+plan);
-}
-
-// TOAST
-function toast(msg){let t=document.getElementById("toast");t.innerText=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2000);}
-
-// CARRUSEL
-function scrollCarrusel(id,direccion){
-  const carrusel=document.getElementById(id);
-  const width=carrusel.querySelector(".pelicula").offsetWidth + 15;
-  carrusel.scrollBy({left:direccion*width*2, behavior:'smooth'});
-}
-
-// MODAL TRAILER
-function abrirTrailer(url){document.getElementById("iframeTrailer").src=url;document.getElementById("modal").style.display="flex";}
-function cerrarTrailer(){document.getElementById("iframeTrailer").src="";document.getElementById("modal").style.display="none";}
-
-// INIT
-window.onload=function(){
-  generarCarrusel("peliculas",peliculasData);
-  generarCarrusel("anime",animeData);
-};
-</script>
+<script src="js/firebase.js"></script>
+<script src="js/app.js"></script>
 
 </body>
 </html>
