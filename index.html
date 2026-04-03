@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Alexis Te Brega</title>
+<title>AF Te Bregamos</title>
 
 <style>
-
 body{
 margin:0;
 font-family:Arial;
@@ -93,13 +89,14 @@ bottom:20px;
 right:20px;
 }
 
-/* STREAMING STYLE */
+/* CARDS STREAMING */
 .card{
 background:#111;
 margin:15px 0;
 padding:20px;
 border-radius:15px;
 text-align:center;
+box-shadow:0 0 10px rgba(168,85,247,0.3);
 }
 
 .btn{
@@ -109,85 +106,49 @@ border:none;
 border-radius:10px;
 color:white;
 cursor:pointer;
+margin-top:10px;
 }
-
 </style>
-
 </head>
 
 <body>
 
 <!-- MENU -->
 <div id="menu" class="menu">
-
 <a onclick="mostrarSeccion('inicio')">Inicio</a>
 <a onclick="mostrarSeccion('seguros')">Seguros</a>
 <a onclick="mostrarSeccion('streaming')">Streaming</a>
 <a onclick="mostrarSeccion('pedidos')">Pedidos</a>
 <a onclick="mostrarSeccion('repuestos')">Repuestos</a>
-
 </div>
 
 <header>
-
 <span class="menuBtn" onclick="abrirMenu()">☰</span>
-
 <h2>AF Te Bregamos</h2>
-
 </header>
 
 <!-- INICIO -->
 <div id="inicio" class="seccion">
-
 <h2>Bienvenido</h2>
-
 <p>AF Te Bregamos es una plataforma de servicios rápidos y confiables.</p>
 
 <h3>Valores</h3>
-
 <ul>
 <li>Responsabilidad</li>
 <li>Confianza</li>
 <li>Rapidez</li>
 </ul>
 
-<a href="https://www.instagram.com/alexis_tebrega?igsh=MWo3ZWNpcWloOWU2bQ==" target="_blank">
+<a href="https://www.instagram.com/alexis_tebrega" target="_blank">
 <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width="40">
 </a>
-
 </div>
 
-<!-- SEGUROS -->
-<div id="seguros" class="seccion">
-
-<h2>Seguros</h2>
-
-<select id="tipoVehiculo">
-<option>Pasola</option>
-<option>Motor</option>
-</select>
-
-<input id="nombreSeguro" placeholder="Nombre">
-
-<input id="cedulaSeguro" placeholder="Cédula">
-
-<select id="pagoSeguro">
-<option>Efectivo</option>
-<option>Transferencia</option>
-</select>
-
-<button onclick="enviarSeguro()">Enviar</button>
-
-</div>
-
-<!-- STREAMING (TU CODIGO INTEGRADO) -->
-<div id="streaming" class="seccion">
-
+<!-- STREAMING PRO -->
 <div id="streaming" class="seccion">
 
 <h2 style="color:#a855f7; text-align:center;">🔥 STREAMING PREMIUM 🔥</h2>
 
-<!-- PANTALLAS -->
 <div class="card">
 <h2>📺 Netflix Pantalla</h2>
 <p>1 perfil • HD / 4K</p>
@@ -195,48 +156,39 @@ cursor:pointer;
 <button class="btn" onclick="comprar('Netflix Pantalla RD$300')">Comprar</button>
 </div>
 
-<!-- CUENTAS PRIVADAS -->
 <div class="card">
 <h2>🔒 Netflix Privado</h2>
-<p>🥉 Básico → RD$700</p>
-<p>🥈 Estándar → RD$900</p>
-<p>🥇 Premium → RD$1200</p>
+<p>🥉 RD$700 • 🥈 RD$900 • 🥇 RD$1200</p>
 <button class="btn" onclick="comprar('Cuenta Privada Netflix')">Comprar</button>
 </div>
 
-<!-- YOUTUBE MUSIC -->
 <div class="card">
-<h2>🎧 YouTube Music Premium</h2>
+<h2>🎧 YouTube Music</h2>
 <p>Sin anuncios • Descargas</p>
-<h1 style="text-decoration:line-through; color:red;">RD$300</h1>
+<h3 style="text-decoration:line-through;color:red;">RD$300</h3>
 <h1 style="color:#00ffae;">RD$250</h1>
 <button class="btn" onclick="comprar('YouTube Music RD$250')">Comprar</button>
 </div>
 
-<!-- HBO -->
 <div class="card">
-<h2>🎬 HBO Max</h2>
-<p>Series y películas exclusivas</p>
+<h2>🎬 HBO</h2>
 <h1>RD$300</h1>
 <button class="btn" onclick="comprar('HBO RD$300')">Comprar</button>
 </div>
 
-<!-- COMBO -->
-<div class="card" style="box-shadow:0 0 20px rgba(168,85,247,0.5);">
-<h2>🔥 COMBO PREMIUM 🔥</h2>
-<p>Netflix + YouTube Music</p>
-<h1 style="text-decoration:line-through; color:red;">RD$500</h1>
+<div class="card">
+<h2>🔥 COMBO 🔥</h2>
+<p>Netflix + Música</p>
+<h3 style="text-decoration:line-through;color:red;">RD$500</h3>
 <h1 style="color:#00ffae;">RD$450</h1>
-<button class="btn" onclick="comprar('Combo Netflix + YouTube RD$450')">Comprar</button>
+<button class="btn" onclick="comprar('Combo RD$450')">Comprar</button>
 </div>
 
-<!-- LOGIN -->
 <div style="text-align:center;">
 <button class="btn" onclick="mostrarLogin()">👤 Acceso Cliente</button>
 </div>
 
 <div id="login" style="display:none;">
-<h3>Login Cliente</h3>
 <input type="text" id="user" placeholder="Usuario">
 <input type="password" id="pass" placeholder="Contraseña">
 <button class="btn" onclick="entrar()">Entrar</button>
@@ -244,9 +196,9 @@ cursor:pointer;
 
 <div id="panel" style="display:none;">
 <h3>📊 Panel Cliente</h3>
-<p id="estado">Estado: Activo</p>
-<p id="plan">Plan: Netflix</p>
-<p id="vence">Vence: --</p>
+<p>Estado: Activo</p>
+<p>Plan: Netflix</p>
+<p>Vence: 30 días</p>
 <button class="btn" onclick="renovar()">Renovar</button>
 </div>
 
@@ -254,34 +206,24 @@ cursor:pointer;
 
 <!-- PEDIDOS -->
 <div id="pedidos" class="seccion">
-
-<h2>Pedidos Temu / Shein</h2>
-
+<h2>Pedidos</h2>
 <input id="productoPedido" placeholder="Producto">
-
 <select id="pagoPedido">
 <option>Efectivo</option>
 <option>Transferencia</option>
 </select>
-
 <button onclick="enviarPedido()">Enviar</button>
-
 </div>
 
 <!-- REPUESTOS -->
 <div id="repuestos" class="seccion">
-
 <h2>Repuestos</h2>
-
 <input id="repuesto" placeholder="Repuesto">
-
 <select id="pagoRepuesto">
 <option>Efectivo</option>
 <option>Transferencia</option>
 </select>
-
 <button onclick="enviarRepuesto()">Enviar</button>
-
 </div>
 
 <!-- WHATSAPP -->
@@ -291,33 +233,23 @@ cursor:pointer;
 
 <script>
 
-function abrirMenu(){
-document.getElementById("menu").style.width="250px";
-}
-
-function cerrarMenu(){
-document.getElementById("menu").style.width="0";
-}
+/* MENU */
+function abrirMenu(){ document.getElementById("menu").style.width="250px"; }
+function cerrarMenu(){ document.getElementById("menu").style.width="0"; }
 
 function mostrarSeccion(id){
-
-let secciones=document.querySelectorAll(".seccion")
-
-secciones.forEach(sec=>sec.style.display="none")
-
-document.getElementById(id).style.display="block"
-
-cerrarMenu()
-
+document.querySelectorAll(".seccion").forEach(sec=>sec.style.display="none");
+document.getElementById(id).style.display="block";
+cerrarMenu();
 }
 
-/* FUNCIONES STREAMING */
-
+/* COMPRA */
 function comprar(plan){
 let mensaje="Hola, quiero comprar: "+plan;
-window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje));
+location.href="https://wa.me/18494349505?text="+encodeURIComponent(mensaje);
 }
 
+/* LOGIN */
 function mostrarLogin(){
 document.getElementById("login").style.display="block";
 }
@@ -335,38 +267,25 @@ alert("Completa los datos");
 }
 
 function renovar(){
-window.open("https://wa.me/18494349505?text=Quiero renovar mi Netflix");
+location.href="https://wa.me/18494349505?text=Quiero renovar mi servicio";
 }
 
-/* OTROS SERVICIOS */
-
-function enviarSeguro(){
-let tipo=document.getElementById("tipoVehiculo").value
-let nombre=document.getElementById("nombreSeguro").value
-let cedula=document.getElementById("cedulaSeguro").value
-let pago=document.getElementById("pagoSeguro").value
-
-let mensaje=`Seguro\nNombre:${nombre}\nCedula:${cedula}\nVehiculo:${tipo}\nPago:${pago}`
-
-window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
-}
-
+/* PEDIDOS */
 function enviarPedido(){
-let producto=document.getElementById("productoPedido").value
-let pago=document.getElementById("pagoPedido").value
+let producto=document.getElementById("productoPedido").value;
+let pago=document.getElementById("pagoPedido").value;
 
-let mensaje=`Pedido\nProducto:${producto}\nPago:${pago}`
-
-window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
+let mensaje=`Pedido\nProducto:${producto}\nPago:${pago}`;
+location.href="https://wa.me/18494349505?text="+encodeURIComponent(mensaje);
 }
 
+/* REPUESTOS */
 function enviarRepuesto(){
-let repuesto=document.getElementById("repuesto").value
-let pago=document.getElementById("pagoRepuesto").value
+let repuesto=document.getElementById("repuesto").value;
+let pago=document.getElementById("pagoRepuesto").value;
 
-let mensaje=`Repuesto\nProducto:${repuesto}\nPago:${pago}`
-
-window.open("https://wa.me/18494349505?text="+encodeURIComponent(mensaje))
+let mensaje=`Repuesto\nProducto:${repuesto}\nPago:${pago}`;
+location.href="https://wa.me/18494349505?text="+encodeURIComponent(mensaje);
 }
 
 </script>
