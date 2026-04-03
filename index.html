@@ -6,108 +6,19 @@
 <title>AF Te Bregamos</title>
 
 <style>
-body{
-margin:0;
-font-family:Arial;
-background:black;
-color:white;
-}
-
-/* HEADER */
-header{
-background:#6a0dad;
-padding:15px;
-display:flex;
-align-items:center;
-}
-
-.menuBtn{
-font-size:25px;
-cursor:pointer;
-margin-right:15px;
-}
-
-/* MENU */
-.menu{
-height:100%;
-width:0;
-position:fixed;
-top:0;
-left:0;
-background:#111;
-overflow-x:hidden;
-transition:0.3s;
-padding-top:60px;
-z-index:10;
-}
-
-.menu a{
-padding:12px 20px;
-display:block;
-color:white;
-text-decoration:none;
-}
-
-.menu a:hover{
-background:#6a0dad;
-}
-
-/* SECCIONES */
-.seccion{
-display:none;
-padding:20px;
-}
-
-#inicio{
-display:block;
-}
-
-/* INPUTS */
-input,select{
-width:100%;
-padding:8px;
-margin-top:8px;
-border-radius:5px;
-border:none;
-}
-
-/* BOTONES */
-button{
-background:#6a0dad;
-color:white;
-border:none;
-padding:10px;
-margin-top:10px;
-border-radius:5px;
-cursor:pointer;
-}
-
-/* WHATSAPP */
-.whatsapp{
-position:fixed;
-bottom:20px;
-right:20px;
-}
-
-/* CARDS STREAMING */
-.card{
-background:#111;
-margin:15px 0;
-padding:20px;
-border-radius:15px;
-text-align:center;
-box-shadow:0 0 10px rgba(168,85,247,0.3);
-}
-
-.btn{
-background:#25D366;
-padding:10px 20px;
-border:none;
-border-radius:10px;
-color:white;
-cursor:pointer;
-margin-top:10px;
-}
+body{margin:0;font-family:Arial;background:black;color:white;}
+header{background:#6a0dad;padding:15px;display:flex;align-items:center;}
+.menuBtn{font-size:25px;cursor:pointer;margin-right:15px;}
+.menu{height:100%;width:0;position:fixed;top:0;left:0;background:#111;transition:0.3s;padding-top:60px;z-index:10;}
+.menu a{padding:12px 20px;display:block;color:white;text-decoration:none;}
+.menu a:hover{background:#6a0dad;}
+.seccion{display:none;padding:20px;}
+#inicio{display:block;}
+input,select{width:100%;padding:8px;margin-top:8px;border-radius:5px;border:none;}
+button{background:#6a0dad;color:white;border:none;padding:10px;margin-top:10px;border-radius:5px;cursor:pointer;}
+.whatsapp{position:fixed;bottom:20px;right:20px;}
+.card{background:#111;margin:15px 0;padding:20px;border-radius:15px;text-align:center;box-shadow:0 0 10px rgba(168,85,247,0.3);}
+.btn{background:#25D366;padding:10px 20px;border:none;border-radius:10px;color:white;cursor:pointer;}
 </style>
 </head>
 
@@ -116,7 +27,6 @@ margin-top:10px;
 <!-- MENU -->
 <div id="menu" class="menu">
 <a onclick="mostrarSeccion('inicio')">Inicio</a>
-<a onclick="mostrarSeccion('seguros')">Seguros</a>
 <a onclick="mostrarSeccion('streaming')">Streaming</a>
 <a onclick="mostrarSeccion('pedidos')">Pedidos</a>
 <a onclick="mostrarSeccion('repuestos')">Repuestos</a>
@@ -130,99 +40,52 @@ margin-top:10px;
 <!-- INICIO -->
 <div id="inicio" class="seccion">
 <h2>Bienvenido</h2>
-<p>AF Te Bregamos es una plataforma de servicios rápidos y confiables.</p>
-
-<h3>Valores</h3>
-<ul>
-<li>Responsabilidad</li>
-<li>Confianza</li>
-<li>Rapidez</li>
-</ul>
-
-<a href="https://www.instagram.com/alexis_tebrega" target="_blank">
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width="40">
-</a>
+<p>Servicios rápidos y confiables.</p>
 </div>
 
-<!-- STREAMING PRO -->
+<!-- STREAMING -->
 <div id="streaming" class="seccion">
 
-<h2 style="color:#a855f7; text-align:center;">🔥 STREAMING PREMIUM 🔥</h2>
+<h2 style="text-align:center;color:#a855f7;">🔥 STREAMING PREMIUM 🔥</h2>
+
+<h3 id="autoMsg" style="text-align:center;color:#00ffae;">🔥 Oferta activa</h3>
+<p id="cupos" style="text-align:center;color:red;">10 disponibles</p>
 
 <div class="card">
 <h2>📺 Netflix Pantalla</h2>
-<p>1 perfil • HD / 4K</p>
 <h1>RD$300</h1>
 <button class="btn" onclick="comprar('Netflix Pantalla RD$300')">Comprar</button>
 </div>
 
 <div class="card">
-<h2>🔒 Netflix Privado</h2>
-<p>🥉 RD$700 • 🥈 RD$900 • 🥇 RD$1200</p>
-<button class="btn" onclick="comprar('Cuenta Privada Netflix')">Comprar</button>
-</div>
-
-<div class="card">
 <h2>🎧 YouTube Music</h2>
-<p>Sin anuncios • Descargas</p>
 <h3 style="text-decoration:line-through;color:red;">RD$300</h3>
 <h1 style="color:#00ffae;">RD$250</h1>
 <button class="btn" onclick="comprar('YouTube Music RD$250')">Comprar</button>
 </div>
 
 <div class="card">
-<h2>🎬 HBO</h2>
-<h1>RD$300</h1>
-<button class="btn" onclick="comprar('HBO RD$300')">Comprar</button>
-</div>
-
-<div class="card">
-<h2>🔥 COMBO 🔥</h2>
-<p>Netflix + Música</p>
+<h2>🔥 Combo</h2>
 <h3 style="text-decoration:line-through;color:red;">RD$500</h3>
 <h1 style="color:#00ffae;">RD$450</h1>
 <button class="btn" onclick="comprar('Combo RD$450')">Comprar</button>
 </div>
 
-<div style="text-align:center;">
-<button class="btn" onclick="mostrarLogin()">👤 Acceso Cliente</button>
-</div>
+<button class="btn" onclick="verClientes()">📊 Ver Clientes</button>
 
-<div id="login" style="display:none;">
-<input type="text" id="user" placeholder="Usuario">
-<input type="password" id="pass" placeholder="Contraseña">
-<button class="btn" onclick="entrar()">Entrar</button>
-</div>
-
-<div id="panel" style="display:none;">
-<h3>📊 Panel Cliente</h3>
-<p>Estado: Activo</p>
-<p>Plan: Netflix</p>
-<p>Vence: 30 días</p>
-<button class="btn" onclick="renovar()">Renovar</button>
-</div>
+<div id="panel"></div>
 
 </div>
 
 <!-- PEDIDOS -->
 <div id="pedidos" class="seccion">
-<h2>Pedidos</h2>
 <input id="productoPedido" placeholder="Producto">
-<select id="pagoPedido">
-<option>Efectivo</option>
-<option>Transferencia</option>
-</select>
 <button onclick="enviarPedido()">Enviar</button>
 </div>
 
 <!-- REPUESTOS -->
 <div id="repuestos" class="seccion">
-<h2>Repuestos</h2>
 <input id="repuesto" placeholder="Repuesto">
-<select id="pagoRepuesto">
-<option>Efectivo</option>
-<option>Transferencia</option>
-</select>
 <button onclick="enviarRepuesto()">Enviar</button>
 </div>
 
@@ -233,59 +96,69 @@ margin-top:10px;
 
 <script>
 
-/* MENU */
-function abrirMenu(){ document.getElementById("menu").style.width="250px"; }
-function cerrarMenu(){ document.getElementById("menu").style.width="0"; }
-
+// MENU
+function abrirMenu(){document.getElementById("menu").style.width="250px";}
 function mostrarSeccion(id){
 document.querySelectorAll(".seccion").forEach(sec=>sec.style.display="none");
 document.getElementById(id).style.display="block";
-cerrarMenu();
 }
 
-/* COMPRA */
+// COMPRA INTELIGENTE + GUARDADO
 function comprar(plan){
-let mensaje="Hola, quiero comprar: "+plan;
+
+let mensaje="";
+
+if(plan.includes("Combo")) mensaje="🔥 Quiero el combo RD$450";
+else if(plan.includes("Netflix")) mensaje="📺 Quiero Netflix RD$300";
+else if(plan.includes("YouTube")) mensaje="🎧 Quiero YouTube RD$250";
+
+guardarCliente(plan);
+
 location.href="https://wa.me/18494349505?text="+encodeURIComponent(mensaje);
 }
 
-/* LOGIN */
-function mostrarLogin(){
-document.getElementById("login").style.display="block";
+// GUARDAR CLIENTES
+function guardarCliente(plan){
+let clientes=JSON.parse(localStorage.getItem("clientes"))||[];
+clientes.push({plan:plan,fecha:new Date().toLocaleDateString(),estado:"Pendiente"});
+localStorage.setItem("clientes",JSON.stringify(clientes));
 }
 
-function entrar(){
-let user=document.getElementById("user").value;
-let pass=document.getElementById("pass").value;
-
-if(user && pass){
-document.getElementById("login").style.display="none";
-document.getElementById("panel").style.display="block";
-}else{
-alert("Completa los datos");
-}
+// VER CLIENTES
+function verClientes(){
+let clientes=JSON.parse(localStorage.getItem("clientes"))||[];
+let html="<h3>Clientes</h3>";
+clientes.forEach(c=>{
+html+=`<p>${c.plan} - ${c.fecha} - ${c.estado}</p>`;
+});
+document.getElementById("panel").innerHTML=html;
 }
 
-function renovar(){
-location.href="https://wa.me/18494349505?text=Quiero renovar mi servicio";
+// URGENCIA
+let cupos=10;
+setInterval(()=>{
+if(cupos>0){
+cupos--;
+document.getElementById("cupos").innerText=cupos+" disponibles";
 }
+},15000);
 
-/* PEDIDOS */
+// MENSAJES DINÁMICOS
+setInterval(()=>{
+let textos=["🔥 Últimos cupos","⚡ Compra ahora","💰 Oferta activa"];
+document.getElementById("autoMsg").innerText=textos[Math.floor(Math.random()*textos.length)];
+},4000);
+
+// PEDIDOS
 function enviarPedido(){
-let producto=document.getElementById("productoPedido").value;
-let pago=document.getElementById("pagoPedido").value;
-
-let mensaje=`Pedido\nProducto:${producto}\nPago:${pago}`;
-location.href="https://wa.me/18494349505?text="+encodeURIComponent(mensaje);
+let p=document.getElementById("productoPedido").value;
+location.href="https://wa.me/18494349505?text="+encodeURIComponent("Pedido: "+p);
 }
 
-/* REPUESTOS */
+// REPUESTOS
 function enviarRepuesto(){
-let repuesto=document.getElementById("repuesto").value;
-let pago=document.getElementById("pagoRepuesto").value;
-
-let mensaje=`Repuesto\nProducto:${repuesto}\nPago:${pago}`;
-location.href="https://wa.me/18494349505?text="+encodeURIComponent(mensaje);
+let r=document.getElementById("repuesto").value;
+location.href="https://wa.me/18494349505?text="+encodeURIComponent("Repuesto: "+r);
 }
 
 </script>
