@@ -205,8 +205,56 @@ color:#00ffae;
 
 <!-- INICIO -->
 <div id="inicio" class="seccion activa">
-<h2>🔥 Bienvenido</h2>
-<p>Servicio premium rápido y confiable</p>
+
+<h2>🔥 Top 10 en RD</h2>
+
+<div class="carrusel">
+
+<div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg"></div>
+<div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg"></div>
+<div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg"></div>
+<div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/5YZbUmjbMa3ClvSW1Wj3D6XGolb.jpg"></div>
+<div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/rktDFPbfHfUbArZ6OOOKsXcv0Bm.jpg"></div>
+<div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/kGzFbGhp99zva6oZODW5atUtnqi.jpg"></div>
+<div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/2lECpi35Hnbpa4y46JX0aY3AWTy.jpg"></div>
+<div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/mu8RKavbv7MLZndJEX0PH1V1Fh.jpg"></div>
+<div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/6oH378KUfCEitzJkm07r97L0RsZ.jpg"></div>
+<div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg"></div>
+
+</div>
+/* CARRUSEL */
+.carrusel{
+display:flex;
+gap:10px;
+overflow-x:auto;
+scroll-snap-type:x mandatory;
+padding-bottom:10px;
+}
+
+.carrusel::-webkit-scrollbar{
+display:none;
+}
+
+/* PELÍCULAS */
+.pelicula{
+min-width:140px;
+height:200px;
+border-radius:10px;
+overflow:hidden;
+scroll-snap-align:start;
+transition:0.3s;
+}
+
+.pelicula img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* EFECTO HOVER */
+.pelicula:hover{
+transform:scale(1.1);
+}
 </div>
 
 <!-- STREAMING -->
