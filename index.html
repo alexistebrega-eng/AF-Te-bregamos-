@@ -8,33 +8,84 @@
 <style>
 body{margin:0;font-family:Arial;background:#0a0a0a;color:white;}
 header{background:#6a0dad;padding:15px;display:flex;align-items:center;}
-.menu{position:fixed;left:-260px;width:260px;height:100%;background:#111;transition:0.4s;}
+.menuBtn{font-size:25px;cursor:pointer;margin-right:15px;}
+
+.menu{
+position:fixed;
+top:0;
+left:-260px;
+width:260px;
+height:100%;
+background:#111;
+transition:0.3s;
+z-index:1000;
+}
 .menu.active{left:0;}
-.overlay{position:fixed;width:100%;height:100%;background:rgba(0,0,0,0.7);opacity:0;pointer-events:none;}
-.overlay.active{opacity:1;pointer-events:auto;}
+
+.overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:none;
+z-index:999;
+}
+.overlay.active{display:block;}
+
+.menu a{display:block;padding:15px;cursor:pointer;}
+.menu a:hover{background:#6a0dad;}
+
 .seccion{display:none;padding:20px;}
-.seccion.activa{display:block;animation:fade 0.4s;}
+.seccion.activa{display:block;animation:fade 0.3s;}
+
 @keyframes fade{from{opacity:0}to{opacity:1}}
-.card{background:#111;margin:10px;padding:20px;border-radius:12px;text-align:center;}
-.btn{background:#25D366;padding:10px;border:none;border-radius:10px;color:white;}
+
+.card{
+background:#111;
+margin:10px 0;
+padding:20px;
+border-radius:12px;
+text-align:center;
+}
+
+.btn{
+background:#25D366;
+padding:10px;
+border:none;
+border-radius:10px;
+color:white;
+cursor:pointer;
+}
+
+.toast{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#6a0dad;
+padding:10px 20px;
+border-radius:10px;
+opacity:0;
+transition:0.3s;
+}
+.toast.show{opacity:1;}
+
 .success{color:#00ffae;}
 .danger{color:red;}
-.dashboard{display:flex;gap:10px;flex-wrap:wrap;}
-.box{flex:1;background:#111;padding:15px;border-radius:10px;text-align:center;}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#6a0dad;padding:10px;border-radius:10px;opacity:0;}
-.toast.show{opacity:1;}
+
 </style>
 </head>
 
 <body>
 
 <header>
-<span onclick="abrirMenu()">☰</span>
+<span class="menuBtn" onclick="abrirMenu()">☰</span>
 <h2>ALEXIS TE BREGA</h2>
 </header>
 
 <div id="menu" class="menu">
-<div onclick="cerrarMenu()">✖</div>
 <a onclick="mostrar('inicio')">Inicio</a>
 <a onclick="mostrar('streaming')">Streaming</a>
 <a onclick="mostrar('panel')">Panel</a>
@@ -54,33 +105,31 @@ header{background:#6a0dad;padding:15px;display:flex;align-items:center;}
 
 <div class="card">
 <h2>Netflix</h2>
-<button class="btn" onclick="comprar('Netflix',300)">RD$300</button>
+<p>RD$300</p>
+<button class="btn" onclick="comprar('Netflix',300)">Comprar</button>
 </div>
 
 <div class="card">
-<h2>YouTube</h2>
-<button class="btn" onclick="comprar('YouTube',250)">RD$250</button>
+<h2>YouTube Music</h2>
+<p>RD$250</p>
+<button class="btn" onclick="comprar('YouTube',250)">Comprar</button>
 </div>
 
 <div class="card">
 <h2>Combo</h2>
-<button class="btn" onclick="comprar('Combo',450)">RD$450</button>
+<p>RD$450</p>
+<button class="btn" onclick="comprar('Combo',450)">Comprar</button>
 </div>
 
 </div>
 
 <!-- PANEL -->
 <div id="panel" class="seccion">
-
 <h2>📊 Dashboard</h2>
 
-<div class="dashboard">
-<div class="box" id="totalClientes">0</div>
-<div class="box" id="ingresos">RD$0</div>
-<div class="box" id="activos">0 activos</div>
-</div>
+<p id="total"></p>
+<p id="ingresos"></p>
 
-<h3>Clientes</h3>
 <div id="clientes"></div>
 
 </div>
@@ -90,8 +139,15 @@ header{background:#6a0dad;padding:15px;display:flex;align-items:center;}
 <script>
 
 // MENU
-function abrirMenu(){menu.classList.add("active");overlay.classList.add("active");}
-function cerrarMenu(){menu.classList.remove("active");overlay.classList.remove("active");}
+function abrirMenu(){
+document.getElementById("menu").classList.add("active");
+document.getElementById("overlay").classList.add("active");
+}
+
+function cerrarMenu(){
+document.getElementById("menu").classList.remove("active");
+document.getElementById("overlay").classList.remove("active");
+}
 
 // SECCIONES
 function mostrar(id){
@@ -110,67 +166,18 @@ let vence=new Date();
 vence.setDate(hoy.getDate()+30);
 
 clientes.push({
-plan,
-precio,
-fecha:hoy.toLocaleDateString(),
+plan:plan,
+precio:precio,
 vence:vence.toLocaleDateString()
 });
 
 localStorage.setItem("clientes",JSON.stringify(clientes));
 
 toast("Cliente agregado");
-actualizarDashboard();
 
-location.href="https://wa.me/18494349505?text="+encodeURIComponent(`Quiero ${plan}`);
-}
+actualizar();
 
-// DASHBOARD
-function actualizarDashboard(){
-
-let clientes=JSON.parse(localStorage.getItem("clientes"))||[];
-
-let total=clientes.length;
-let ingresos=0;
-let activos=0;
-
-let hoy=new Date();
-
-clientes.forEach(c=>{
-ingresos+=c.precio;
-
-if(new Date(c.vence) > hoy){
-activos++;
-}
-});
-
-totalClientes.innerText=total+" clientes";
-ingresos.innerText="RD$"+ingresos;
-activos.innerText=activos+" activos";
-
-}
-
-// VER CLIENTES
-function verClientes(){
-
-let clientes=JSON.parse(localStorage.getItem("clientes"))||[];
-
-let html="";
-
-clientes.forEach(c=>{
-let estado=new Date(c.vence)>new Date()?"Activo":"Vencido";
-
-html+=`
-<div class="card">
-<p>${c.plan} - RD$${c.precio}</p>
-<p>${estado}</p>
-<p>Vence: ${c.vence}</p>
-</div>
-`;
-});
-
-document.getElementById("clientes").innerHTML=html;
-
-actualizarDashboard();
+location.href="https://wa.me/18494349505?text="+encodeURIComponent("Quiero "+plan);
 }
 
 // TOAST
@@ -181,10 +188,36 @@ t.classList.add("show");
 setTimeout(()=>t.classList.remove("show"),2000);
 }
 
+// ACTUALIZAR PANEL
+function actualizar(){
+
+let clientes=JSON.parse(localStorage.getItem("clientes"))||[];
+
+let total=clientes.length;
+let ingresos=0;
+
+let html="";
+
+clientes.forEach(c=>{
+ingresos+=c.precio;
+
+html+=`
+<div class="card">
+<p>${c.plan}</p>
+<p>RD$${c.precio}</p>
+<p>Vence: ${c.vence}</p>
+</div>
+`;
+});
+
+document.getElementById("total").innerText="Clientes: "+total;
+document.getElementById("ingresos").innerText="Ingresos: RD$"+ingresos;
+document.getElementById("clientes").innerHTML=html;
+
+}
+
 // AUTO LOAD
-window.onload=()=>{
-verClientes();
-};
+window.onload=actualizar;
 
 </script>
 
