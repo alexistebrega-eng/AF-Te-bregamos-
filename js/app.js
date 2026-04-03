@@ -164,6 +164,119 @@ async function cargarClientes(){
 // =======================
 // ATAJOS DE TECLADO (PRO)
 // =======================
+// =======================
+// DATOS PELÍCULAS
+// =======================
+const peliculasData = [
+  {
+    nombre:"Wonder Woman 1984",
+    imagen:"https://image.tmdb.org/t/p/w300/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",
+    calificacion:"7.4",
+    trailer:"https://www.youtube.com/embed/8ugaeA-nMTc"
+  },
+  {
+    nombre:"Black Panther",
+    imagen:"https://image.tmdb.org/t/p/w300/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",
+    calificacion:"7.3",
+    trailer:"https://www.youtube.com/embed/xjDjIWPwcPU"
+  },
+  {
+    nombre:"Joker",
+    imagen:"https://image.tmdb.org/t/p/w300/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
+    calificacion:"8.5",
+    trailer:"https://www.youtube.com/embed/zAGVQLHvwOY"
+  }
+];
+
+// =======================
+// DATOS ANIME
+// =======================
+const animeData = [
+  {
+    nombre:"Attack on Titan",
+    imagen:"https://upload.wikimedia.org/wikipedia/en/9/9d/Attack_on_Titan_S3.jpg",
+    calificacion:"9.0",
+    trailer:"https://www.youtube.com/embed/MGRm4IzK1SQ"
+  },
+  {
+    nombre:"One Piece",
+    imagen:"https://upload.wikimedia.org/wikipedia/en/2/2e/One_Piece_Anime.png",
+    calificacion:"8.9",
+    trailer:"https://www.youtube.com/embed/uaeY3kVfZCo"
+  },
+  {
+    nombre:"Demon Slayer",
+    imagen:"https://upload.wikimedia.org/wikipedia/en/3/3e/Kimetsu_no_Yaiba_poster.jpg",
+    calificacion:"8.7",
+    trailer:"https://www.youtube.com/embed/VQGCKyvzIM4"
+  }
+];
+
+// =======================
+// GENERAR CARRUSEL
+// =======================
+function generarCarrusel(id,data){
+  const cont = document.getElementById(id);
+  if(!cont) return;
+
+  cont.innerHTML = "";
+
+  data.forEach((d,i)=>{
+    const div = document.createElement("div");
+    div.className = "pelicula";
+
+    div.innerHTML = `
+      <img src="${d.imagen}" loading="lazy">
+      <button class="play-btn" onclick="abrirTrailer('${d.trailer}')">▶</button>
+      <div class="info-overlay">
+        <h3>${d.nombre}</h3>
+        <p>⭐ ${d.calificacion}</p>
+        <button onclick="abrirTrailer('${d.trailer}')">Ver Trailer</button>
+      </div>
+    `;
+
+    cont.appendChild(div);
+  });
+}
+
+// =======================
+// SCROLL CARRUSEL
+// =======================
+function scrollCarrusel(id,direccion){
+  const carrusel = document.getElementById(id);
+  if(!carrusel) return;
+
+  const item = carrusel.querySelector(".pelicula");
+  if(!item) return;
+
+  const width = item.offsetWidth + 15;
+
+  carrusel.scrollBy({
+    left: direccion * width * 2,
+    behavior: 'smooth'
+  });
+}
+
+// =======================
+// MODAL TRAILER
+// =======================
+function abrirTrailer(url){
+  document.getElementById("iframeTrailer").src = url + "?autoplay=1";
+  document.getElementById("modal").style.display = "flex";
+}
+
+function cerrarTrailer(){
+  document.getElementById("iframeTrailer").src = "";
+  document.getElementById("modal").style.display = "none";
+}
+
+// =======================
+// INICIO AUTOMÁTICO
+// =======================
+window.onload = function(){
+  generarCarrusel("peliculas", peliculasData);
+  generarCarrusel("anime", animeData);
+};
 document.addEventListener("keydown",(e)=>{
   if(e.key==="Escape"){
     cerrarMenu();
