@@ -20,16 +20,11 @@ background:#6a0dad;
 padding:15px;
 display:flex;
 align-items:center;
-box-shadow:0 2px 10px rgba(0,0,0,0.6);
-}
-
-.menuBtn{
-font-size:25px;
-cursor:pointer;
-margin-right:15px;
 }
 
 /* MENU */
+.menuBtn{font-size:25px;cursor:pointer;margin-right:15px;}
+
 .menu{
 position:fixed;
 top:0;
@@ -37,7 +32,7 @@ left:-260px;
 width:260px;
 height:100%;
 background:#111;
-transition:0.4s;
+transition:0.3s;
 z-index:1000;
 }
 .menu.active{left:0;}
@@ -46,33 +41,22 @@ z-index:1000;
 position:fixed;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.7);
-opacity:0;
-pointer-events:none;
-transition:0.3s;
+background:rgba(0,0,0,0.6);
+display:none;
+z-index:999;
 }
-.overlay.active{
-opacity:1;
-pointer-events:auto;
-}
+.overlay.active{display:block;}
 
-.menu a{
-display:block;
-padding:15px;
-transition:0.3s;
-}
-.menu a:hover{
-background:#6a0dad;
-padding-left:25px;
-}
+.menu a{display:block;padding:15px;}
+.menu a:hover{background:#6a0dad;}
 
 /* SECCIONES */
 .seccion{
 display:none;
 padding:20px;
 opacity:0;
-transform:translateY(25px);
-transition:0.4s ease;
+transform:translateY(20px);
+transition:0.4s;
 }
 .seccion.activa{
 display:block;
@@ -88,56 +72,28 @@ padding:20px;
 border-radius:15px;
 text-align:center;
 transition:0.3s;
-box-shadow:0 0 10px rgba(168,85,247,0.2);
 }
 
 .card:hover{
 transform:scale(1.05);
-box-shadow:0 0 25px rgba(168,85,247,0.7);
 }
 
 /* LOGOS */
 .logo{
 width:60px;
 margin-bottom:10px;
-transition:0.3s;
-}
-.card:hover .logo{
-transform:scale(1.1);
 }
 
 /* BOTONES */
 .btn{
 background:#25D366;
-padding:12px 20px;
+padding:12px;
 border:none;
 border-radius:10px;
 color:white;
 cursor:pointer;
-position:relative;
-overflow:hidden;
 }
 
-/* EFECTO RIPPLE */
-.btn:after{
-content:"";
-position:absolute;
-width:0;
-height:0;
-background:rgba(255,255,255,0.3);
-border-radius:50%;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-transition:0.4s;
-}
-
-.btn:active:after{
-width:200px;
-height:200px;
-}
-
-/* TEXTO */
 .success{color:#00ffae;}
 .danger{color:red;}
 
@@ -154,6 +110,80 @@ opacity:0;
 transition:0.3s;
 }
 .toast.show{opacity:1;}
+
+/* 🔥 COMBO IRRESISTIBLE */
+.combo-card{
+position:relative;
+border:2px solid #00ffae;
+box-shadow:0 0 20px rgba(0,255,174,0.4);
+animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+from{box-shadow:0 0 10px rgba(0,255,174,0.3);}
+to{box-shadow:0 0 30px rgba(0,255,174,0.9);}
+}
+
+/* BADGE */
+.badge{
+position:absolute;
+top:-10px;
+left:-10px;
+background:red;
+padding:5px 10px;
+border-radius:10px;
+font-size:12px;
+font-weight:bold;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.1);}
+100%{transform:scale(1);}
+}
+
+/* LOGOS COMBO */
+.logos-combo{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+margin-bottom:10px;
+}
+
+.plus{
+font-size:25px;
+color:#00ffae;
+}
+
+/* ANIMACIÓN LOGOS */
+.anim{
+opacity:0;
+transform:translateY(10px);
+animation:fadeUp 0.5s forwards;
+}
+
+.delay{animation-delay:0.3s;}
+
+@keyframes fadeUp{
+to{opacity:1;transform:translateY(0);}
+}
+
+/* BOTÓN COMBO */
+.combo-btn{
+background:#00ffae;
+color:black;
+font-weight:bold;
+}
+
+.combo-btn:active{transform:scale(0.9);}
+
+.price{
+font-size:22px;
+font-weight:bold;
+color:#00ffae;
+}
 
 </style>
 </head>
@@ -200,12 +230,23 @@ transition:0.3s;
 <button class="btn" onclick="comprar('YouTube Music',250)">Comprar</button>
 </div>
 
-<!-- COMBO -->
-<div class="card">
-<img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg">
+<!-- 🔥 COMBO IRRESISTIBLE -->
+<div class="card combo-card">
+
+<div class="badge">🔥 MÁS VENDIDO</div>
+
+<div class="logos-combo">
+<img class="logo anim" src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg">
+<span class="plus">+</span>
+<img class="logo anim delay" src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg">
+</div>
+
 <h2>Combo Premium</h2>
-<p class="success">RD$500</p>
-<button class="btn" onclick="comprar('Combo',500)">Comprar</button>
+
+<p class="price">RD$500</p>
+
+<button class="btn combo-btn" onclick="comprar('Combo',500)">🔥 Lo Quiero</button>
+
 </div>
 
 </div>
@@ -250,11 +291,7 @@ let hoy=new Date();
 let vence=new Date();
 vence.setDate(hoy.getDate()+30);
 
-clientes.push({
-plan:plan,
-precio:precio,
-vence:vence.toLocaleDateString()
-});
+clientes.push({plan,precio,vence:vence.toLocaleDateString()});
 
 localStorage.setItem("clientes",JSON.stringify(clientes));
 
