@@ -140,20 +140,17 @@ header{background:#6a0dad;padding:15px;display:flex;align-items:center;position:
 <div id="toast" class="toast"></div>
 
 <script>
-// DATOS DE PELÍCULAS Y ANIME
+// DATOS DE PELÍCULAS Y ANIME (Imágenes consistentes)
 const peliculasData=[
-  {nombre:"Wonder Woman 1984",imagen:"https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",calificacion:"7.4",trailer:"https://www.youtube.com/embed/8ugaeA-nMTc"},
-  {nombre:"Black Panther",imagen:"https://image.tmdb.org/t/p/w500/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",calificacion:"7.3",trailer:"https://www.youtube.com/embed/QwievZ1Tx-8"},
-  {nombre:"Joker",imagen:"https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",calificacion:"8.5",trailer:"https://www.youtube.com/embed/zAGVQLHvwOY"},
-  {nombre:"Tenet",imagen:"https://image.tmdb.org/t/p/w500/k68nPLbIST6NP96JmTxmZijEvCA.jpg",calificacion:"7.5",trailer:"https://www.youtube.com/embed/L3pk_TBkihU"},
-  {nombre:"Spiderman: No Way Home",imagen:"https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",calificacion:"8.2",trailer:"https://www.youtube.com/embed/JfVOs4VSpmA"},
-  {nombre:"Avatar",imagen:"https://image.tmdb.org/t/p/w500/kmcqlZGaSh20zpTbuoF0Cdn07dT.jpg",calificacion:"7.8",trailer:"https://www.youtube.com/embed/5PSNL1qE6VY"}
+  {nombre:"Wonder Woman 1984",imagen:"https://image.tmdb.org/t/p/w300/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",calificacion:"7.4",trailer:"https://www.youtube.com/embed/8ugaeA-nMTc"},
+  {nombre:"Black Panther",imagen:"https://image.tmdb.org/t/p/w300/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",calificacion:"7.3",trailer:"https://www.youtube.com/embed/QwievZ1Tx-8"},
+  {nombre:"Joker",imagen:"https://image.tmdb.org/t/p/w300/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",calificacion:"8.5",trailer:"https://www.youtube.com/embed/zAGVQLHvwOY"}
 ];
 
 const animeData=[
   {nombre:"Attack on Titan",imagen:"https://upload.wikimedia.org/wikipedia/en/9/9d/Attack_on_Titan_S3.jpg",calificacion:"9.0",trailer:"https://www.youtube.com/embed/MGRm4IzK1SQ"},
-  {nombre:"One Piece",imagen:"https://upload.wikimedia.org/wikipedia/en/5/5f/One_Piece_Logo.png",calificacion:"8.9",trailer:"https://www.youtube.com/embed/uaeY3kVfZCo"},
-  {nombre:"Demon Slayer",imagen:"https://upload.wikimedia.org/wikipedia/en/f/f8/Demon_Slayer_Kimetsu_no_Yaiba.jpg",calificacion:"8.7",trailer:"https://www.youtube.com/embed/VQGCKyvzIM4"},
+  {nombre:"One Piece",imagen:"https://upload.wikimedia.org/wikipedia/en/2/2e/One_Piece_Anime.png",calificacion:"8.9",trailer:"https://www.youtube.com/embed/uaeY3kVfZCo"},
+  {nombre:"Demon Slayer",imagen:"https://upload.wikimedia.org/wikipedia/en/3/3e/Kimetsu_no_Yaiba_poster.jpg",calificacion:"8.7",trailer:"https://www.youtube.com/embed/VQGCKyvzIM4"},
   {nombre:"Jujutsu Kaisen",imagen:"https://upload.wikimedia.org/wikipedia/en/7/7a/Jujutsu_Kaisen_Poster.jpg",calificacion:"8.8",trailer:"https://www.youtube.com/embed/TG5XzR5w8kA"},
   {nombre:"My Hero Academia",imagen:"https://upload.wikimedia.org/wikipedia/en/1/13/My_Hero_Academia.jpg",calificacion:"8.6",trailer:"https://www.youtube.com/embed/ABkA2M1tzPA"}
 ];
