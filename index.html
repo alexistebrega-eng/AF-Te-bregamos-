@@ -3,135 +3,157 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AF Te Bregamos</title>
+<title>ALEXIS TE BREGA</title>
 
 <style>
-body{margin:0;font-family:Arial;background:black;color:white;}
+body{margin:0;font-family:Arial;background:#0a0a0a;color:white;}
 header{background:#6a0dad;padding:15px;display:flex;align-items:center;}
-.menuBtn{font-size:25px;cursor:pointer;margin-right:15px;}
-.menu{height:100%;width:0;position:fixed;top:0;left:0;background:#111;transition:0.3s;padding-top:60px;z-index:10;}
-.menu a{padding:12px 20px;display:block;color:white;text-decoration:none;}
-.menu a:hover{background:#6a0dad;}
+.menuBtn{font-size:25px;margin-right:15px;cursor:pointer;}
+.menu{position:fixed;width:0;height:100%;background:#111;transition:0.3s;overflow:hidden;}
+.menu a{display:block;padding:12px;color:white;text-decoration:none;}
 .seccion{display:none;padding:20px;}
 #inicio{display:block;}
-input,select{width:100%;padding:8px;margin-top:8px;border-radius:5px;border:none;}
-button{background:#6a0dad;color:white;border:none;padding:10px;margin-top:10px;border-radius:5px;cursor:pointer;}
-.whatsapp{position:fixed;bottom:20px;right:20px;}
-.card{background:#111;margin:15px 0;padding:20px;border-radius:15px;text-align:center;box-shadow:0 0 10px rgba(168,85,247,0.3);}
-.btn{background:#25D366;padding:10px 20px;border:none;border-radius:10px;color:white;cursor:pointer;}
+.card{background:#111;margin:10px;padding:20px;border-radius:12px;text-align:center;}
+.btn{background:#25D366;padding:10px;border:none;border-radius:10px;color:white;cursor:pointer;}
+.danger{color:red;}
+.success{color:#00ffae;}
 </style>
 </head>
 
 <body>
 
-<!-- MENU -->
-<div id="menu" class="menu">
-<a onclick="mostrarSeccion('inicio')">Inicio</a>
-<a onclick="mostrarSeccion('streaming')">Streaming</a>
-<a onclick="mostrarSeccion('pedidos')">Pedidos</a>
-<a onclick="mostrarSeccion('repuestos')">Repuestos</a>
-</div>
-
 <header>
 <span class="menuBtn" onclick="abrirMenu()">☰</span>
-<h2>AF Te Bregamos</h2>
+<h2>ALEXIS TE BREGA</h2>
 </header>
+
+<div id="menu" class="menu">
+<a onclick="mostrar('inicio')">Inicio</a>
+<a onclick="mostrar('streaming')">Streaming</a>
+<a onclick="mostrar('panel')">Panel</a>
+</div>
 
 <!-- INICIO -->
 <div id="inicio" class="seccion">
-<h2>Bienvenido</h2>
-<p>Servicios rápidos y confiables.</p>
+<h2>🔥 Bienvenido</h2>
+<p>Servicios premium rápidos y seguros.</p>
 </div>
 
 <!-- STREAMING -->
 <div id="streaming" class="seccion">
 
-<h2 style="text-align:center;color:#a855f7;">🔥 STREAMING PREMIUM 🔥</h2>
+<h2>🔥 Streaming Premium</h2>
 
-<h3 id="autoMsg" style="text-align:center;color:#00ffae;">🔥 Oferta activa</h3>
-<p id="cupos" style="text-align:center;color:red;">10 disponibles</p>
+<h3 id="autoMsg" class="success">🔥 Oferta activa</h3>
+<p id="cupos" class="danger">10 disponibles</p>
 
 <div class="card">
-<h2>📺 Netflix Pantalla</h2>
-<h1>RD$300</h1>
-<button class="btn" onclick="comprar('Netflix Pantalla RD$300')">Comprar</button>
+<h2>📺 Netflix</h2>
+<p>RD$300</p>
+<button class="btn" onclick="comprar('Netflix',300)">Comprar</button>
 </div>
 
 <div class="card">
 <h2>🎧 YouTube Music</h2>
-<h3 style="text-decoration:line-through;color:red;">RD$300</h3>
-<h1 style="color:#00ffae;">RD$250</h1>
-<button class="btn" onclick="comprar('YouTube Music RD$250')">Comprar</button>
+<p class="danger"><s>RD$300</s></p>
+<p class="success">RD$250</p>
+<button class="btn" onclick="comprar('YouTube',250)">Comprar</button>
 </div>
 
 <div class="card">
 <h2>🔥 Combo</h2>
-<h3 style="text-decoration:line-through;color:red;">RD$500</h3>
-<h1 style="color:#00ffae;">RD$450</h1>
-<button class="btn" onclick="comprar('Combo RD$450')">Comprar</button>
+<p class="danger"><s>RD$500</s></p>
+<p class="success">RD$450</p>
+<button class="btn" onclick="comprar('Combo',450)">Comprar</button>
 </div>
-
-<button class="btn" onclick="verClientes()">📊 Ver Clientes</button>
-
-<div id="panel"></div>
 
 </div>
 
-<!-- PEDIDOS -->
-<div id="pedidos" class="seccion">
-<input id="productoPedido" placeholder="Producto">
-<button onclick="enviarPedido()">Enviar</button>
+<!-- PANEL -->
+<div id="panel" class="seccion">
+<h2>📊 Panel de Clientes</h2>
+<button class="btn" onclick="verClientes()">Actualizar</button>
+<button class="btn" onclick="exportar()">Exportar</button>
+<div id="clientes"></div>
 </div>
-
-<!-- REPUESTOS -->
-<div id="repuestos" class="seccion">
-<input id="repuesto" placeholder="Repuesto">
-<button onclick="enviarRepuesto()">Enviar</button>
-</div>
-
-<!-- WHATSAPP -->
-<a class="whatsapp" href="https://wa.me/18494349505">
-<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="60">
-</a>
 
 <script>
 
 // MENU
-function abrirMenu(){document.getElementById("menu").style.width="250px";}
-function mostrarSeccion(id){
-document.querySelectorAll(".seccion").forEach(sec=>sec.style.display="none");
+function abrirMenu(){
+document.getElementById("menu").style.width="250px";
+}
+function mostrar(id){
+document.querySelectorAll(".seccion").forEach(s=>s.style.display="none");
 document.getElementById(id).style.display="block";
 }
 
-// COMPRA INTELIGENTE + GUARDADO
-function comprar(plan){
+// COMPRA + GUARDADO
+function comprar(plan,precio){
 
-let mensaje="";
-
-if(plan.includes("Combo")) mensaje="🔥 Quiero el combo RD$450";
-else if(plan.includes("Netflix")) mensaje="📺 Quiero Netflix RD$300";
-else if(plan.includes("YouTube")) mensaje="🎧 Quiero YouTube RD$250";
-
-guardarCliente(plan);
-
-location.href="https://wa.me/18494349505?text="+encodeURIComponent(mensaje);
-}
-
-// GUARDAR CLIENTES
-function guardarCliente(plan){
 let clientes=JSON.parse(localStorage.getItem("clientes"))||[];
-clientes.push({plan:plan,fecha:new Date().toLocaleDateString(),estado:"Pendiente"});
+
+let fecha=new Date();
+let vence=new Date();
+vence.setDate(fecha.getDate()+30);
+
+clientes.push({
+plan,
+precio,
+fecha:fecha.toLocaleDateString(),
+vence:vence.toLocaleDateString(),
+estado:"Activo"
+});
+
 localStorage.setItem("clientes",JSON.stringify(clientes));
+
+let msg=`🔥 Quiero ${plan} RD$${precio}`;
+location.href="https://wa.me/18494349505?text="+encodeURIComponent(msg);
+
 }
 
 // VER CLIENTES
 function verClientes(){
+
 let clientes=JSON.parse(localStorage.getItem("clientes"))||[];
-let html="<h3>Clientes</h3>";
-clientes.forEach(c=>{
-html+=`<p>${c.plan} - ${c.fecha} - ${c.estado}</p>`;
+
+let html="";
+clientes.forEach((c,i)=>{
+
+let hoy=new Date();
+let vence=new Date(c.vence);
+
+let estado = (vence < hoy) ? "Vencido" : "Activo";
+
+html+=`
+<div class="card">
+<p>${c.plan} - RD$${c.precio}</p>
+<p>📅 ${c.fecha}</p>
+<p>⏳ Vence: ${c.vence}</p>
+<p class="${estado=='Activo'?'success':'danger'}">${estado}</p>
+<button onclick="eliminar(${i})">❌</button>
+</div>
+`;
+
 });
-document.getElementById("panel").innerHTML=html;
+
+document.getElementById("clientes").innerHTML=html;
+
+}
+
+// ELIMINAR
+function eliminar(i){
+let clientes=JSON.parse(localStorage.getItem("clientes"));
+clientes.splice(i,1);
+localStorage.setItem("clientes",JSON.stringify(clientes));
+verClientes();
+}
+
+// EXPORTAR
+function exportar(){
+let data=localStorage.getItem("clientes");
+navigator.clipboard.writeText(data);
+alert("Copiado!");
 }
 
 // URGENCIA
@@ -143,23 +165,11 @@ document.getElementById("cupos").innerText=cupos+" disponibles";
 }
 },15000);
 
-// MENSAJES DINÁMICOS
+// MENSAJES
 setInterval(()=>{
-let textos=["🔥 Últimos cupos","⚡ Compra ahora","💰 Oferta activa"];
-document.getElementById("autoMsg").innerText=textos[Math.floor(Math.random()*textos.length)];
+let t=["🔥 Últimos cupos","⚡ Compra ahora","💰 Oferta activa"];
+document.getElementById("autoMsg").innerText=t[Math.floor(Math.random()*t.length)];
 },4000);
-
-// PEDIDOS
-function enviarPedido(){
-let p=document.getElementById("productoPedido").value;
-location.href="https://wa.me/18494349505?text="+encodeURIComponent("Pedido: "+p);
-}
-
-// REPUESTOS
-function enviarRepuesto(){
-let r=document.getElementById("repuesto").value;
-location.href="https://wa.me/18494349505?text="+encodeURIComponent("Repuesto: "+r);
-}
 
 </script>
 
