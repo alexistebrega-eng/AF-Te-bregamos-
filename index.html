@@ -183,22 +183,54 @@ cursor:pointer;
 <!-- STREAMING (TU CODIGO INTEGRADO) -->
 <div id="streaming" class="seccion">
 
-<h2 style="color:#e50914;">NETFLIX</h2>
+<div id="streaming" class="seccion">
 
+<h2 style="color:#a855f7; text-align:center;">🔥 STREAMING PREMIUM 🔥</h2>
+
+<!-- PANTALLAS -->
 <div class="card">
-<h2>🔥 Pantalla Premium</h2>
-<p>4K + HDR</p>
+<h2>📺 Netflix Pantalla</h2>
+<p>1 perfil • HD / 4K</p>
 <h1>RD$300</h1>
-<button class="btn" onclick="comprar('Pantalla Netflix RD$300')">Comprar</button>
+<button class="btn" onclick="comprar('Netflix Pantalla RD$300')">Comprar</button>
 </div>
 
+<!-- CUENTAS PRIVADAS -->
 <div class="card">
-<h2>🔒 Cuenta Privada</h2>
-<p>Plan Premium</p>
-<h1>RD$1200</h1>
-<button class="btn" onclick="comprar('Cuenta Privada RD$1200')">Comprar</button>
+<h2>🔒 Netflix Privado</h2>
+<p>🥉 Básico → RD$700</p>
+<p>🥈 Estándar → RD$900</p>
+<p>🥇 Premium → RD$1200</p>
+<button class="btn" onclick="comprar('Cuenta Privada Netflix')">Comprar</button>
 </div>
 
+<!-- YOUTUBE MUSIC -->
+<div class="card">
+<h2>🎧 YouTube Music Premium</h2>
+<p>Sin anuncios • Descargas</p>
+<h1 style="text-decoration:line-through; color:red;">RD$300</h1>
+<h1 style="color:#00ffae;">RD$250</h1>
+<button class="btn" onclick="comprar('YouTube Music RD$250')">Comprar</button>
+</div>
+
+<!-- HBO -->
+<div class="card">
+<h2>🎬 HBO Max</h2>
+<p>Series y películas exclusivas</p>
+<h1>RD$300</h1>
+<button class="btn" onclick="comprar('HBO RD$300')">Comprar</button>
+</div>
+
+<!-- COMBO -->
+<div class="card" style="box-shadow:0 0 20px rgba(168,85,247,0.5);">
+<h2>🔥 COMBO PREMIUM 🔥</h2>
+<p>Netflix + YouTube Music</p>
+<h1 style="text-decoration:line-through; color:red;">RD$500</h1>
+<h1 style="color:#00ffae;">RD$450</h1>
+<button class="btn" onclick="comprar('Combo Netflix + YouTube RD$450')">Comprar</button>
+</div>
+
+<!-- LOGIN -->
 <div style="text-align:center;">
 <button class="btn" onclick="mostrarLogin()">👤 Acceso Cliente</button>
 </div>
@@ -212,9 +244,9 @@ cursor:pointer;
 
 <div id="panel" style="display:none;">
 <h3>📊 Panel Cliente</h3>
-<p>Estado: Activo</p>
-<p>Plan: Netflix Premium</p>
-<p>Vence: 30 días</p>
+<p id="estado">Estado: Activo</p>
+<p id="plan">Plan: Netflix</p>
+<p id="vence">Vence: --</p>
 <button class="btn" onclick="renovar()">Renovar</button>
 </div>
 
