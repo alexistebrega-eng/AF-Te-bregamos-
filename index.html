@@ -2,248 +2,75 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ALEXIS TE BREGA</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALEXIS TE BREGA - Premium</title>
 <style>
-body{
-  margin:0;
-  font-family:Arial;
-  background:#0a0a0a;
-  color:white;
-  overflow-x:hidden;
-}
+/* ================== RESET Y BODY ================== */
+body{margin:0;font-family:Arial,sans-serif;background:#0a0a0a;color:white;overflow-x:hidden;}
+h2{margin-bottom:15px;}
+button{cursor:pointer;}
 
-/* HEADER */
-header{
-  background:#6a0dad;
-  padding:15px;
-  display:flex;
-  align-items:center;
-}
-
-/* MENU */
+/* ================== HEADER ================== */
+header{background:#6a0dad;padding:15px;display:flex;align-items:center;position:sticky;top:0;z-index:1000;}
 .menuBtn{font-size:25px;cursor:pointer;margin-right:15px;}
 
-.menu{
-  position:fixed;
-  top:0;
-  left:-260px;
-  width:260px;
-  height:100%;
-  background:#111;
-  transition:0.3s;
-  z-index:1000;
-}
+/* ================== MENU ================== */
+.menu{position:fixed;top:0;left:-260px;width:260px;height:100%;background:#111;transition:0.3s;z-index:1000;padding-top:60px;}
 .menu.active{left:0;}
-
-.overlay{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.6);
-  display:none;
-  z-index:999;
-}
+.overlay{position:fixed;width:100%;height:100%;background:rgba(0,0,0,0.6);display:none;z-index:999;}
 .overlay.active{display:block;}
-
-.menu a{display:block;padding:15px;cursor:pointer;}
+.menu a{display:block;padding:15px;color:white;text-decoration:none;}
 .menu a:hover{background:#6a0dad;}
 
-/* SECCIONES */
-.seccion{
-  display:none;
-  padding:20px;
-  opacity:0;
-  transform:translateY(20px);
-  transition:0.4s;
-}
-.seccion.activa{
-  display:block;
-  opacity:1;
-  transform:translateY(0);
-}
+/* ================== SECCIONES ================== */
+.seccion{display:none;padding:20px;opacity:0;transform:translateY(20px);transition:0.4s;}
+.seccion.activa{display:block;opacity:1;transform:translateY(0);}
 
-/* CARDS */
-.card{
-  background:#111;
-  margin:15px 0;
-  padding:20px;
-  border-radius:15px;
-  text-align:center;
-  transition:0.3s;
-}
-
-.card:hover{
-  transform:scale(1.05);
-}
-
-/* LOGOS */
-.logo{
-  width:60px;
-  margin-bottom:10px;
-}
-
-/* BOTONES */
-.btn{
-  background:#25D366;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  color:white;
-  cursor:pointer;
-}
-
-.success{color:#00ffae;}
-.danger{color:red;}
-
-/* TOAST */
-.toast{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#6a0dad;
-  padding:10px 20px;
-  border-radius:10px;
-  opacity:0;
-  transition:0.3s;
-}
-.toast.show{opacity:1;}
-
-/* 🔥 COMBO IRRESISTIBLE */
-.combo-card{
-  position:relative;
-  border:2px solid #00ffae;
-  box-shadow:0 0 20px rgba(0,255,174,0.4);
-  animation:glow 2s infinite alternate;
-}
-
-@keyframes glow{
-  from{box-shadow:0 0 10px rgba(0,255,174,0.3);}
-  to{box-shadow:0 0 30px rgba(0,255,174,0.9);}
-}
-
-/* BADGE */
-.badge{
-  position:absolute;
-  top:-10px;
-  left:-10px;
-  background:red;
-  padding:5px 10px;
-  border-radius:10px;
-  font-size:12px;
-  font-weight:bold;
-  animation:pulse 1.5s infinite;
-}
-
-@keyframes pulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.1);}
-  100%{transform:scale(1);}
-}
-
-/* LOGOS COMBO */
-.logos-combo{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  margin-bottom:10px;
-}
-
-.plus{
-  font-size:25px;
-  color:#00ffae;
-}
-
-/* ANIMACIÓN LOGOS */
-.anim{
-  opacity:0;
-  transform:translateY(10px);
-  animation:fadeUp 0.5s forwards;
-}
-
-.delay{animation-delay:0.3s;}
-
-@keyframes fadeUp{
-  to{opacity:1;transform:translateY(0);}
-}
-
-/* BOTÓN COMBO */
-.combo-btn{
-  background:#00ffae;
-  color:black;
-  font-weight:bold;
-}
-
-.combo-btn:active{transform:scale(0.9);}
-
-.price{
-  font-size:22px;
-  font-weight:bold;
-  color:#00ffae;
-}
-
-/* ================== CARRUSEL ESTILO NETFLIX ================== */
-.carrusel-container{
-  position:relative;
-}
-
-.carrusel{
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  padding:10px 0;
-  scroll-behavior:smooth;
-}
-
-.carrusel::-webkit-scrollbar{
-  display:none;
-}
-
-.pelicula{
-  min-width:140px;
-  height:200px;
-  border-radius:10px;
-  overflow:hidden;
-  scroll-snap-align:start;
-  transition:0.3s;
-  flex-shrink:0;
-}
-
-.pelicula img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.pelicula:hover{
-  transform:scale(1.1);
-}
-
-/* BOTONES CARRUSEL */
-.btn-carrusel{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  background:rgba(106,13,173,0.7);
-  border:none;
-  color:white;
-  font-size:30px;
-  padding:10px;
-  cursor:pointer;
-  border-radius:50%;
-  z-index:10;
-}
-
+/* ================== CARRUSEL ================== */
+.carrusel-container{position:relative;margin-bottom:30px;}
+.carrusel{display:flex;gap:15px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 0;scroll-behavior:smooth;}
+.carrusel::-webkit-scrollbar{display:none;}
+.pelicula{min-width:160px;height:240px;border-radius:10px;overflow:hidden;scroll-snap-align:start;position:relative;flex-shrink:0;transition:0.3s;cursor:pointer;}
+.pelicula img{width:100%;height:100%;object-fit:cover;display:block;transition:0.3s;}
+.pelicula:hover{transform:scale(1.2);z-index:5;box-shadow:0 0 20px #6a0dad;}
+.info-overlay{position:absolute;bottom:0;left:0;width:100%;background:linear-gradient(transparent,#111);padding:10px;color:white;opacity:0;transition:0.3s;text-align:center;}
+.pelicula:hover .info-overlay{opacity:1;}
+.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:none;font-size:25px;background:rgba(255,255,255,0.9);color:black;border:none;border-radius:50%;padding:10px 15px;z-index:10;}
+.pelicula:hover .play-btn{display:block;}
+.btn-carrusel{position:absolute;top:50%;transform:translateY(-50%);background:rgba(106,13,173,0.7);border:none;color:white;font-size:30px;padding:10px;cursor:pointer;border-radius:50%;z-index:10;}
 .btn-left{left:0;}
 .btn-right{right:0;}
 
+/* ================== STREAMING ================== */
+.card{background:#111;margin:15px 0;padding:20px;border-radius:15px;text-align:center;transition:0.3s;}
+.card:hover{transform:scale(1.05);}
+.logo{width:60px;margin-bottom:10px;}
+.btn{background:#25D366;padding:12px;border:none;border-radius:10px;color:white;transition:0.3s;}
+.btn:hover{background:#00ffae;}
+.combo-card{position:relative;border:2px solid #00ffae;box-shadow:0 0 20px rgba(0,255,174,0.4);animation:glow 2s infinite alternate;}
+@keyframes glow{from{box-shadow:0 0 10px rgba(0,255,174,0.3);}to{box-shadow:0 0 30px rgba(0,255,174,0.9);}}
+.badge{position:absolute;top:-10px;left:-10px;background:red;padding:5px 10px;border-radius:10px;font-size:12px;font-weight:bold;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}}
+.logos-combo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;}
+.plus{font-size:25px;color:#00ffae;}
+.combo-btn{background:#00ffae;color:black;font-weight:bold;}
+.combo-btn:active{transform:scale(0.9);}
+.price{font-size:22px;font-weight:bold;color:#00ffae;}
+
+/* ================== DASHBOARD ================== */
+#panel .card{margin:10px 0;background:#111;padding:15px;border-radius:10px;}
+
+/* ================== MODAL TRAILER ================== */
+#modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);display:none;justify-content:center;align-items:center;z-index:10000;animation:fadeIn 0.3s;}
+#modal iframe{width:80%;height:80%;border:none;border-radius:10px;}
+#modal .close{position:absolute;top:20px;right:30px;font-size:30px;color:white;cursor:pointer;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+/* ================== TOAST ================== */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#6a0dad;padding:10px 20px;border-radius:10px;opacity:0;transition:0.3s;z-index:10000;}
+.toast.show{opacity:1;}
 </style>
 </head>
-
 <body>
 
 <header>
@@ -256,55 +83,49 @@ header{
   <a onclick="mostrar('streaming')">Streaming</a>
   <a onclick="mostrar('panel')">Panel</a>
 </div>
-
 <div id="overlay" class="overlay" onclick="cerrarMenu()"></div>
 
-<!-- INICIO -->
+<!-- ================== INICIO ================== -->
 <div id="inicio" class="seccion activa">
 
-<h2>🔥 Top 10 en RD</h2>
-
+<h2>🔥 Películas</h2>
 <div class="carrusel-container">
-  <button class="btn-carrusel btn-left" onclick="scrollCarrusel(-1)">❮</button>
-  <div id="carrusel" class="carrusel">
-    <div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg"></div>
-    <div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg"></div>
-    <div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg"></div>
-    <div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/5YZbUmjbMa3ClvSW1Wj3D6XGolb.jpg"></div>
-    <div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/rktDFPbfHfUbArZ6OOOKsXcv0Bm.jpg"></div>
-    <div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/kGzFbGhp99zva6oZODW5atUtnqi.jpg"></div>
-    <div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/2lECpi35Hnbpa4y46JX0aY3AWTy.jpg"></div>
-    <div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/mu8RKavbv7MLZndJEX0PH1V1Fh.jpg"></div>
-    <div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/6oH378KUfCEitzJkm07r97L0RsZ.jpg"></div>
-    <div class="pelicula"><img src="https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg"></div>
-  </div>
-  <button class="btn-carrusel btn-right" onclick="scrollCarrusel(1)">❯</button>
+  <button class="btn-carrusel btn-left" onclick="scrollCarrusel('peliculas',-1)">❮</button>
+  <div id="peliculas" class="carrusel"></div>
+  <button class="btn-carrusel btn-right" onclick="scrollCarrusel('peliculas',1)">❯</button>
+</div>
+
+<h2>📺 Series</h2>
+<div class="carrusel-container">
+  <button class="btn-carrusel btn-left" onclick="scrollCarrusel('series',-1)">❮</button>
+  <div id="series" class="carrusel"></div>
+  <button class="btn-carrusel btn-right" onclick="scrollCarrusel('series',1)">❯</button>
+</div>
+
+<h2>🍥 Anime</h2>
+<div class="carrusel-container">
+  <button class="btn-carrusel btn-left" onclick="scrollCarrusel('anime',-1)">❮</button>
+  <div id="anime" class="carrusel"></div>
+  <button class="btn-carrusel btn-right" onclick="scrollCarrusel('anime',1)">❯</button>
 </div>
 
 </div>
 
-<!-- STREAMING -->
+<!-- ================== STREAMING ================== -->
 <div id="streaming" class="seccion">
-
 <h2>🔥 Streaming Premium</h2>
-
-<!-- NETFLIX -->
 <div class="card">
   <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg">
   <h2>Netflix</h2>
   <p>RD$300</p>
   <button class="btn" onclick="comprar('Netflix',300)">Comprar</button>
 </div>
-
-<!-- YOUTUBE -->
 <div class="card">
   <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg">
   <h2>YouTube Music</h2>
   <p class="success">RD$250</p>
   <button class="btn" onclick="comprar('YouTube Music',250)">Comprar</button>
 </div>
-
-<!-- 🔥 COMBO IRRESISTIBLE -->
 <div class="card combo-card">
   <div class="badge">🔥 MÁS VENDIDO</div>
   <div class="logos-combo">
@@ -316,10 +137,9 @@ header{
   <p class="price">RD$500</p>
   <button class="btn combo-btn" onclick="comprar('Combo',500)">🔥 Lo Quiero</button>
 </div>
-
 </div>
 
-<!-- PANEL -->
+<!-- ================== PANEL ================== -->
 <div id="panel" class="seccion">
 <h2>📊 Dashboard</h2>
 <p id="total"></p>
@@ -327,32 +147,57 @@ header{
 <div id="clientes"></div>
 </div>
 
+<!-- ================== MODAL TRAILER ================== -->
+<div id="modal">
+  <span class="close" onclick="cerrarTrailer()">✖</span>
+  <iframe src="" id="iframeTrailer" allowfullscreen></iframe>
+</div>
+
 <div id="toast" class="toast"></div>
 
 <script>
-// MENU
-function abrirMenu(){
-  document.getElementById("menu").classList.add("active");
-  document.getElementById("overlay").classList.add("active");
-}
-function cerrarMenu(){
-  document.getElementById("menu").classList.remove("active");
-  document.getElementById("overlay").classList.remove("active");
+// =================== DATOS ===================
+const peliculasData=[
+  {nombre:"Wonder Woman 1984",imagen:"https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",calificacion:"7.4",trailer:"https://www.youtube.com/embed/8ugaeA-nMTc"},
+  {nombre:"Black Panther",imagen:"https://image.tmdb.org/t/p/w500/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",calificacion:"7.3",trailer:"https://www.youtube.com/embed/QwievZ1Tx-8"}
+];
+const seriesData=[
+  {nombre:"Stranger Things",imagen:"https://image.tmdb.org/t/p/w500/kGzFbGhp99zva6oZODW5atUtnqi.jpg",calificacion:"8.7",trailer:"https://www.youtube.com/embed/JSxuy4h8nfs"}
+];
+const animeData=[
+  {nombre:"Attack on Titan",imagen:"https://upload.wikimedia.org/wikipedia/en/9/9d/Attack_on_Titan_S3.jpg",calificacion:"9.0",trailer:"https://www.youtube.com/embed/MGRm4IzK1SQ"}
+];
+
+// =================== FUNCIONES ===================
+function generarCarrusel(id,data){
+  const cont=document.getElementById(id);
+  cont.innerHTML="";
+  data.forEach(d=>{
+    const div=document.createElement("div");
+    div.className="pelicula";
+    div.innerHTML=`
+      <img src="${d.imagen}">
+      <button class="play-btn" onclick="abrirTrailer('${d.trailer}')">▶</button>
+      <div class="info-overlay">
+        <h3>${d.nombre}</h3>
+        <p>⭐ ${d.calificacion}</p>
+        <button onclick="abrirTrailer('${d.trailer}')">Ver Trailer</button>
+      </div>
+    `;
+    cont.appendChild(div);
+  });
 }
 
-// SECCIONES
-function mostrar(id){
-  document.querySelectorAll(".seccion").forEach(s=>s.classList.remove("activa"));
-  document.getElementById(id).classList.add("activa");
-  cerrarMenu();
-}
+// =================== MENU ===================
+function abrirMenu(){document.getElementById("menu").classList.add("active");document.getElementById("overlay").classList.add("active");}
+function cerrarMenu(){document.getElementById("menu").classList.remove("active");document.getElementById("overlay").classList.remove("active");}
+function mostrar(id){document.querySelectorAll(".seccion").forEach(s=>s.classList.remove("activa"));document.getElementById(id).classList.add("activa");cerrarMenu();}
 
-// COMPRA
+// =================== COMPRA ===================
 function comprar(plan,precio){
   let clientes=JSON.parse(localStorage.getItem("clientes"))||[];
   let hoy=new Date();
-  let vence=new Date();
-  vence.setDate(hoy.getDate()+30);
+  let vence=new Date(); vence.setDate(hoy.getDate()+30);
   clientes.push({plan,precio,vence:vence.toLocaleDateString()});
   localStorage.setItem("clientes",JSON.stringify(clientes));
   toast("✅ Cliente agregado");
@@ -360,7 +205,7 @@ function comprar(plan,precio){
   location.href="https://wa.me/18494349505?text="+encodeURIComponent("Quiero "+plan);
 }
 
-// TOAST
+// =================== TOAST ===================
 function toast(msg){
   let t=document.getElementById("toast");
   t.innerText=msg;
@@ -368,36 +213,36 @@ function toast(msg){
   setTimeout(()=>t.classList.remove("show"),2000);
 }
 
-// PANEL
+// =================== PANEL ===================
 function actualizar(){
   let clientes=JSON.parse(localStorage.getItem("clientes"))||[];
   let total=clientes.length;
-  let ingresos=0;
+  let ingresos=clientes.reduce((a,b)=>a+b.precio,0);
   let html="";
-  clientes.forEach(c=>{
-    ingresos+=c.precio;
-    html+=`
-      <div class="card">
-        <p>${c.plan}</p>
-        <p>RD$${c.precio}</p>
-        <p>Vence: ${c.vence}</p>
-      </div>
-    `;
-  });
+  clientes.forEach(c=>{html+=`<div class="card"><p>${c.plan}</p><p>RD$${c.precio}</p><p>Vence: ${c.vence}</p></div>`;});
   document.getElementById("total").innerText="Clientes: "+total;
   document.getElementById("ingresos").innerText="Ingresos: RD$"+ingresos;
   document.getElementById("clientes").innerHTML=html;
 }
 
-// INIT
-window.onload=actualizar;
-
-// ================== FUNCIONES CARRUSEL ==================
-function scrollCarrusel(direccion){
-  const carrusel=document.getElementById("carrusel");
-  const width=carrusel.querySelector(".pelicula").offsetWidth + 10; // ancho + gap
+// =================== CARRUSEL ===================
+function scrollCarrusel(id,direccion){
+  const carrusel=document.getElementById(id);
+  const width=carrusel.querySelector(".pelicula").offsetWidth + 15;
   carrusel.scrollBy({left:direccion*width*3, behavior:'smooth'});
 }
+
+// =================== MODAL TRAILER ===================
+function abrirTrailer(url){document.getElementById("iframeTrailer").src=url;document.getElementById("modal").style.display="flex";}
+function cerrarTrailer(){document.getElementById("iframeTrailer").src="";document.getElementById("modal").style.display="none";}
+
+// =================== INIT ===================
+window.onload=function(){
+  generarCarrusel("peliculas",peliculasData);
+  generarCarrusel("series",seriesData);
+  generarCarrusel("anime",animeData);
+  actualizar();
+};
 </script>
 
 </body>
