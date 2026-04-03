@@ -7,9 +7,99 @@
 
 <link rel="stylesheet" href="css/styles.css">
 
-<!-- Firebase -->
+<!-- Firebase (VERSIÓN CORRECTA) -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+<style>
+/* 🔥 ESTILOS QUE TE FALTABAN */
+.carrusel{
+  display:flex;
+  gap:15px;
+  overflow-x:auto;
+  scroll-behavior:smooth;
+  padding:10px 0;
+}
+.carrusel::-webkit-scrollbar{display:none;}
+
+.pelicula{
+  min-width:180px;
+  height:270px;
+  border-radius:10px;
+  overflow:hidden;
+  position:relative;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.pelicula img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.pelicula:hover{
+  transform:scale(1.1);
+  z-index:5;
+}
+
+.play-btn{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  display:none;
+  background:white;
+  border-radius:50%;
+  padding:10px;
+}
+
+.pelicula:hover .play-btn{
+  display:block;
+}
+
+.info-overlay{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  background:linear-gradient(transparent,#000);
+  padding:10px;
+  opacity:0;
+  transition:0.3s;
+}
+
+.pelicula:hover .info-overlay{
+  opacity:1;
+}
+
+/* MODAL */
+#modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+#modal iframe{
+  width:80%;
+  height:80%;
+  border:none;
+}
+
+.close{
+  position:absolute;
+  top:20px;
+  right:20px;
+  font-size:30px;
+  cursor:pointer;
+}
+</style>
 
 </head>
 <body>
@@ -80,11 +170,12 @@
 <!-- MODAL -->
 <div id="modal">
   <span class="close" onclick="cerrarTrailer()">✖</span>
-  <iframe id="iframeTrailer"></iframe>
+  <iframe id="iframeTrailer" allowfullscreen></iframe>
 </div>
 
 <div id="toast" class="toast"></div>
 
+<!-- JS -->
 <script src="js/firebase.js"></script>
 <script src="js/app.js"></script>
 
