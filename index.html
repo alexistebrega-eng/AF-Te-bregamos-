@@ -6,17 +6,169 @@
 <title>ALEXIS TE BREGA</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#0a0a0a;color:white;}
-header{background:#6a0dad;padding:15px;display:flex;align-items:center;}
-.menuBtn{font-size:25px;margin-right:15px;cursor:pointer;}
-.menu{position:fixed;width:0;height:100%;background:#111;transition:0.3s;overflow:hidden;}
-.menu a{display:block;padding:12px;color:white;text-decoration:none;}
-.seccion{display:none;padding:20px;}
-#inicio{display:block;}
-.card{background:#111;margin:10px;padding:20px;border-radius:12px;text-align:center;}
-.btn{background:#25D366;padding:10px;border:none;border-radius:10px;color:white;cursor:pointer;}
-.danger{color:red;}
+body{
+margin:0;
+font-family:Arial;
+background:#0a0a0a;
+color:white;
+overflow-x:hidden;
+}
+
+/* HEADER */
+header{
+background:#6a0dad;
+padding:15px;
+display:flex;
+align-items:center;
+box-shadow:0 2px 10px rgba(0,0,0,0.5);
+}
+
+.menuBtn{
+font-size:25px;
+cursor:pointer;
+margin-right:15px;
+}
+
+/* MENU PRO */
+.menu{
+position:fixed;
+top:0;
+left:-260px;
+width:260px;
+height:100%;
+background:#111;
+transition:0.4s;
+z-index:1000;
+}
+
+.menu.active{left:0;}
+
+.closeBtn{
+text-align:right;
+padding:10px;
+cursor:pointer;
+font-size:20px;
+}
+
+.menu a{
+display:block;
+padding:15px;
+transition:0.3s;
+}
+
+.menu a:hover{
+background:#6a0dad;
+padding-left:25px;
+}
+
+/* OVERLAY */
+.overlay{
+position:fixed;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+top:0;
+left:0;
+opacity:0;
+pointer-events:none;
+transition:0.3s;
+z-index:999;
+}
+
+.overlay.active{
+opacity:1;
+pointer-events:auto;
+}
+
+/* SECCIONES */
+.seccion{
+display:none;
+padding:20px;
+opacity:0;
+transform:translateY(30px) scale(0.98);
+transition:0.4s;
+}
+
+.seccion.activa{
+display:block;
+opacity:1;
+transform:translateY(0) scale(1);
+}
+
+/* CARDS */
+.card{
+background:#111;
+margin:15px 0;
+padding:20px;
+border-radius:15px;
+text-align:center;
+transition:0.3s;
+box-shadow:0 0 10px rgba(168,85,247,0.2);
+}
+
+.card:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px rgba(168,85,247,0.6);
+}
+
+/* BOTONES */
+.btn{
+background:#25D366;
+padding:12px 20px;
+border:none;
+border-radius:10px;
+color:white;
+cursor:pointer;
+transition:0.2s;
+}
+
+.btn:active{
+transform:scale(0.9);
+}
+
+/* TEXTO */
 .success{color:#00ffae;}
+.danger{color:red;}
+
+/* ANIMACIÓN ENTRADA */
+@keyframes fadeIn{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+/* ALERTA VISUAL */
+.toast{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+background:#6a0dad;
+padding:10px 20px;
+border-radius:10px;
+opacity:0;
+transition:0.3s;
+}
+
+.toast.show{
+opacity:1;
+}
+
+/* INPUT */
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:5px;
+}
+
+/* BOTÓN FLOTANTE */
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+}
+
 </style>
 </head>
 
@@ -28,13 +180,16 @@ header{background:#6a0dad;padding:15px;display:flex;align-items:center;}
 </header>
 
 <div id="menu" class="menu">
+<div class="closeBtn" onclick="cerrarMenu()">✖</div>
 <a onclick="mostrar('inicio')">Inicio</a>
 <a onclick="mostrar('streaming')">Streaming</a>
 <a onclick="mostrar('panel')">Panel</a>
 </div>
 
+<div id="overlay" class="overlay" onclick="cerrarMenu()"></div>
+
 <!-- INICIO -->
-<div id="inicio" class="seccion">
+<div id="inicio" class="seccion activa">
 <h2>🔥 Bienvenido</h2>
 <p>Servicios premium rápidos y seguros.</p>
 </div>
@@ -71,24 +226,38 @@ header{background:#6a0dad;padding:15px;display:flex;align-items:center;}
 
 <!-- PANEL -->
 <div id="panel" class="seccion">
-<h2>📊 Panel de Clientes</h2>
+<h2>📊 Panel</h2>
 <button class="btn" onclick="verClientes()">Actualizar</button>
-<button class="btn" onclick="exportar()">Exportar</button>
 <div id="clientes"></div>
 </div>
+
+<div id="toast" class="toast">Agregado</div>
+
+<!-- WHATSAPP -->
+<a class="whatsapp" href="https://wa.me/18494349505">
+<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="60">
+</a>
 
 <script>
 
 // MENU
 function abrirMenu(){
-document.getElementById("menu").style.width="250px";
+menu.classList.add("active");
+overlay.classList.add("active");
 }
-function mostrar(id){
-document.querySelectorAll(".seccion").forEach(s=>s.style.display="none");
-document.getElementById(id).style.display="block";
+function cerrarMenu(){
+menu.classList.remove("active");
+overlay.classList.remove("active");
 }
 
-// COMPRA + GUARDADO
+// SECCIONES
+function mostrar(id){
+document.querySelectorAll(".seccion").forEach(s=>s.classList.remove("activa"));
+document.getElementById(id).classList.add("activa");
+cerrarMenu();
+}
+
+// COMPRA
 function comprar(plan,precio){
 
 let clientes=JSON.parse(localStorage.getItem("clientes"))||[];
@@ -97,63 +266,31 @@ let fecha=new Date();
 let vence=new Date();
 vence.setDate(fecha.getDate()+30);
 
-clientes.push({
-plan,
-precio,
-fecha:fecha.toLocaleDateString(),
-vence:vence.toLocaleDateString(),
-estado:"Activo"
-});
+clientes.push({plan,precio,fecha:fecha.toLocaleDateString(),vence:vence.toLocaleDateString()});
 
 localStorage.setItem("clientes",JSON.stringify(clientes));
 
-let msg=`🔥 Quiero ${plan} RD$${precio}`;
-location.href="https://wa.me/18494349505?text="+encodeURIComponent(msg);
+mostrarToast("Cliente agregado");
 
+location.href="https://wa.me/18494349505?text="+encodeURIComponent(`Quiero ${plan}`);
 }
 
-// VER CLIENTES
+// TOAST
+function mostrarToast(msg){
+let t=document.getElementById("toast");
+t.innerText=msg;
+t.classList.add("show");
+setTimeout(()=>t.classList.remove("show"),2000);
+}
+
+// PANEL
 function verClientes(){
-
-let clientes=JSON.parse(localStorage.getItem("clientes"))||[];
-
+let c=JSON.parse(localStorage.getItem("clientes"))||[];
 let html="";
-clientes.forEach((c,i)=>{
-
-let hoy=new Date();
-let vence=new Date(c.vence);
-
-let estado = (vence < hoy) ? "Vencido" : "Activo";
-
-html+=`
-<div class="card">
-<p>${c.plan} - RD$${c.precio}</p>
-<p>📅 ${c.fecha}</p>
-<p>⏳ Vence: ${c.vence}</p>
-<p class="${estado=='Activo'?'success':'danger'}">${estado}</p>
-<button onclick="eliminar(${i})">❌</button>
-</div>
-`;
-
+c.forEach(x=>{
+html+=`<div class="card">${x.plan} - ${x.vence}</div>`;
 });
-
-document.getElementById("clientes").innerHTML=html;
-
-}
-
-// ELIMINAR
-function eliminar(i){
-let clientes=JSON.parse(localStorage.getItem("clientes"));
-clientes.splice(i,1);
-localStorage.setItem("clientes",JSON.stringify(clientes));
-verClientes();
-}
-
-// EXPORTAR
-function exportar(){
-let data=localStorage.getItem("clientes");
-navigator.clipboard.writeText(data);
-alert("Copiado!");
+clientes.innerHTML=html;
 }
 
 // URGENCIA
@@ -161,14 +298,14 @@ let cupos=10;
 setInterval(()=>{
 if(cupos>0){
 cupos--;
-document.getElementById("cupos").innerText=cupos+" disponibles";
+cupos.innerText=cupos+" disponibles";
 }
 },15000);
 
 // MENSAJES
 setInterval(()=>{
 let t=["🔥 Últimos cupos","⚡ Compra ahora","💰 Oferta activa"];
-document.getElementById("autoMsg").innerText=t[Math.floor(Math.random()*t.length)];
+autoMsg.innerText=t[Math.floor(Math.random()*t.length)];
 },4000);
 
 </script>
