@@ -5,6 +5,11 @@ const menu = document.getElementById("menu");
 const overlay = document.getElementById("overlay");
 
 // =======================
+// CARRITO
+// =======================
+let carrito = [];
+
+// =======================
 // MENU
 // =======================
 function abrirMenu(){
@@ -32,7 +37,7 @@ function mostrar(id){
 }
 
 // =======================
-// LOGIN SIMPLE
+// LOGIN
 // =======================
 function login(){
   let pass = prompt("Clave admin:");
@@ -45,84 +50,115 @@ function login(){
 }
 
 // =======================
-// TOAST (MENSAJES)
+// TOAST
 // =======================
 function toast(msg){
   let t = document.getElementById("toast");
   t.innerText = msg;
   t.classList.add("show");
 
-  setTimeout(()=>{
-    t.classList.remove("show");
-  },2000);
+  setTimeout(()=>t.classList.remove("show"),2000);
 }
 
 // =======================
-// COMPRAR (GUARDA EN FIREBASE)
+// AGREGAR AL CARRITO
 // =======================
-async function comprar(plan,precio){
+function comprar(plan, precio){
 
-  let hoy = new Date();
-  let vence = new Date();
-  vence.setDate(hoy.getDate()+30);
+  carrito.push({plan, precio});
 
+  actualizarCarrito();
+
+  toast(`✅ ${plan} agregado`);
+}
+
+// =======================
+// ACTUALIZAR CARRITO
+// =======================
+function actualizarCarrito(){
+
+  const lista = document.getElementById("carritoLista");
+  const total = document.getElementById("carritoTotal");
+
+  if(!lista || !total) return;
+
+  lista.innerHTML = "";
+
+  let suma = 0;
+
+  carrito.forEach((item,index)=>{
+    suma += item.precio;
+
+    let div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <h3>${item.plan}</h3>
+      <p>RD$${item.precio}</p>
+      <button class="btn" onclick="eliminarDelCarrito(${index})">Eliminar</button>
+    `;
+
+    lista.appendChild(div);
+  });
+
+  total.innerText = `Total: RD$${suma}`;
+}
+
+// =======================
+// ELIMINAR DEL CARRITO
+// =======================
+function eliminarDelCarrito(index){
+  carrito.splice(index,1);
+  actualizarCarrito();
+}
+
+// =======================
+// ENVIAR CARRITO
+// =======================
+async function enviarCarrito(){
+
+  if(carrito.length === 0){
+    toast("❌ Carrito vacío");
+    return;
+  }
+
+  let total = 0;
+  let mensaje = "🔥 Hola, quiero ordenar:\n\n";
+
+  carrito.forEach(item=>{
+    mensaje += `• ${item.plan} - RD$${item.precio}\n`;
+    total += item.precio;
+  });
+
+  mensaje += `\n💰 Total: RD$${total}`;
+  mensaje += "\n\n¿Disponible ahora?";
+
+  // Guardar en Firebase
   try{
+    let hoy = new Date();
+    let vence = new Date();
+    vence.setDate(hoy.getDate()+30);
 
-    await db.collection("clientes").add({
-      plan: plan,
-      precio: precio,
-      fecha: hoy.toISOString(),
-      vence: vence.toISOString()
-    });
-
-    toast("🔥 Enviando a WhatsApp...");
-
-    enviarWhatsApp(plan,precio);
+    for(const item of carrito){
+      await db.collection("clientes").add({
+        plan: item.plan,
+        precio: item.precio,
+        fecha: hoy.toISOString(),
+        vence: vence.toISOString()
+      });
+    }
 
   }catch(error){
     console.error(error);
-    toast("❌ Error al guardar");
+    toast("❌ Error guardando");
   }
+
+  // Enviar WhatsApp
+  location.href = "https://wa.me/18494349505?text=" + encodeURIComponent(mensaje);
 }
 
 // =======================
-// WHATSAPP AUTOMÁTICO
-// =======================
-function enviarWhatsApp(plan,precio){
-
-  let mensajes = {
-    "Netflix":[
-      "Quiero Netflix ahora mismo 🔥",
-      "Actívame Netflix hoy 🎬",
-      "Necesito Netflix urgente 👀"
-    ],
-    "YouTube Music":[
-      "Quiero música sin anuncios 🎧",
-      "Dame YouTube Music Premium 🔥"
-    ],
-    "Combo":[
-      "🔥 QUIERO EL COMBO PREMIUM 🔥",
-      "Dame todo el combo ahora 🚀"
-    ]
-  };
-
-  let random = mensajes[plan][Math.floor(Math.random()*mensajes[plan].length)];
-
-  let mensaje = `${random}
-
-💰 Precio: RD$${precio}
-📅 Duración: 30 días
-
-¿Disponible ahora?`;
-
-  // REDIRECCIÓN
-  setTimeout(()=>{
-    location.href="https://wa.me/18494349505?text="+encodeURIComponent(mensaje);
-  },800);
-}
-
-// =======================
-// ADMIN (VER CLIENTES)
+// ADMIN
 // =======================
 async function cargarClientes(){
 
@@ -130,13 +166,12 @@ async function cargarClientes(){
   cont.innerHTML = "Cargando...";
 
   try{
-
     const snapshot = await db.collection("clientes").get();
 
     cont.innerHTML = "";
 
     if(snapshot.empty){
-      cont.innerHTML = "<p>No hay clientes aún</p>";
+      cont.innerHTML = "<p>No hay clientes</p>";
       return;
     }
 
@@ -157,63 +192,26 @@ async function cargarClientes(){
 
   }catch(error){
     console.error(error);
-    cont.innerHTML = "❌ Error cargando clientes";
+    cont.innerHTML = "❌ Error";
   }
 }
 
 // =======================
-// ATAJOS DE TECLADO (PRO)
-// =======================
-// =======================
-// DATOS PELÍCULAS
+// DATOS
 // =======================
 const peliculasData = [
-  {
-    nombre:"Wonder Woman 1984",
-    imagen:"https://image.tmdb.org/t/p/w300/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",
-    calificacion:"7.4",
-    trailer:"https://www.youtube.com/embed/8ugaeA-nMTc"
-  },
-  {
-    nombre:"Black Panther",
-    imagen:"https://image.tmdb.org/t/p/w300/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",
-    calificacion:"7.3",
-    trailer:"https://www.youtube.com/embed/xjDjIWPwcPU"
-  },
-  {
-    nombre:"Joker",
-    imagen:"https://image.tmdb.org/t/p/w300/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",
-    calificacion:"8.5",
-    trailer:"https://www.youtube.com/embed/zAGVQLHvwOY"
-  }
+  {nombre:"Joker",imagen:"https://image.tmdb.org/t/p/w300/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",calificacion:"8.5",trailer:"https://www.youtube.com/embed/zAGVQLHvwOY"},
+  {nombre:"Black Panther",imagen:"https://image.tmdb.org/t/p/w300/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",calificacion:"7.3",trailer:"https://www.youtube.com/embed/xjDjIWPwcPU"}
 ];
 
-// =======================
-// DATOS ANIME
-// =======================
 const animeData = [
-  {
-    nombre:"Attack on Titan",
-    imagen:"https://upload.wikimedia.org/wikipedia/en/9/9d/Attack_on_Titan_S3.jpg",
-    calificacion:"9.0",
-    trailer:"https://www.youtube.com/embed/MGRm4IzK1SQ"
-  },
-  {
-    nombre:"One Piece",
-    imagen:"https://upload.wikimedia.org/wikipedia/en/2/2e/One_Piece_Anime.png",
-    calificacion:"8.9",
-    trailer:"https://www.youtube.com/embed/uaeY3kVfZCo"
-  },
-  {
-    nombre:"Demon Slayer",
-    imagen:"https://upload.wikimedia.org/wikipedia/en/3/3e/Kimetsu_no_Yaiba_poster.jpg",
-    calificacion:"8.7",
-    trailer:"https://www.youtube.com/embed/VQGCKyvzIM4"
-  }
+  {nombre:"Attack on Titan",imagen:"https://upload.wikimedia.org/wikipedia/en/9/9d/Attack_on_Titan_S3.jpg",calificacion:"9.0",trailer:"https://www.youtube.com/embed/MGRm4IzK1SQ"},
+  {nombre:"One Piece",imagen:"https://upload.wikimedia.org/wikipedia/en/2/2e/One_Piece_Anime.png",calificacion:"8.9",trailer:"https://www.youtube.com/embed/uaeY3kVfZCo"},
+  {nombre:"Demon Slayer",imagen:"https://upload.wikimedia.org/wikipedia/en/3/3e/Kimetsu_no_Yaiba_poster.jpg",calificacion:"8.7",trailer:"https://www.youtube.com/embed/VQGCKyvzIM4"}
 ];
 
 // =======================
-// GENERAR CARRUSEL
+// CARRUSEL
 // =======================
 function generarCarrusel(id,data){
   const cont = document.getElementById(id);
@@ -221,17 +219,16 @@ function generarCarrusel(id,data){
 
   cont.innerHTML = "";
 
-  data.forEach((d,i)=>{
+  data.forEach(d=>{
     const div = document.createElement("div");
     div.className = "pelicula";
 
     div.innerHTML = `
-      <img src="${d.imagen}" loading="lazy">
+      <img src="${d.imagen}">
       <button class="play-btn" onclick="abrirTrailer('${d.trailer}')">▶</button>
       <div class="info-overlay">
         <h3>${d.nombre}</h3>
         <p>⭐ ${d.calificacion}</p>
-        <button onclick="abrirTrailer('${d.trailer}')">Ver Trailer</button>
       </div>
     `;
 
@@ -240,25 +237,15 @@ function generarCarrusel(id,data){
 }
 
 // =======================
-// SCROLL CARRUSEL
+// SCROLL
 // =======================
 function scrollCarrusel(id,direccion){
   const carrusel = document.getElementById(id);
-  if(!carrusel) return;
-
-  const item = carrusel.querySelector(".pelicula");
-  if(!item) return;
-
-  const width = item.offsetWidth + 15;
-
-  carrusel.scrollBy({
-    left: direccion * width * 2,
-    behavior: 'smooth'
-  });
+  carrusel.scrollLeft += direccion * 250;
 }
 
 // =======================
-// MODAL TRAILER
+// MODAL
 // =======================
 function abrirTrailer(url){
   document.getElementById("iframeTrailer").src = url + "?autoplay=1";
@@ -271,12 +258,13 @@ function cerrarTrailer(){
 }
 
 // =======================
-// INICIO AUTOMÁTICO
+// INIT
 // =======================
-window.onload = function(){
+window.onload = ()=>{
   generarCarrusel("peliculas", peliculasData);
   generarCarrusel("anime", animeData);
 };
+
 document.addEventListener("keydown",(e)=>{
   if(e.key==="Escape"){
     cerrarMenu();
