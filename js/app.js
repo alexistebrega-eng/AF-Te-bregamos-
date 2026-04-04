@@ -231,26 +231,32 @@ function generarCarrusel(id,data){
     div.className = "pelicula";
 
     div.innerHTML = `
-      <img src="${d.imagen}" loading="lazy">
-      <button class="play-btn" onclick="abrirTrailer('${d.trailer}')">▶</button>
+      <img src="${d.imagen}">
       <div class="info-overlay">
         <h3>${d.nombre}</h3>
         <p>⭐ ${d.calificacion}</p>
       </div>
     `;
 
+    // 🔥 CLICK EN TODA LA TARJETA
+    div.onclick = ()=>{
+      abrirTrailer(d.trailer);
+    };
+
     cont.appendChild(div);
   });
-}
-// =======================
+}// =======================
 // SCROLL
 // =======================
 function scrollCarrusel(id,direccion){
   const carrusel = document.getElementById(id);
-  carrusel.scrollLeft += direccion * 250;
-}
+  if(!carrusel) return;
 
-// =======================
+  carrusel.scrollBy({
+    left: direccion * 300,
+    behavior: "smooth"
+  });
+}// =======================
 // MODAL
 // =======================
 function abrirTrailer(url){
