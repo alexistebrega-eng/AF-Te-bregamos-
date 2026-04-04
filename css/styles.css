@@ -89,3 +89,107 @@ button:active{
   opacity:0;
 }
 .toast.show{opacity:1;}
+/* ===== CARRUSEL FUNCIONAL ===== */
+.carrusel-container{
+  position:relative;
+}
+
+.carrusel{
+  display:flex;
+  gap:15px;
+  overflow-x:auto;
+  scroll-behavior:smooth;
+  padding:10px 0;
+}
+
+.carrusel::-webkit-scrollbar{
+  display:none;
+}
+
+.pelicula{
+  min-width:180px;
+  height:270px;
+  border-radius:10px;
+  overflow:hidden;
+  position:relative;
+  cursor:pointer;
+  flex-shrink:0;
+  transition:0.3s;
+}
+
+.pelicula img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.pelicula:hover{
+  transform:scale(1.1);
+  z-index:5;
+}
+
+/* BOTONES DEL CARRUSEL */
+.btn-carrusel{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:#6a0dad;
+  color:white;
+  border:none;
+  font-size:25px;
+  padding:10px;
+  cursor:pointer;
+  border-radius:50%;
+  z-index:20;
+}
+
+.btn-left{ left:0; }
+.btn-right{ right:0; }
+
+/* ===== MENU (ARREGLA LOS 3 PUNTOS) ===== */
+header{
+  position:sticky;
+  top:0;
+  z-index:2000;
+}
+
+.menu{
+  z-index:3000;
+}
+
+.overlay{
+  z-index:2500;
+}
+
+/* ===== MODAL ===== */
+#modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.9);
+  z-index:9999;
+}
+
+#modal iframe{
+  width:80%;
+  height:80%;
+}
+
+/* ===== FLUIDEZ ===== */
+.seccion{
+  display:none;
+  opacity:0;
+  transform:translateY(20px);
+  transition:0.3s;
+}
+
+.seccion.activa{
+  display:block;
+  opacity:1;
+  transform:translateY(0);
+}
