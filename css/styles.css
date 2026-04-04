@@ -195,36 +195,40 @@ header{
 }
 /* HEADER CENTRADO */
 .header{
-  display:flex;
-  align-items:center;
-  justify-content:center;
   position:sticky;
   top:0;
   background:#6a0dad;
   padding:15px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:2000;
 }
 
-/* MENU BTN IZQUIERDA */
 .menuBtn{
   position:absolute;
   left:15px;
   font-size:25px;
-  cursor:pointer;
 }
 
-/* LOGO */
 .logo{
   display:flex;
   align-items:center;
   gap:10px;
 }
 
-/* MURCIELAGO */
+/* MURCIELAGO PRO */
 .bat{
-  font-size:28px;
-  animation:flotar 2s infinite ease-in-out;
+  font-size:30px;
+  color:#00ffae;
+  text-shadow:0 0 10px #00ffae;
+  animation:batGlow 1.5s infinite alternate;
 }
 
+@keyframes batGlow{
+  from{transform:scale(1);}
+  to{transform:scale(1.2);}
+}
 /* EFECTO */
 @keyframes flotar{
   0%{transform:translateY(0);}
