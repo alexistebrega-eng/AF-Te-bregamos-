@@ -197,20 +197,27 @@ async function cargarClientes(){
 }
 
 // =======================
-// DATOS
+// =======================
+// DATOS PELÍCULAS
 // =======================
 const peliculasData = [
   {nombre:"Joker",imagen:"https://image.tmdb.org/t/p/w300/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",calificacion:"8.5",trailer:"https://www.youtube.com/embed/zAGVQLHvwOY"},
-  {nombre:"Black Panther",imagen:"https://image.tmdb.org/t/p/w300/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg",calificacion:"7.3",trailer:"https://www.youtube.com/embed/xjDjIWPwcPU"}
-];
-
-const animeData = [
-  {nombre:"Attack on Titan",imagen:"https://upload.wikimedia.org/wikipedia/en/9/9d/Attack_on_Titan_S3.jpg",calificacion:"9.0",trailer:"https://www.youtube.com/embed/MGRm4IzK1SQ"},
-  {nombre:"One Piece",imagen:"https://upload.wikimedia.org/wikipedia/en/2/2e/One_Piece_Anime.png",calificacion:"8.9",trailer:"https://www.youtube.com/embed/uaeY3kVfZCo"},
-  {nombre:"Demon Slayer",imagen:"https://upload.wikimedia.org/wikipedia/en/3/3e/Kimetsu_no_Yaiba_poster.jpg",calificacion:"8.7",trailer:"https://www.youtube.com/embed/VQGCKyvzIM4"}
+  {nombre:"Avengers Endgame",imagen:"https://image.tmdb.org/t/p/w300/or06FN3Dka5tukK1e9sl16pB3iy.jpg",calificacion:"8.4",trailer:"https://www.youtube.com/embed/TcMBFSGVi1c"},
+  {nombre:"Spider-Man No Way Home",imagen:"https://image.tmdb.org/t/p/w300/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",calificacion:"8.3",trailer:"https://www.youtube.com/embed/JfVOs4VSpmA"},
+  {nombre:"Batman",imagen:"https://image.tmdb.org/t/p/w300/74xTEgt7R36Fpooo50r9T25onhq.jpg",calificacion:"7.9",trailer:"https://www.youtube.com/embed/mqqft2x_Aa4"},
+  {nombre:"John Wick 4",imagen:"https://image.tmdb.org/t/p/w300/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg",calificacion:"8.2",trailer:"https://www.youtube.com/embed/qEVUtrk8_B4"}
 ];
 
 // =======================
+// DATOS ANIME
+// =======================
+const animeData = [
+  {nombre:"Attack on Titan",imagen:"https://upload.wikimedia.org/wikipedia/en/9/9d/Attack_on_Titan_S3.jpg",calificacion:"9.0",trailer:"https://www.youtube.com/embed/MGRm4IzK1SQ"},
+  {nombre:"One Piece",imagen:"https://upload.wikimedia.org/wikipedia/en/2/2e/One_Piece_Anime.png",calificacion:"8.9",trailer:"https://www.youtube.com/embed/uaeY3kVfZCo"},
+  {nombre:"Demon Slayer",imagen:"https://upload.wikimedia.org/wikipedia/en/3/3e/Kimetsu_no_Yaiba_poster.jpg",calificacion:"8.7",trailer:"https://www.youtube.com/embed/VQGCKyvzIM4"},
+  {nombre:"Jujutsu Kaisen",imagen:"https://image.tmdb.org/t/p/w300/fHpKWq9ayzSk8nSwqRuaAUemRKh.jpg",calificacion:"8.6",trailer:"https://www.youtube.com/embed/pkKu9hLT-t8"},
+  {nombre:"Solo Leveling",imagen:"https://image.tmdb.org/t/p/w300/geCRueV3ElhRTr0xtJuEWJt6dJ1.jpg",calificacion:"8.8",trailer:"https://www.youtube.com/embed/ghvUY6xGth4"}
+];
 // CARRUSEL
 // =======================
 function generarCarrusel(id,data){
@@ -224,7 +231,7 @@ function generarCarrusel(id,data){
     div.className = "pelicula";
 
     div.innerHTML = `
-      <img src="${d.imagen}">
+      <img src="${d.imagen}" loading="lazy">
       <button class="play-btn" onclick="abrirTrailer('${d.trailer}')">▶</button>
       <div class="info-overlay">
         <h3>${d.nombre}</h3>
@@ -235,7 +242,6 @@ function generarCarrusel(id,data){
     cont.appendChild(div);
   });
 }
-
 // =======================
 // SCROLL
 // =======================
