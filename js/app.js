@@ -260,15 +260,29 @@ function scrollCarrusel(id,direccion){
 // MODAL
 // =======================
 function abrirTrailer(url){
-  document.getElementById("iframeTrailer").src = url + "?autoplay=1";
-  document.getElementById("modal").style.display = "flex";
-}
 
+  const modal = document.getElementById("modal");
+  const iframe = document.getElementById("iframeTrailer");
+
+  // Convertir embed a link normal por si falla
+  let normalURL = url.replace("embed/", "watch?v=");
+
+  iframe.src = url + "?autoplay=1&rel=0";
+
+  modal.style.display = "flex";
+
+  // 🔥 fallback si no carga
+  setTimeout(()=>{
+    if(!iframe.contentWindow){
+      window.open(normalURL, "_blank");
+    }
+  },2000);
+}
 function cerrarTrailer(){
-  document.getElementById("iframeTrailer").src = "";
+  const iframe = document.getElementById("iframeTrailer");
+  iframe.src = "";
   document.getElementById("modal").style.display = "none";
 }
-
 // =======================
 // INIT
 // =======================
