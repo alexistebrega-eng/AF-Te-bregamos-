@@ -108,8 +108,19 @@
   <span class="menuBtn" onclick="abrirMenu()">☰</span>
   <h2>ALEXIS TE BREGA</h2>
 </header>
+<div id="carrito" class="seccion">
+  <h2>🛒 Carrito</h2>
 
+  <div id="carritoLista"></div>
+
+  <h3 id="carritoTotal">Total: RD$0</h3>
+
+  <button class="btn combo-btn" onclick="enviarCarrito()">
+    📲 Enviar pedido
+  </button>
+</div>
 <div id="menu" class="menu">
+ <a onclick="mostrar('carrito')">Carrito</a>
   <a onclick="mostrar('inicio')">Inicio</a>
   <a onclick="mostrar('streaming')">Streaming</a>
   <a onclick="login()">Admin</a>
