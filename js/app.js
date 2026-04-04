@@ -204,10 +204,15 @@ const peliculasData = [
   {nombre:"Joker",imagen:"https://image.tmdb.org/t/p/w300/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",calificacion:"8.5",trailer:"https://www.youtube.com/embed/zAGVQLHvwOY"},
   {nombre:"Avengers Endgame",imagen:"https://image.tmdb.org/t/p/w300/or06FN3Dka5tukK1e9sl16pB3iy.jpg",calificacion:"8.4",trailer:"https://www.youtube.com/embed/TcMBFSGVi1c"},
   {nombre:"Spider-Man No Way Home",imagen:"https://image.tmdb.org/t/p/w300/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",calificacion:"8.3",trailer:"https://www.youtube.com/embed/JfVOs4VSpmA"},
-  {nombre:"Batman",imagen:"https://image.tmdb.org/t/p/w300/74xTEgt7R36Fpooo50r9T25onhq.jpg",calificacion:"7.9",trailer:"https://www.youtube.com/embed/mqqft2x_Aa4"},
-  {nombre:"John Wick 4",imagen:"https://image.tmdb.org/t/p/w300/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg",calificacion:"8.2",trailer:"https://www.youtube.com/embed/qEVUtrk8_B4"}
-];
+  {nombre:"The Batman",imagen:"https://image.tmdb.org/t/p/w300/74xTEgt7R36Fpooo50r9T25onhq.jpg",calificacion:"7.9",trailer:"https://www.youtube.com/embed/mqqft2x_Aa4"},
+  {nombre:"John Wick 4",imagen:"https://image.tmdb.org/t/p/w300/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg",calificacion:"8.2",trailer:"https://www.youtube.com/embed/qEVUtrk8_B4"},
 
+  {nombre:"Fast X",imagen:"https://image.tmdb.org/t/p/w300/fiVW06jE7z9YnO4trhaMEdclSiC.jpg",calificacion:"7.2",trailer:"https://www.youtube.com/embed/aOb15GVFZxU"},
+  {nombre:"Aquaman",imagen:"https://image.tmdb.org/t/p/w300/5Kg76ldv7VxeX9YlcQXiowHgdX6.jpg",calificacion:"7.0",trailer:"https://www.youtube.com/embed/WDkg3h8PCVU"},
+  {nombre:"Doctor Strange 2",imagen:"https://image.tmdb.org/t/p/w300/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg",calificacion:"7.5",trailer:"https://www.youtube.com/embed/aWzlQ2N6qqg"},
+  {nombre:"Black Adam",imagen:"https://image.tmdb.org/t/p/w300/pFlaoHTZeyNkG83vxsAJiGzfSsa.jpg",calificacion:"6.9",trailer:"https://www.youtube.com/embed/X0tOpBuYasI"},
+  {nombre:"Venom 2",imagen:"https://image.tmdb.org/t/p/w300/rjkmN1dniUHVYAtwuV3Tji7FsDO.jpg",calificacion:"7.1",trailer:"https://www.youtube.com/embed/-ezfi6FQ8Ds"}
+];
 // =======================
 // DATOS ANIME
 // =======================
@@ -226,11 +231,13 @@ function generarCarrusel(id,data){
 
   cont.innerHTML = "";
 
-  data.forEach(d=>{
+  data.forEach((d,index)=>{
     const div = document.createElement("div");
     div.className = "pelicula";
 
     div.innerHTML = `
+      <span class="top-badge">TOP ${index+1}</span>
+
       <img src="${d.imagen}">
       <div class="info-overlay">
         <h3>${d.nombre}</h3>
@@ -238,10 +245,7 @@ function generarCarrusel(id,data){
       </div>
     `;
 
-    // 🔥 CLICK EN TODA LA TARJETA
-    div.onclick = ()=>{
-      abrirTrailer(d.trailer);
-    };
+    div.onclick = ()=>abrirTrailer(d.trailer);
 
     cont.appendChild(div);
   });
