@@ -1,15 +1,3 @@
-function previewTrailer(div, url){
-
-  let iframe = document.createElement("iframe");
-  iframe.src = url + "?autoplay=1&mute=1";
-  iframe.className = "preview";
-
-  div.appendChild(iframe);
-
-  div.onmouseleave = ()=>{
-    iframe.remove();
-  };
-}
 // =======================
 // ELEMENTOS
 // =======================
@@ -17,9 +5,9 @@ const menu = document.getElementById("menu");
 const overlay = document.getElementById("overlay");
 
 // =======================
-// CARRITO
+// CARRITO (PERSISTENTE)
 // =======================
-let carrito = [];
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 // =======================
 // MENU
@@ -53,12 +41,8 @@ function mostrar(id){
 // =======================
 function login(){
   let pass = prompt("Clave admin:");
-
-  if(pass==="1234"){
-    mostrar("admin");
-  }else{
-    alert("❌ Acceso denegado");
-  }
+  if(pass==="1234") mostrar("admin");
+  else alert("❌ Acceso denegado");
 }
 
 // =======================
@@ -68,34 +52,25 @@ function toast(msg){
   let t = document.getElementById("toast");
   t.innerText = msg;
   t.classList.add("show");
-
   setTimeout(()=>t.classList.remove("show"),2000);
 }
 
 // =======================
-// AGREGAR AL CARRITO
+// CARRITO
 // =======================
 function comprar(plan, precio){
-
   carrito.push({plan, precio});
-
   actualizarCarrito();
-
   toast(`✅ ${plan} agregado`);
 }
 
-// =======================
-// ACTUALIZAR CARRITO
-// =======================
 function actualizarCarrito(){
-
   const lista = document.getElementById("carritoLista");
   const total = document.getElementById("carritoTotal");
 
   if(!lista || !total) return;
 
   lista.innerHTML = "";
-
   let suma = 0;
 
   carrito.forEach((item,index)=>{
@@ -114,18 +89,18 @@ function actualizarCarrito(){
   });
 
   total.innerText = `Total: RD$${suma}`;
+
+  // 🔥 guardar carrito
+  localStorage.setItem("carrito", JSON.stringify(carrito));
 }
 
-// =======================
-// ELIMINAR DEL CARRITO
-// =======================
 function eliminarDelCarrito(index){
   carrito.splice(index,1);
   actualizarCarrito();
 }
 
 // =======================
-// ENVIAR CARRITO
+// WHATSAPP
 // =======================
 async function enviarCarrito(){
 
@@ -135,7 +110,7 @@ async function enviarCarrito(){
   }
 
   let total = 0;
-  let mensaje = "🔥 Hola, quiero ordenar:\n\n";
+  let mensaje = "🔥 NUEVO PEDIDO\n\n";
 
   carrito.forEach(item=>{
     mensaje += `• ${item.plan} - RD$${item.precio}\n`;
@@ -143,29 +118,8 @@ async function enviarCarrito(){
   });
 
   mensaje += `\n💰 Total: RD$${total}`;
-  mensaje += "\n\n¿Disponible ahora?";
+  mensaje += "\n📸 Enviar comprobante";
 
-  // Guardar en Firebase
-  try{
-    let hoy = new Date();
-    let vence = new Date();
-    vence.setDate(hoy.getDate()+30);
-
-    for(const item of carrito){
-      await db.collection("clientes").add({
-        plan: item.plan,
-        precio: item.precio,
-        fecha: hoy.toISOString(),
-        vence: vence.toISOString()
-      });
-    }
-
-  }catch(error){
-    console.error(error);
-    toast("❌ Error guardando");
-  }
-
-  // Enviar WhatsApp
   location.href = "https://wa.me/18494349505?text=" + encodeURIComponent(mensaje);
 }
 
@@ -182,11 +136,6 @@ async function cargarClientes(){
 
     cont.innerHTML = "";
 
-    if(snapshot.empty){
-      cont.innerHTML = "<p>No hay clientes</p>";
-      return;
-    }
-
     snapshot.forEach(doc=>{
       let c = doc.data();
 
@@ -196,45 +145,56 @@ async function cargarClientes(){
       div.innerHTML = `
         <h3>${c.plan}</h3>
         <p>💰 RD$${c.precio}</p>
-        <p>📅 Expira: ${new Date(c.vence).toLocaleDateString()}</p>
       `;
 
       cont.appendChild(div);
     });
 
   }catch(error){
-    console.error(error);
     cont.innerHTML = "❌ Error";
   }
 }
 
 // =======================
+// TRAILER CLICK
 // =======================
-// DATOS PELÍCULAS
-// =======================
-const peliculasData = [
-  {nombre:"Joker",imagen:"https://image.tmdb.org/t/p/w300/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg",calificacion:"8.5",trailer:"https://www.youtube.com/embed/zAGVQLHvwOY"},
-  {nombre:"Avengers Endgame",imagen:"https://image.tmdb.org/t/p/w300/or06FN3Dka5tukK1e9sl16pB3iy.jpg",calificacion:"8.4",trailer:"https://www.youtube.com/embed/TcMBFSGVi1c"},
-  {nombre:"Spider-Man No Way Home",imagen:"https://image.tmdb.org/t/p/w300/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",calificacion:"8.3",trailer:"https://www.youtube.com/embed/JfVOs4VSpmA"},
-  {nombre:"The Batman",imagen:"https://image.tmdb.org/t/p/w300/74xTEgt7R36Fpooo50r9T25onhq.jpg",calificacion:"7.9",trailer:"https://www.youtube.com/embed/mqqft2x_Aa4"},
-  {nombre:"John Wick 4",imagen:"https://image.tmdb.org/t/p/w300/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg",calificacion:"8.2",trailer:"https://www.youtube.com/embed/qEVUtrk8_B4"},
+function abrirTrailer(url){
+  document.getElementById("iframeTrailer").src = url + "?autoplay=1";
+  document.getElementById("modal").style.display = "flex";
+}
 
-  {nombre:"Fast X",imagen:"https://image.tmdb.org/t/p/w300/fiVW06jE7z9YnO4trhaMEdclSiC.jpg",calificacion:"7.2",trailer:"https://www.youtube.com/embed/aOb15GVFZxU"},
-  {nombre:"Aquaman",imagen:"https://image.tmdb.org/t/p/w300/5Kg76ldv7VxeX9YlcQXiowHgdX6.jpg",calificacion:"7.0",trailer:"https://www.youtube.com/embed/WDkg3h8PCVU"},
-  {nombre:"Doctor Strange 2",imagen:"https://image.tmdb.org/t/p/w300/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg",calificacion:"7.5",trailer:"https://www.youtube.com/embed/aWzlQ2N6qqg"},
-  {nombre:"Black Adam",imagen:"https://image.tmdb.org/t/p/w300/pFlaoHTZeyNkG83vxsAJiGzfSsa.jpg",calificacion:"6.9",trailer:"https://www.youtube.com/embed/X0tOpBuYasI"},
-  {nombre:"Venom 2",imagen:"https://image.tmdb.org/t/p/w300/rjkmN1dniUHVYAtwuV3Tji7FsDO.jpg",calificacion:"7.1",trailer:"https://www.youtube.com/embed/-ezfi6FQ8Ds"}
-];
+function cerrarTrailer(){
+  document.getElementById("iframeTrailer").src = "";
+  document.getElementById("modal").style.display = "none";
+}
+
 // =======================
-// DATOS ANIME
+// PREVIEW HOVER (PRO)
 // =======================
-const animeData = [
-  {nombre:"Attack on Titan",imagen:"https://upload.wikimedia.org/wikipedia/en/9/9d/Attack_on_Titan_S3.jpg",calificacion:"9.0",trailer:"https://www.youtube.com/embed/MGRm4IzK1SQ"},
-  {nombre:"One Piece",imagen:"https://upload.wikimedia.org/wikipedia/en/2/2e/One_Piece_Anime.png",calificacion:"8.9",trailer:"https://www.youtube.com/embed/uaeY3kVfZCo"},
-  {nombre:"Demon Slayer",imagen:"https://upload.wikimedia.org/wikipedia/en/3/3e/Kimetsu_no_Yaiba_poster.jpg",calificacion:"8.7",trailer:"https://www.youtube.com/embed/VQGCKyvzIM4"},
-  {nombre:"Jujutsu Kaisen",imagen:"https://image.tmdb.org/t/p/w300/fHpKWq9ayzSk8nSwqRuaAUemRKh.jpg",calificacion:"8.6",trailer:"https://www.youtube.com/embed/pkKu9hLT-t8"},
-  {nombre:"Solo Leveling",imagen:"https://image.tmdb.org/t/p/w300/geCRueV3ElhRTr0xtJuEWJt6dJ1.jpg",calificacion:"8.8",trailer:"https://www.youtube.com/embed/ghvUY6xGth4"}
-];
+let hoverTimer;
+
+function previewTrailer(div, url){
+
+  hoverTimer = setTimeout(()=>{
+
+    if(div.querySelector("iframe")) return;
+
+    let iframe = document.createElement("iframe");
+    iframe.src = url + "?autoplay=1&mute=1";
+    iframe.className = "preview";
+
+    div.appendChild(iframe);
+
+  },700);
+
+  div.onmouseleave = ()=>{
+    clearTimeout(hoverTimer);
+    let iframe = div.querySelector("iframe");
+    if(iframe) iframe.remove();
+  };
+}
+
+// =======================
 // CARRUSEL
 // =======================
 function generarCarrusel(id,data){
@@ -249,7 +209,6 @@ function generarCarrusel(id,data){
 
     div.innerHTML = `
       <span class="ranking">${index+1}</span>
-
       <img src="${d.imagen}">
       <div class="info-overlay">
         <h3>${d.nombre}</h3>
@@ -257,27 +216,22 @@ function generarCarrusel(id,data){
       </div>
     `;
 
-    // 🔥 CLICK → abre trailer
     div.onclick = ()=>abrirTrailer(d.trailer);
-function previewTrailer(div, url){
-
-  // evitar duplicados
-  if(div.querySelector("iframe")) return;
-
-  let iframe = document.createElement("iframe");
-
-  iframe.src = url + "?autoplay=1&mute=1";
-  iframe.className = "preview";
-
-  div.appendChild(iframe);
-
-  div.onmouseleave = ()=>{
-    iframe.remove();
-  };
-}
-    // 🔥 HOVER → preview automático
     div.onmouseenter = ()=>previewTrailer(div,d.trailer);
 
     cont.appendChild(div);
   });
 }
+
+// =======================
+// INIT
+// =======================
+window.onload = ()=>{
+  generarCarrusel("peliculas", peliculasData);
+  generarCarrusel("anime", animeData);
+  actualizarCarrito();
+};
+
+document.addEventListener("keydown",(e)=>{
+  if(e.key==="Escape") cerrarMenu();
+});
