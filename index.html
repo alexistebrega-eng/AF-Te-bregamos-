@@ -1,132 +1,514 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ALEXIS TE BREGA</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALEXIS TE BREGA 🦇</title>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a0f2e;
+            --accent-neon: #8b5cf6;
+            --accent-glow: #a78bfa;
+            --text-primary: #ffffff;
+            --text-secondary: #b4b4b4;
+            --border-glow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
 
-<link rel="stylesheet" href="css/styles.css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
 
+        /* Logo Header */
+        .header {
+            text-align: center;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+
+        .logo {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--accent-neon), #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: var(--border-glow);
+            animation: glow 2s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 20px var(--accent-neon));
+        }
+
+        .bat-icon {
+            display: inline-block;
+            animation: bat-flap 3s ease-in-out infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px var(--accent-neon)); }
+            to { filter: drop-shadow(0 0 30px var(--accent-glow)); }
+        }
+
+        @keyframes bat-flap {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        /* Navigation Categories */
+        .categories {
+            display: flex;
+            overflow-x: auto;
+            padding: 1rem 2rem;
+            gap: 1rem;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .categories::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-btn {
+            flex: 0 0 auto;
+            padding: 1rem 2rem;
+            background: rgba(139, 92, 246, 0.2);
+            border: 2px solid var(--accent-neon);
+            border-radius: 50px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-width: 180px;
+            text-align: center;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: var(--accent-neon);
+            box-shadow: var(--border-glow);
+            transform: translateY(-5px);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Carousel */
+        .carousel {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .carousel-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--accent-glow);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .carousel-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 1.5rem;
+            padding: 1rem 0;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .carousel-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .carousel-item {
+            flex: 0 0 280px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .carousel-item:hover::before {
+            left: 100%;
+        }
+
+        .carousel-item:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: var(--border-glow), 0 20px 40px rgba(0,0,0,0.5);
+            border-color: var(--accent-neon);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
+
+        .item-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-price {
+            color: var(--accent-neon);
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(45deg, var(--accent-neon), var(--accent-glow));
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .add-to-cart:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Cart */
+        .cart {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--accent-neon);
+            border-radius: 15px;
+            padding: 1.5rem;
+            min-width: 350px;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .cart.open {
+            transform: translateX(0);
+        }
+
+        .cart-toggle {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--accent-neon);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: var(--border-glow);
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cart-total {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-neon);
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, #10b981, #059669);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-checkout {
+            background: #25D366 !important;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4) !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .cart {
+                right: 10px;
+                left: 10px;
+                min-width: auto;
+                top: 10px;
+            }
+            
+            .cart-toggle {
+                top: 80px;
+                right: 10px;
+            }
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .admin-panel.active {
+            display: flex;
+        }
+
+        .admin-content {
+            background: var(--bg-secondary);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 2px solid var(--accent-neon);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .admin-form input {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid var(--accent-neon);
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .admin-form input::placeholder {
+            color: var(--text-secondary);
+        }
+    </style>
 </head>
 <body>
+    <!-- Header -->
+    <header class="header">
+        <h1 class="logo">
+            <span class="bat-icon">🦇</span>
+            ALEXIS TE BREGA
+        </h1>
+    </header>
 
-<!-- HEADER -->
-<header class="header">
-  <span class="menuBtn" onclick="abrirMenu()">☰</span>
+    <!-- Categories Navigation -->
+    <nav class="categories">
+        <div class="category-btn active" data-section="home">🏠 Inicio</div>
+        <div class="category-btn" data-section="streaming">📺 Streaming</div>
+        <div class="category-btn" data-section="pedidos">🛒 Pedidos Online</div>
+        <div class="category-btn" data-section="motores">🏍️ Motores/Repuestos</div>
+        <div class="category-btn" onclick="toggleAdmin()">🔐 Admin</div>
+    </nav>
 
-  <div class="logo">
-    <span class="bat">🦇</span>
-    <h2>ALEXIS TE BREGA</h2>
-  </div>
-</header>
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="carousel">
+                <h2 class="carousel-title">🔥 Top Ofertas</h2>
+                <div class="carousel-container" id="home-top-offers">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+            <div class="carousel">
+                <h2 class="carousel-title">⭐ Más Vendidos</h2>
+                <div class="carousel-container" id="home-best-sellers">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+        </section>
 
-<!-- MENU -->
-<div id="menu" class="menu">
-  <a onclick="mostrar('inicio')">🏠 Inicio</a>
-  <a onclick="mostrar('streaming')">📺 Streaming</a>
-  <a onclick="mostrar('carrito')">🛒 Carrito</a>
-</div>
+        <!-- Streaming Section -->
+        <section id="streaming" class="section">
+            <div class="carousel">
+                <h2 class="carousel-title">📺 Servicios de Streaming</h2>
+                <div class="carousel-container" id="streaming-carousel">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+        </section>
 
-<div id="overlay" class="overlay" onclick="cerrarMenu()"></div>
+        <!-- Pedidos Online -->
+        <section id="pedidos" class="section">
+            <div class="carousel">
+                <h2 class="carousel-title">🛒 Productos Temu</h2>
+                <div class="carousel-container" id="pedidos-carousel">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+        </section>
 
-<!-- INICIO -->
-<div id="inicio" class="seccion activa">
+        <!-- Motores/Repuestos -->
+        <section id="motores" class="section">
+            <div class="carousel">
+                <h2 class="carousel-title">🏍️ Repuestos de Motores</h2>
+                <div class="carousel-container" id="motores-carousel">
+                    <!-- Dynamic content from Firebase -->
+                </div>
+            </div>
+        </section>
+    </main>
 
-<h2>🔥 Top Películas</h2>
-<div class="carrusel-container">
-  <button class="btn-carrusel left" onclick="scrollCarrusel('peliculas',-1)">❮</button>
-  <div id="peliculas" class="carrusel"></div>
-  <button class="btn-carrusel right" onclick="scrollCarrusel('peliculas',1)">❯</button>
-</div>
+    <!-- Cart -->
+    <button class="cart-toggle" onclick="toggleCart()">🛒</button>
+    <div class="cart" id="cart">
+        <h3>🛒 Carrito (<span id="cart-count">0</span>)</h3>
+        <div id="cart-items"></div>
+        <div class="cart-total">Total: $<span id="cart-total">0</span></div>
+        <button class="checkout-btn whatsapp-checkout" onclick="checkoutWhatsApp()">
+            💳 Pagar por WhatsApp
+        </button>
+        <button class="add-to-cart" onclick="clearCart()" style="background: #ef4444; margin-top: 0.5rem;">
+            🗑️ Vaciar Carrito
+        </button>
+    </div>
 
-<h2>🍥 Top Anime</h2>
-<div class="carrusel-container">
-  <button class="btn-carrusel left" onclick="scrollCarrusel('anime',-1)">❮</button>
-  <div id="anime" class="carrusel"></div>
-  <button class="btn-carrusel right" onclick="scrollCarrusel('anime',1)">❯</button>
-</div>
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="admin-panel">
+        <div class="admin-content">
+            <h2>🔐 Panel Admin</h2>
+            <div class="admin-form">
+                <input type="password" id="admin-password" placeholder="Contraseña">
+                <button class="add-to-cart" onclick="loginAdmin()">Entrar</button>
+            </div>
+            <div id="admin-dashboard" style="display: none; margin-top: 2rem;">
+                <h3>📊 Dashboard</h3>
+                <div id="admin-stats"></div>
+                <div style="margin-top: 2rem;">
+                    <h4>➕ Agregar Repuesto</h4>
+                    <input type="text" id="new-part-name" placeholder="Nombre">
+                    <input type="number" id="new-part-price" placeholder="Precio">
+                    <input type="text" id="new-part-image" placeholder="URL Imagen">
+                    <button class="add-to-cart" onclick="addPart()">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-</div>
+    <script>
+        // Firebase Config (Reemplaza con tus credenciales)
+        const firebaseConfig = {
+            apiKey: "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+            authDomain: "tu-proyecto.firebaseapp.com",
+            projectId: "tu-proyecto",
+            storageBucket: "tu-proyecto.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:xxxxxxxxxxxxxxxx"
+        };
 
-<!-- STREAMING -->
-<div id="streaming" class="seccion">
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-<h2>🔥 Streaming Premium</h2>
+        // Estado de la app
+        let cart = [];
+        let currentSection = 'home';
 
-<div class="stream-grid">
+        // Datos estáticos (puedes mover a Firebase)
+        const streamingServices = [
+            { id: 1, name: 'Netflix Premium', price: 12.99, image: 'https://via.placeholder.com/280x180/8b5cf6/ffffff?text=NETFLIX', type: 'streaming' },
+            { id: 2, name: 'YouTube Music Premium', price: 9.99, image: 'https://via.placeholder.com/280x180/ff0000/ffffff?text=YOUTUBE+MUSIC', type: 'streaming' },
+            { id: 3, name: 'HBO Max', price: 14.99, image: 'https://via.placeholder.com/280x180/002d73/ffffff?text=HBO+MAX', type: 'streaming' },
+            { id: 4, name: 'Combo Completo', price: 29.99, image: 'https://via.placeholder.com/280x180/8b5cf6/000000?text=COMBO+COMPLETO', type: 'streaming' }
+        ];
 
-<!-- NETFLIX -->
-<div class="card">
-  <img class="logo-stream" src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg">
-  <h3>Netflix</h3>
-  <p class="price">RD$300</p>
-  <button class="btn" onclick="comprar('Netflix',300)">Agregar</button>
-</div>
+        const temuProducts = [
+            { id: 5, name: 'Auriculares Bluetooth', price: 19.99, image: 'https://via.placeholder.com/280x180/10b981/ffffff?text=AURICULARES', link: 'https://temu.com', type: 'temu' },
+            { id: 6, name: 'Reloj Inteligente', price: 29.99, image: 'https://via.placeholder.com/280x180/f59e0b/000000?text=RELOJ+SMART', link: 'https://temu.com', type: 'temu' },
+            { id: 7, name: 'Camiseta Gaming', price: 14.99, image: 'https://via.placeholder.com/280x180/ef4444/ffffff?text=CAMISETA', link: 'https://temu.com', type: 'temu' }
+        ];
 
-<!-- YOUTUBE -->
-<div class="card">
-  <img class="logo-stream" src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg">
-  <h3>YouTube Music</h3>
-  <p class="price">RD$250</p>
-  <button class="btn" onclick="comprar('YouTube Music',250)">Agregar</button>
-</div>
+        const homeOffers = [
+            ...streamingServices.slice(0, 3),
+            ...temuProducts.slice(0, 2)
+        ];
 
-<!-- COMBO -->
-<div class="card combo">
-  <div class="badge">🔥 POPULAR</div>
+        // Inicializar app
+        document.addEventListener('DOMContentLoaded', function() {
+            setupNavigation();
+            loadHomeContent();
+            loadStreamingContent();
+            loadTemuContent();
+            loadMotoresContent();
+            updateCart();
+        });
 
-  <div class="combo-logos">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg">
-    <span>+</span>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg">
-  </div>
-
-  <h3>Combo Premium</h3>
-  <p class="price">RD$500</p>
-
-  <button class="btn combo-btn" onclick="comprar('Combo',500)">
-    🔥 Lo quiero
-  </button>
-</div>
-
-</div>
-
-</div>
-
-<!-- CARRITO -->
-<div id="carrito" class="seccion">
-<h2>🛒 Carrito</h2>
-
-<div id="carritoLista"></div>
-
-<h3 id="carritoTotal">Total: RD$0</h3>
-
-<button class="btn combo-btn" onclick="enviarCarrito()">
-📲 Finalizar pedido
-</button>
-</div>
-
-<!-- MODAL TRAILER -->
-<div id="modal">
-  <span class="close" onclick="cerrarTrailer()">✖</span>
-  <iframe id="iframeTrailer" allowfullscreen></iframe>
-</div>
-
-<!-- BOTONES FLOTANTES -->
-<div class="floating">
-  <a href="https://wa.me/18494349505" target="_blank" class="whatsapp">📲</a>
-  <a href="#" class="instagram">📸</a>
-</div>
-
-<!-- TOAST -->
-<div id="toast" class="toast"></div>
-
-<!-- JS -->
-<script src="js/app.js"></script>
-
-</body>
-</html>
+        // Navegación entre secciones
+        function setupNavigation() {
