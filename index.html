@@ -7,12 +7,12 @@
 
 <link rel="stylesheet" href="css/styles.css">
 
-<!-- Firebase (VERSIÓN CORRECTA) -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
 <style>
-/* 🔥 ESTILOS QUE TE FALTABAN */
+/* CARRUSEL */
 .carrusel{
   display:flex;
   gap:15px;
@@ -43,21 +43,17 @@
   z-index:5;
 }
 
-.play-btn{
+/* RANKING */
+.ranking{
   position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  display:none;
-  background:white;
-  border-radius:50%;
-  padding:10px;
+  left:-10px;
+  bottom:-20px;
+  font-size:80px;
+  font-weight:bold;
+  color:rgba(255,255,255,0.15);
 }
 
-.pelicula:hover .play-btn{
-  display:block;
-}
-
+/* OVERLAY */
 .info-overlay{
   position:absolute;
   bottom:0;
@@ -70,6 +66,17 @@
 
 .pelicula:hover .info-overlay{
   opacity:1;
+}
+
+/* PREVIEW */
+.preview{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  border:none;
+  z-index:10;
 }
 
 /* MODAL */
@@ -99,36 +106,84 @@
   font-size:30px;
   cursor:pointer;
 }
+
+/* HEADER PRO */
+.header{
+  position:sticky;
+  top:0;
+  background:#6a0dad;
+  padding:15px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:2000;
+}
+
+.menuBtn{
+  position:absolute;
+  left:15px;
+  font-size:25px;
+  cursor:pointer;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.bat{
+  font-size:30px;
+  color:#00ffae;
+  text-shadow:0 0 10px #00ffae;
+  animation:batGlow 1.5s infinite alternate;
+}
+
+@keyframes batGlow{
+  from{transform:scale(1);}
+  to{transform:scale(1.2);}
+}
+
+/* ICONOS FLOTANTES */
+.floating{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  z-index:9999;
+}
+
+.floating a{
+  padding:15px;
+  border-radius:50%;
+  color:white;
+  text-decoration:none;
+}
+
+.whatsapp{background:#25D366;}
+.instagram{background:#E1306C;}
+
 </style>
 
 </head>
 <body>
 
 <header class="header">
-
   <span class="menuBtn" onclick="abrirMenu()">☰</span>
 
   <div class="logo">
     <span class="bat">🦇</span>
     <h2>ALEXIS TE BREGA</h2>
   </div>
-
 </header>
-<div id="carrito" class="seccion">
-  <h2>🛒 Carrito</h2>
 
-  <div id="carritoLista"></div>
-
-  <h3 id="carritoTotal">Total: RD$0</h3>
-
-  <button class="btn combo-btn" onclick="enviarCarrito()">
-    📲 Enviar pedido
-  </button>
-</div>
+<!-- MENU -->
 <div id="menu" class="menu">
- <a onclick="mostrar('carrito')">Carrito</a>
   <a onclick="mostrar('inicio')">Inicio</a>
   <a onclick="mostrar('streaming')">Streaming</a>
+  <a onclick="mostrar('carrito')">Carrito</a>
   <a onclick="login()">Admin</a>
 </div>
 
@@ -178,6 +233,14 @@
 
 </div>
 
+<!-- CARRITO -->
+<div id="carrito" class="seccion">
+  <h2>🛒 Carrito</h2>
+  <div id="carritoLista"></div>
+  <h3 id="carritoTotal">Total: RD$0</h3>
+  <button class="btn combo-btn" onclick="enviarCarrito()">📲 Enviar pedido</button>
+</div>
+
 <!-- ADMIN -->
 <div id="admin" class="seccion">
   <h2>📊 Clientes</h2>
@@ -191,6 +254,12 @@
 </div>
 
 <div id="toast" class="toast"></div>
+
+<!-- ICONOS -->
+<div class="floating">
+  <a href="https://wa.me/18494349505" target="_blank" class="whatsapp">📲</a>
+  <a href="#" class="instagram">📸</a>
+</div>
 
 <!-- JS -->
 <script src="js/firebase.js"></script>
