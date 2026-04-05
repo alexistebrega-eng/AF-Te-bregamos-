@@ -1,3 +1,15 @@
+function previewTrailer(div, url){
+
+  let iframe = document.createElement("iframe");
+  iframe.src = url + "?autoplay=1&mute=1";
+  iframe.className = "preview";
+
+  div.appendChild(iframe);
+
+  div.onmouseleave = ()=>{
+    iframe.remove();
+  };
+}
 // =======================
 // ELEMENTOS
 // =======================
@@ -236,7 +248,7 @@ function generarCarrusel(id,data){
     div.className = "pelicula";
 
     div.innerHTML = `
-      <span class="top-badge">TOP ${index+1}</span>
+      <span class="ranking">${index+1}</span>
 
       <img src="${d.imagen}">
       <div class="info-overlay">
@@ -245,58 +257,27 @@ function generarCarrusel(id,data){
       </div>
     `;
 
+    // 🔥 CLICK → abre trailer
     div.onclick = ()=>abrirTrailer(d.trailer);
+function previewTrailer(div, url){
+
+  // evitar duplicados
+  if(div.querySelector("iframe")) return;
+
+  let iframe = document.createElement("iframe");
+
+  iframe.src = url + "?autoplay=1&mute=1";
+  iframe.className = "preview";
+
+  div.appendChild(iframe);
+
+  div.onmouseleave = ()=>{
+    iframe.remove();
+  };
+}
+    // 🔥 HOVER → preview automático
+    div.onmouseenter = ()=>previewTrailer(div,d.trailer);
 
     cont.appendChild(div);
   });
-}// =======================
-// SCROLL
-// =======================
-function scrollCarrusel(id,direccion){
-  const carrusel = document.getElementById(id);
-  if(!carrusel) return;
-
-  carrusel.scrollBy({
-    left: direccion * 300,
-    behavior: "smooth"
-  });
-}// =======================
-// MODAL
-// =======================
-function abrirTrailer(url){
-
-  const modal = document.getElementById("modal");
-  const iframe = document.getElementById("iframeTrailer");
-
-  // Convertir embed a link normal por si falla
-  let normalURL = url.replace("embed/", "watch?v=");
-
-  iframe.src = url + "?autoplay=1&rel=0";
-
-  modal.style.display = "flex";
-
-  // 🔥 fallback si no carga
-  setTimeout(()=>{
-    if(!iframe.contentWindow){
-      window.open(normalURL, "_blank");
-    }
-  },2000);
 }
-function cerrarTrailer(){
-  const iframe = document.getElementById("iframeTrailer");
-  iframe.src = "";
-  document.getElementById("modal").style.display = "none";
-}
-// =======================
-// INIT
-// =======================
-window.onload = ()=>{
-  generarCarrusel("peliculas", peliculasData);
-  generarCarrusel("anime", animeData);
-};
-
-document.addEventListener("keydown",(e)=>{
-  if(e.key==="Escape"){
-    cerrarMenu();
-  }
-});
