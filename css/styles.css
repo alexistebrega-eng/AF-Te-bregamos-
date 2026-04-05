@@ -1,137 +1,67 @@
 body{
-  body{
-  background:
-    repeating-linear-gradient(
-      0deg,
-      #0a0a0a 0px,
-      #0a0a0a 2px,
-      #111 2px,
-      #111 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(106,13,173,0.2) 0px,
-      rgba(106,13,173,0.2) 2px,
-      transparent 2px,
-      transparent 6px
-    );
-}
   margin:0;
-  font-family:Arial;
-  background:#0a0a0a;
+  background:#000;
   color:white;
+  font-family:Arial;
 }
 
 /* HEADER */
-header{
+.header{
   background:#6a0dad;
   padding:15px;
-  display:flex;
-  align-items:center;
+  text-align:center;
+  position:sticky;
+  top:0;
 }
 
-.menuBtn{font-size:25px;cursor:pointer;margin-right:10px;}
+.menuBtn{
+  position:absolute;
+  left:10px;
+  cursor:pointer;
+}
 
 /* MENU */
 .menu{
   position:fixed;
-  left:-260px;
-  width:260px;
+  left:-200px;
+  top:0;
+  width:200px;
   height:100%;
   background:#111;
   transition:0.3s;
 }
-.menu.active{left:0;}
 
-.overlay{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.6);
-  display:none;
-}
-.overlay.active{display:block;}
+.menu.active{left:0;}
 
 .menu a{
   display:block;
   padding:15px;
-  color:white;
-  text-decoration:none;
 }
 
 /* SECCIONES */
-.seccion{display:none;padding:20px;}
-.seccion.activa{display:block;}
-
-/* CARDS */
-.card{
-  background:#111;
-  margin:15px 0;
+.seccion{
+  display:none;
   padding:20px;
-  border-radius:10px;
-  text-align:center;
-  transition:0.3s;
 }
 
-.card:hover{
-  transform:scale(1.05);
+.seccion.activa{
+  display:block;
 }
 
-.combo-card{
-  border:2px solid #00ffae;
-}
-
-.btn{
-  background:#25D366;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  color:white;
-  cursor:pointer;
-}
-
-button:active{
-  transform:scale(0.95);
-}
-
-/* TOAST */
-.toast{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#6a0dad;
-  padding:10px;
-  border-radius:10px;
-  opacity:0;
-}
-.toast.show{opacity:1;}
-/* ===== CARRUSEL FUNCIONAL ===== */
-.carrusel-container{
-  position:relative;
-}
-
+/* CARRUSEL */
 .carrusel{
   display:flex;
-  gap:15px;
+  gap:10px;
   overflow-x:auto;
-  scroll-behavior:smooth;
-  padding:10px 0;
-}
-
-.carrusel::-webkit-scrollbar{
-  display:none;
 }
 
 .pelicula{
-  min-width:180px;
-  height:270px;
+  min-width:150px;
+  height:220px;
+  background:#222;
   border-radius:10px;
   overflow:hidden;
-  position:relative;
   cursor:pointer;
-  flex-shrink:0;
-  transition:0.3s;
 }
 
 .pelicula img{
@@ -140,163 +70,38 @@ button:active{
   object-fit:cover;
 }
 
-.pelicula:hover{
-  transform:scale(1.1);
-  z-index:5;
+/* STREAMING */
+.stream-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:20px;
 }
 
-/* BOTONES DEL CARRUSEL */
-.btn-carrusel{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  background:#6a0dad;
-  color:white;
-  border:none;
-  font-size:25px;
-  padding:10px;
-  cursor:pointer;
-  border-radius:50%;
-  z-index:20;
+.card{
+  background:#111;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
 }
 
-.btn-left{ left:0; }
-.btn-right{ right:0; }
-
-/* ===== MENU (ARREGLA LOS 3 PUNTOS) ===== */
-header{
-  position:sticky;
-  top:0;
-  z-index:2000;
+.card img{
+  width:60px;
 }
 
-.menu{
-  z-index:3000;
-}
-
-.overlay{
-  z-index:2500;
-}
-
-/* ===== MODAL ===== */
+/* MODAL */
 #modal{
+  display:none;
   position:fixed;
   top:0;
   left:0;
   width:100%;
   height:100%;
-  display:none;
+  background:black;
   justify-content:center;
   align-items:center;
-  background:rgba(0,0,0,0.9);
-  z-index:9999;
 }
 
 #modal iframe{
   width:80%;
   height:80%;
-}
-
-/* ===== FLUIDEZ ===== */
-.seccion{
-  display:none;
-  opacity:0;
-  transform:translateY(20px);
-  transition:0.3s;
-}
-
-.seccion.activa{
-  display:block;
-  opacity:1;
-  transform:translateY(0);
-}
-/* HEADER CENTRADO */
-.header{
-  position:sticky;
-  top:0;
-  background:#6a0dad;
-  padding:15px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:2000;
-}
-
-.menuBtn{
-  position:absolute;
-  left:15px;
-  font-size:25px;
-}
-
-.logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-/* MURCIELAGO PRO */
-.bat{
-  font-size:30px;
-  color:#00ffae;
-  text-shadow:0 0 10px #00ffae;
-  animation:batGlow 1.5s infinite alternate;
-}
-
-@keyframes batGlow{
-  from{transform:scale(1);}
-  to{transform:scale(1.2);}
-}
-/* EFECTO */
-@keyframes flotar{
-  0%{transform:translateY(0);}
-  50%{transform:translateY(-5px);}
-  100%{transform:translateY(0);}
-}
-.top-badge{
-  position:absolute;
-  top:5px;
-  left:5px;
-  background:red;
-  color:white;
-  padding:5px 8px;
-  font-size:12px;
-  font-weight:bold;
-  border-radius:5px;
-  z-index:10;
-}
-/* TEXTO */
-.logo h2{
-  margin:0;
-}
-.ranking{
-  position:absolute;
-  left:-10px;
-  bottom:-20px;
-  font-size:80px;
-  font-weight:bold;
-  color:rgba(255,255,255,0.15);
-  z-index:0;
-  pointer-events:none;
-}
-
-.pelicula{
-  position:relative;
-  z-index:1;
-}
-.preview{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  border:none;
-  z-index:10;
-}
-.menu a{
-  transition:0.3s;
-}
-
-.menu a:hover{
-  background:#6a0dad;
-  padding-left:25px;
 }
