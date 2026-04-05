@@ -3,188 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ALEXIS TE BREGA - Premium</title>
+<title>ALEXIS TE BREGA</title>
 
 <link rel="stylesheet" href="css/styles.css">
 
-<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-
-<style>
-/* CARRUSEL */
-.carrusel{
-  display:flex;
-  gap:15px;
-  overflow-x:auto;
-  scroll-behavior:smooth;
-  padding:10px 0;
-}
-.carrusel::-webkit-scrollbar{display:none;}
-
-.pelicula{
-  min-width:180px;
-  height:270px;
-  border-radius:10px;
-  overflow:hidden;
-  position:relative;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.pelicula img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.pelicula:hover{
-  transform:scale(1.1);
-  z-index:5;
-}
-
-/* RANKING */
-.ranking{
-  position:absolute;
-  left:-10px;
-  bottom:-20px;
-  font-size:80px;
-  font-weight:bold;
-  color:rgba(255,255,255,0.15);
-}
-
-/* OVERLAY */
-.info-overlay{
-  position:absolute;
-  bottom:0;
-  width:100%;
-  background:linear-gradient(transparent,#000);
-  padding:10px;
-  opacity:0;
-  transition:0.3s;
-}
-
-.pelicula:hover .info-overlay{
-  opacity:1;
-}
-
-/* PREVIEW */
-.preview{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  border:none;
-  z-index:10;
-}
-
-/* MODAL */
-#modal{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.9);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
-
-#modal iframe{
-  width:80%;
-  height:80%;
-  border:none;
-}
-
-.close{
-  position:absolute;
-  top:20px;
-  right:20px;
-  font-size:30px;
-  cursor:pointer;
-}
-
-/* HEADER PRO */
-.header{
-  position:sticky;
-  top:0;
-  background:#6a0dad;
-  padding:15px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:2000;
-}
-
-.menuBtn{
-  position:absolute;
-  left:15px;
-  font-size:25px;
-  cursor:pointer;
-}
-
-.logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.bat{
-  font-size:30px;
-  color:#00ffae;
-  text-shadow:0 0 10px #00ffae;
-  animation:batGlow 1.5s infinite alternate;
-}
-
-@keyframes batGlow{
-  from{transform:scale(1);}
-  to{transform:scale(1.2);}
-}
-
-/* ICONOS FLOTANTES */
-.floating{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  z-index:9999;
-}
-
-.floating a{
-  padding:15px;
-  border-radius:50%;
-  color:white;
-  text-decoration:none;
-}
-
-.whatsapp{background:#25D366;}
-.instagram{background:#E1306C;}
-
-</style>
 
 </head>
 <body>
 
 <header class="header">
   <span class="menuBtn" onclick="abrirMenu()">☰</span>
-
   <div class="logo">
-    <span class="bat">🦇</span>
-    <h2>ALEXIS TE BREGA</h2>
+    🦇 ALEXIS TE BREGA
   </div>
 </header>
 
-<!-- MENU -->
 <div id="menu" class="menu">
   <a onclick="mostrar('inicio')">Inicio</a>
   <a onclick="mostrar('streaming')">Streaming</a>
   <a onclick="mostrar('carrito')">Carrito</a>
-  <a onclick="login()">Admin</a>
 </div>
 
 <div id="overlay" class="overlay" onclick="cerrarMenu()"></div>
@@ -194,75 +33,65 @@
 
 <h2>🔥 Películas</h2>
 <div class="carrusel-container">
-  <button class="btn-carrusel btn-left" onclick="scrollCarrusel('peliculas',-1)">❮</button>
+  <button onclick="scrollCarrusel('peliculas',-1)">❮</button>
   <div id="peliculas" class="carrusel"></div>
-  <button class="btn-carrusel btn-right" onclick="scrollCarrusel('peliculas',1)">❯</button>
+  <button onclick="scrollCarrusel('peliculas',1)">❯</button>
 </div>
 
 <h2>🍥 Anime</h2>
 <div class="carrusel-container">
-  <button class="btn-carrusel btn-left" onclick="scrollCarrusel('anime',-1)">❮</button>
+  <button onclick="scrollCarrusel('anime',-1)">❮</button>
   <div id="anime" class="carrusel"></div>
-  <button class="btn-carrusel btn-right" onclick="scrollCarrusel('anime',1)">❯</button>
+  <button onclick="scrollCarrusel('anime',1)">❯</button>
 </div>
 
 </div>
 
 <!-- STREAMING -->
 <div id="streaming" class="seccion">
-<h2>🔥 Streaming Premium</h2>
+
+<h2>🔥 Streaming</h2>
+
+<div class="stream-grid">
 
 <div class="card">
-  <h2>Netflix</h2>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg">
+  <h3>Netflix</h3>
   <p>RD$300</p>
-  <button class="btn" onclick="comprar('Netflix',300)">Comprar</button>
+  <button onclick="comprar('Netflix',300)">Agregar</button>
 </div>
 
 <div class="card">
-  <h2>YouTube Music</h2>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg">
+  <h3>YouTube Music</h3>
   <p>RD$250</p>
-  <button class="btn" onclick="comprar('YouTube Music',250)">Comprar</button>
+  <button onclick="comprar('YouTube Music',250)">Agregar</button>
 </div>
 
-<div class="card combo-card">
-  <div class="badge">🔥 MÁS VENDIDO</div>
-  <h2>Combo Premium</h2>
-  <p class="price">RD$500</p>
-  <button class="btn combo-btn" onclick="comprar('Combo',500)">🔥 Lo Quiero</button>
+<div class="card combo">
+  <h3>🔥 Combo</h3>
+  <p>RD$500</p>
+  <button onclick="comprar('Combo',500)">Agregar</button>
+</div>
+
 </div>
 
 </div>
 
 <!-- CARRITO -->
 <div id="carrito" class="seccion">
-  <h2>🛒 Carrito</h2>
-  <div id="carritoLista"></div>
-  <h3 id="carritoTotal">Total: RD$0</h3>
-  <button class="btn combo-btn" onclick="enviarCarrito()">📲 Enviar pedido</button>
-</div>
-
-<!-- ADMIN -->
-<div id="admin" class="seccion">
-  <h2>📊 Clientes</h2>
-  <div id="listaClientes"></div>
+<h2>🛒 Carrito</h2>
+<div id="carritoLista"></div>
+<h3 id="carritoTotal">Total: RD$0</h3>
+<button onclick="enviarCarrito()">Enviar pedido</button>
 </div>
 
 <!-- MODAL -->
 <div id="modal">
-  <span class="close" onclick="cerrarTrailer()">✖</span>
-  <iframe id="iframeTrailer" allowfullscreen></iframe>
+<span onclick="cerrarTrailer()">X</span>
+<iframe id="iframeTrailer"></iframe>
 </div>
 
-<div id="toast" class="toast"></div>
-
-<!-- ICONOS -->
-<div class="floating">
-  <a href="https://wa.me/18494349505" target="_blank" class="whatsapp">📲</a>
-  <a href="#" class="instagram">📸</a>
-</div>
-
-<!-- JS -->
-<script src="js/firebase.js"></script>
 <script src="js/app.js"></script>
 
 </body>
