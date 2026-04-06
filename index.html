@@ -4,213 +4,156 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALEXIS TE BREGA 🦇</title>
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js"></script>
     <style>
-        :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #1a0f2e;
-            --accent-neon: #8b5cf6;
-            --accent-glow: #a78bfa;
-            --text-primary: #ffffff;
-            --text-secondary: #b4b4b4;
-            --border-glow: 0 0 20px rgba(139, 92, 246, 0.5);
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
-            font-family: 'Courier New', monospace;
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-            color: var(--text-primary);
+            font-family: Arial, sans-serif;
+            background: #000;
+            color: white;
             overflow-x: hidden;
         }
-
-        .header { text-align: center; padding: 2rem 1rem; }
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(45deg, #8b5cf6, #000);
+        }
         .logo {
-            font-size: clamp(2.5rem, 8vw, 6rem);
-            background: linear-gradient(45deg, var(--accent-neon), #ffffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: var(--border-glow);
-            animation: glow 2s ease-in-out infinite alternate;
+            font-size: 3rem;
+            font-weight: bold;
         }
-
-        @keyframes glow {
-            from { filter: drop-shadow(0 0 10px var(--accent-neon)); }
-            to { filter: drop-shadow(0 0 30px var(--accent-glow)); }
-        }
-
         .categories {
             display: flex;
+            gap: 10px;
+            padding: 20px;
             overflow-x: auto;
-            padding: 1rem 2rem;
-            gap: 1rem;
-            background: rgba(0,0,0,0.5);
+            background: #111;
         }
-
         .category-btn {
-            flex: 0 0 auto;
-            padding: 1rem 2rem;
-            background: rgba(139, 92, 246, 0.2);
-            border: 2px solid var(--accent-neon);
-            border-radius: 50px;
-            color: var(--text-primary);
+            padding: 15px 25px;
+            background: #8b5cf6;
+            border: none;
+            border-radius: 25px;
+            color: white;
             cursor: pointer;
-            transition: all 0.3s ease;
+            white-space: nowrap;
             font-weight: bold;
-            text-transform: uppercase;
-            min-width: 180px;
-            text-align: center;
         }
-
         .category-btn:hover, .category-btn.active {
-            background: var(--accent-neon);
-            box-shadow: var(--border-glow);
-            transform: translateY(-5px);
+            background: #a78bfa;
+            transform: scale(1.05);
         }
-
-        .main-content { padding: 2rem; max-width: 1400px; margin: 0 auto; }
-
-        .section { display: none; animation: fadeIn 0.5s ease; }
+        .main-content { padding: 20px; max-width: 1400px; margin: 0 auto; }
+        .section { display: none; }
         .section.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .carousel { margin-bottom: 3rem; }
         .carousel-title {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
+            font-size: 2rem;
             text-align: center;
-            color: var(--accent-glow);
-            text-shadow: 0 0 10px var(--accent-glow);
+            margin: 30px 0 20px;
+            color: #8b5cf6;
         }
-
         .carousel-container {
             display: flex;
+            gap: 20px;
             overflow-x: auto;
-            gap: 1.5rem;
-            padding: 1rem 0;
-            scroll-behavior: smooth;
+            padding: 20px 0;
+            scroll-snap-type: x mandatory;
         }
-
         .carousel-item {
-            flex: 0 0 280px;
-            background: rgba(255,255,255,0.05);
+            flex: 0 0 300px;
+            background: #222;
             border-radius: 15px;
-            padding: 1.5rem;
+            padding: 20px;
             cursor: pointer;
-            transition: all 0.4s ease;
-            border: 1px solid rgba(139,92,246,0.3);
-            position: relative;
+            transition: all 0.3s;
+            border: 2px solid #333;
         }
-
         .carousel-item:hover {
-            transform: translateY(-15px) scale(1.05);
-            box-shadow: var(--border-glow);
-            border-color: var(--accent-neon);
+            transform: translateY(-10px);
+            border-color: #8b5cf6;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
         }
-
         .item-image {
             width: 100%;
-            height: 180px;
-            object-fit: cover;
+            height: 200px;
+            background: #444;
             border-radius: 10px;
-            margin-bottom: 1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #ccc;
         }
-
-        .item-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 0.5rem; }
+        .item-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 10px; }
         .item-price { 
-            color: var(--accent-neon);
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
+            font-size: 1.5rem; 
+            color: #8b5cf6; 
+            font-weight: bold; 
+            margin-bottom: 15px; 
         }
-
-        .add-to-cart {
+        .btn {
             width: 100%;
-            padding: 0.8rem;
-            background: linear-gradient(45deg, var(--accent-neon), var(--accent-glow));
+            padding: 12px;
+            background: linear-gradient(45deg, #8b5cf6, #a78bfa);
             border: none;
             border-radius: 25px;
             color: white;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
+            font-size: 1rem;
         }
-
-        .add-to-cart:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(139,92,246,0.4);
-        }
+        .btn:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(139,92,246,0.4); }
+        .btn-danger { background: linear-gradient(45deg, #ef4444, #dc2626); }
 
         /* Cart */
         .cart-toggle {
             position: fixed;
-            top: 100px;
-            right: 20px;
-            background: var(--accent-neon);
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1001;
-            box-shadow: var(--border-glow);
-        }
-
-        .cart {
-            position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(10,10,10,0.98);
-            backdrop-filter: blur(20px);
-            border: 2px solid var(--accent-neon);
-            border-radius: 15px;
-            padding: 1.5rem;
-            min-width: 350px;
+            width: 60px;
+            height: 60px;
+            background: #8b5cf6;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
             z-index: 1000;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
-            max-height: 80vh;
+        }
+        .cart {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            width: 380px;
+            max-height: 70vh;
+            background: #111;
+            border: 2px solid #8b5cf6;
+            border-radius: 15px;
+            padding: 20px;
+            transform: translateX(450px);
+            transition: transform 0.3s;
+            z-index: 999;
             overflow-y: auto;
         }
-
         .cart.open { transform: translateX(0); }
-
+        .cart h3 { margin-bottom: 20px; color: #8b5cf6; }
         .cart-item {
             display: flex;
-            gap: 1rem;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
         }
-
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            background: #444;
+        }
         .cart-total {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent-neon);
-            margin-top: 1rem;
+            font-size: 1.8rem;
             text-align: center;
-        }
-
-        .checkout-btn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(45deg, #10b981, #059669);
-            border: none;
-            border-radius: 25px;
-            color: white;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            margin-top: 1rem;
+            margin: 20px 0;
+            color: #8b5cf6;
         }
 
         /* Admin */
@@ -226,199 +169,251 @@
             justify-content: center;
             align-items: center;
         }
-
         .admin-panel.active { display: flex; }
-
         .admin-content {
-            background: var(--bg-secondary);
-            padding: 3rem;
+            background: #222;
+            padding: 40px;
             border-radius: 20px;
-            border: 2px solid var(--accent-neon);
-            max-width: 600px;
+            border: 3px solid #8b5cf6;
+            max-width: 500px;
             width: 90%;
             text-align: center;
         }
-
-        .admin-form input {
+        .admin-content input {
             width: 100%;
-            padding: 1rem;
-            margin: 1rem 0;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid var(--accent-neon);
+            padding: 15px;
+            margin: 10px 0;
+            background: #333;
+            border: 2px solid #8b5cf6;
             border-radius: 10px;
             color: white;
             font-size: 1.1rem;
         }
+        .admin-content input::placeholder { color: #999; }
 
         @media (max-width: 768px) {
-            .main-content { padding: 1rem; }
-            .cart { right: 10px; left: 10px; min-width: auto; top: 10px; }
-            .cart-toggle { top: 80px; right: 10px; }
+            .cart { right: 10px; left: 10px; width: auto; top: 90px; }
+            .main-content { padding: 10px; }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
+    <div class="header">
         <h1 class="logo">🦇 ALEXIS TE BREGA</h1>
-    </header>
+    </div>
 
-    <!-- Categories -->
-    <nav class="categories">
-        <div class="category-btn active" data-section="home">🏠 Inicio</div>
-        <div class="category-btn" data-section="streaming">📺 Streaming</div>
-        <div class="category-btn" data-section="pedidos">🛒 Pedidos</div>
-        <div class="category-btn" data-section="motores">🏍️ Repuestos</div>
-        <div class="category-btn" onclick="toggleAdmin()">🔐 Admin</div>
-    </nav>
+    <div class="categories">
+        <button class="category-btn active" onclick="showSection('home')">🏠 Inicio</button>
+        <button class="category-btn" onclick="showSection('streaming')">📺 Streaming</button>
+        <button class="category-btn" onclick="showSection('pedidos')">🛒 Pedidos</button>
+        <button class="category-btn" onclick="showSection('motores')">🏍️ Repuestos</button>
+        <button class="category-btn" onclick="toggleAdmin()">🔐 Admin</button>
+    </div>
 
-    <!-- Content -->
     <main class="main-content">
         <section id="home" class="section active">
-            <div class="carousel">
-                <h2 class="carousel-title">🔥 Top Ofertas</h2>
-                <div class="carousel-container" id="home-carousel"></div>
-            </div>
+            <h2 class="carousel-title">🔥 TOP OFERTAS</h2>
+            <div class="carousel-container" id="home-items"></div>
         </section>
 
         <section id="streaming" class="section">
-            <div class="carousel">
-                <h2 class="carousel-title">📺 Streaming Premium</h2>
-                <div class="carousel-container" id="streaming-carousel"></div>
-            </div>
+            <h2 class="carousel-title">📺 STREAMING PREMIUM</h2>
+            <div class="carousel-container" id="streaming-items"></div>
         </section>
 
         <section id="pedidos" class="section">
-            <div class="carousel">
-                <h2 class="carousel-title">🛒 Productos Temu</h2>
-                <div class="carousel-container" id="pedidos-carousel"></div>
-            </div>
+            <h2 class="carousel-title">🛒 PRODUCTOS TEMU</h2>
+            <div class="carousel-container" id="pedidos-items"></div>
         </section>
 
         <section id="motores" class="section">
-            <div class="carousel">
-                <h2 class="carousel-title">🏍️ Repuestos Motores</h2>
-                <div class="carousel-container" id="motores-carousel"></div>
-            </div>
+            <h2 class="carousel-title">🏍️ REPUESTOS MOTORES</h2>
+            <div class="carousel-container" id="motores-items"></div>
         </section>
     </main>
 
-    <!-- Cart -->
+    <!-- CARRITO -->
     <button class="cart-toggle" onclick="toggleCart()">🛒</button>
     <div class="cart" id="cart">
-        <h3>🛒 Carrito (<span id="cart-count">0</span>)</h3>
-        <div id="cart-items">Carrito vacío</div>
-        <div class="cart-total">Total: $<span id="cart-total">0</span></div>
-        <button class="checkout-btn" onclick="checkoutWhatsApp()">💳 WhatsApp Pago</button>
-        <button class="add-to-cart" onclick="clearCart()" style="background: #ef4444;">🗑️ Vaciar</button>
+        <h3>🛒 MI CARRITO (<span id="cart-count">0</span>)</h3>
+        <div id="cart-items"></div>
+        <div class="cart-total">TOTAL: $<span id="cart-total">0</span></div>
+        <button class="btn" onclick="pagarWhatsApp()">💳 PAGAR WHATSAPP</button>
+        <button class="btn btn-danger" onclick="vaciarCarrito()">🗑️ VACIAR</button>
     </div>
 
-    <!-- Admin -->
-    <div class="admin-panel" id="admin-panel">
+    <!-- ADMIN -->
+    <div class="admin-panel" id="admin">
         <div class="admin-content">
-            <h2>🔐 Panel Admin</h2>
-            <div class="admin-form">
-                <input type="password" id="admin-password" placeholder="Contraseña: alexis123">
-                <button class="add-to-cart" onclick="loginAdmin()">Entrar</button>
-            </div>
-            <div id="admin-dashboard" style="display:none;">
-                <h3>📊 Dashboard Admin</h3>
-                <div id="admin-stats"></div>
-                <h4>➕ Nuevo Repuesto</h4>
-                <input type="text" id="new-part-name" placeholder="Nombre pieza">
-                <input type="number" id="new-part-price" placeholder="Precio $">
-                <input type="url" id="new-part-image" placeholder="https://imagen.com">
-                <button class="add-to-cart" onclick="addPart()">➕ Agregar</button>
+            <h2>🔐 PANEL ADMIN</h2>
+            <input type="password" id="admin-pass" placeholder="Contraseña: admin123">
+            <button class="btn" onclick="entrarAdmin()">ENTRAR</button>
+            <div id="admin-area" style="display:none;margin-top:30px;">
+                <h3>📊 DASHBOARD</h3>
+                <div id="admin-stats">Cargando...</div>
+                <h4 style="margin-top:30px;">➕ NUEVO REPUESTO</h4>
+                <input type="text" id="part-name" placeholder="Nombre">
+                <input type="number" id="part-price" placeholder="Precio">
+                <input type="text" id="part-img" placeholder="URL imagen">
+                <button class="btn" onclick="agregarRepuesto()">AGREGAR</button>
             </div>
         </div>
     </div>
 
     <script>
-        // 🔥 APP COMPLETA FUNCIONAL
-        let cart = [];
-        const ADMIN_PASSWORD = "alexis123";
-        const WA_NUMBER = "18291234567"; // CAMBIA TU NÚMERO
-
-        // Datos de prueba
-        const products = {
+        // DATOS DE PRODUCTOS
+        const productos = {
             streaming: [
-                {id:1, name:'Netflix Premium', price:12.99, image:'https://via.placeholder.com/280x180/8b5cf6/ffffff?text=NETFLIX'},
-                {id:2, name:'YouTube Premium', price:9.99, image:'https://via.placeholder.com/280x180/ff0000/ffffff?text=YOUTUBE'},
-                {id:3, name:'HBO Max', price:14.99, image:'https://via.placeholder.com/280x180/002d73/ffffff?text=HBO'},
-                {id:4, name:'Combo Todo', price:29.99, image:'https://via.placeholder.com/280x180/8b5cf6/000?text=COMBO'}
+                {id:1, nombre:'Netflix Premium', precio:12.99, imagen:'https://via.placeholder.com/300x200/8b5cf6/fff?text=NETFLIX'},
+                {id:2, nombre:'YouTube Premium', precio:9.99, imagen:'https://via.placeholder.com/300x200/ff0000/fff?text=YOUTUBE'},
+                {id:3, nombre:'HBO Max', precio:14.99, imagen:'https://via.placeholder.com/300x200/002d73/fff?text=HBO'},
+                {id:4, nombre:'COMBO TODO', precio:29.99, imagen:'https://via.placeholder.com/300x200/8b5cf6/000?text=COMBO'}
             ],
             pedidos: [
-                {id:5, name:'Auriculares TWS', price:19.99, image:'https://via.placeholder.com/280x180/10b981/fff?text=AURICULARES', link:'https://temu.com'},
-                {id:6, name:'Smartwatch Pro', price:29.99, image:'https://via.placeholder.com/280x180/f59e0b/000?text=SMARTWATCH'},
-                {id:7, name:'Camiseta Gaming', price:14.99, image:'https://via.placeholder.com/280x180/ef4444/fff?text=CAMISETA'}
+                {id:5, nombre:'Auriculares TWS', precio:19.99, imagen:'https://via.placeholder.com/300x200/10b981/fff?text=AURICULARES', link:'https://temu.com'},
+                {id:6, nombre:'Smartwatch Pro', precio:29.99, imagen:'https://via.placeholder.com/300x200/f59e0b/000?text=SMARTWATCH'},
+                {id:7, nombre:'Camiseta Gaming', precio:14.99, imagen:'https://via.placeholder.com/300x200/ef4444/fff?text=CAMISETA'}
             ],
             motores: [
-                {id:10, name:'Filtro Yamaha', price:15.99, image:'https://via.placeholder.com/280x180/059669/fff?text=FILTRO'},
-                {id:11, name:'Bujía NGK', price:8.99, image:'https://via.placeholder.com/280x180/ef4444/fff?text=BUJIA'},
-                {id:12, name:'Cadena Moto', price:45.99, image:'https://via.placeholder.com/280x180/f59e0b/000?text=CADENA'}
+                {id:10, nombre:'Filtro Yamaha', precio:15.99, imagen:'https://via.placeholder.com/300x200/059669/fff?text=FILTRO'},
+                {id:11, nombre:'Bujía NGK', precio:8.99, imagen:'https://via.placeholder.com/300x200/ef4444/fff?text=BUJIA'},
+                {id:12, nombre:'Cadena Moto', precio:45.99, imagen:'https://via.placeholder.com/300x200/f59e0b/000?text=CADENA'}
             ]
         };
 
-        // Inicializar
-        document.addEventListener('DOMContentLoaded', function(){
-            loadAllSections();
-            setupNavigation();
-            setupCarousels();
-            updateCart();
-        });
+        let carrito = [];
+        let adminActivo = false;
 
-        function loadAllSections(){
-            document.getElementById('home-carousel').innerHTML = createItems(products.streaming.slice(0,3).concat(products.pedidos.slice(0,2)));
-            document.getElementById('streaming-carousel').innerHTML = createItems(products.streaming);
-            document.getElementById('pedidos-carousel').innerHTML = createItems(products.pedidos, true);
-            document.getElementById('motores-carousel').innerHTML = createItems(products.motores);
+        // INICIALIZAR
+        window.onload = function() {
+            cargarSecciones();
+            actualizarCarrito();
+        };
+
+        function cargarSecciones() {
+            document.getElementById('home-items').innerHTML = crearItems(productos.streaming.slice(0,2).concat(productos.pedidos.slice(0,2)));
+            document.getElementById('streaming-items').innerHTML = crearItems(productos.streaming);
+            document.getElementById('pedidos-items').innerHTML = crearItemsTemu(productos.pedidos);
+            document.getElementById('motores-items').innerHTML = crearItems(productos.motores);
         }
 
-        function createItems(items, isTemu=false){
-            return items.map(item => isTemu ? 
-                `<div class="carousel-item"><img src="${item.image}" class="item-image"><div class="item-title">${item.name}</div><div class="item-price">$${item.price}</div><a href="${item.link}" target="_blank" class="add-to-cart">👀 Temu</a></div>` :
-                `<div class="carousel-item" onclick="itemClick(${item.id})"><img src="${item.image}" class="item-image"><div class="item-title">${item.name}</div><div class="item-price">$${item.price}</div><button class="add-to-cart" onclick="event.stopPropagation(); addToCart({id:${item.id},name:'${item.name}',price:${item.price},image:'${item.image}'})">➕ Carrito</button></div>`
-            ).join('');
+        function crearItems(productos) {
+            return productos.map(p => `
+                <div class="carousel-item">
+                    <div class="item-image" style="background-image:url(${p.imagen})">${p.nombre}</div>
+                    <div class="item-title">${p.nombre}</div>
+                    <div class="item-price">$${p.precio}</div>
+                    <button class="btn" onclick="agregarAlCarrito(${p.id},'${p.nombre}',${p.precio},'${p.imagen}')">➕ AL CARRITO</button>
+                </div>
+            `).join('');
         }
 
-        // Navegación
-        function setupNavigation(){
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.onclick = (e) => {
-                    const section = e.target.dataset.section;
-                    if(section){
-                        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-                        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-                        document.getElementById(section).classList.add('active');
-                        e.target.classList.add('active');
-                    }
-                }
-            });
+        function crearItemsTemu(productos) {
+            return productos.map(p => `
+                <div class="carousel-item">
+                    <div class="item-image" style="background-image:url(${p.imagen})">${p.nombre}</div>
+                    <div class="item-title">${p.nombre}</div>
+                    <div class="item-price">$${p.precio}</div>
+                    <a href="${p.link}" target="_blank" class="btn">🛒 VER EN TEMU</a>
+                </div>
+            `).join('');
         }
 
-        // Carrito
-        function addToCart(item){
-            const existing = cart.find(p => p.id === item.id);
-            if(existing) existing.quantity = (existing.quantity || 1) + 1;
-            else cart.push({...item, quantity:1});
-            updateCart();
-            showNotification('✅ Agregado al carrito!');
+        // NAVEGACIÓN
+        function showSection(seccion) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(seccion).classList.add('active');
+            event.target.classList.add('active');
         }
 
-        function updateCart(){
-            document.getElementById('cart-count').textContent = cart.reduce((sum,item)=>sum+(item.quantity||1),0);
-            const itemsEl = document.getElementById('cart-items');
-            if(cart.length === 0){
-                itemsEl.innerHTML = '<p style="text-align:center;color:var(--text-secondary);">🛒 Carrito vacío</p>';
+        // CARRITO
+        function agregarAlCarrito(id, nombre, precio, imagen) {
+            const existe = carrito.find(item => item.id === id);
+            if (existe) {
+                existe.cantidad += 1;
+            } else {
+                carrito.push({id, nombre, precio, imagen, cantidad: 1});
+            }
+            actualizarCarrito();
+            alert('✅ ' + nombre + ' agregado al carrito!');
+        }
+
+        function actualizarCarrito() {
+            const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+            
+            const contenedor = document.getElementById('cart-items');
+            if (carrito.length === 0) {
+                contenedor.innerHTML = '<p style="text-align:center;color:#999;">Carrito vacío 😢</p>';
                 document.getElementById('cart-total').textContent = '0';
                 return;
             }
-            itemsEl.innerHTML = cart.map(item => 
-                `<div class="cart-item">
-                    <img src="${item.image}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;">
-                    <div style="flex:1;">
-                        <div>${item.name}</div>
-                        <div style="color:var(--accent-neon);font-weight:bold;">$${item.price}</div>
-                        <div>Cant: ${(item.quantity||1)}</div>
+            
+            contenedor.innerHTML = carrito.map(item => `
+                <div class="cart-item">
+                    <div class="item-image" style="width:60px;height:60px;font-size:0.8rem;background-image:url(${item.imagen})">${item.nombre}</div>
+                    <div style="flex:1">
+                        <div>${item.nombre}</div>
+                        <strong>$${item.precio} x ${item.cantidad}</strong>
                     </div>
-                    <button onclick="removeFromCart(${item.id})" style="background:#ef4444;border:none;color:white;padding:0.5rem 1rem;border-radius:20px;cursor:pointer;font-size:12px;">❌</
+                    <button class="btn btn-danger" onclick="quitarDelCarrito(${item.id})" style="padding:5px 15px;font-size:0.9rem;">❌</button>
+                </div>
+            `).join('');
+            
+            const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0).toFixed(2);
+            document.getElementById('cart-total').textContent = total;
+        }
+
+        function quitarDelCarrito(id) {
+            carrito = carrito.filter(item => item.id !== id);
+            actualizarCarrito();
+        }
+
+        function vaciarCarrito() {
+            carrito = [];
+            actualizarCarrito();
+        }
+
+        function pagarWhatsApp() {
+            if (carrito.length === 0) {
+                alert('🛒 Carrito vacío!');
+                return;
+            }
+            let mensaje = '🛒 *PEDIDO ALEXIS TE BREGA*\n\n';
+            carrito.forEach(item => {
+                mensaje += `${item.cantidad}x ${item.nombre} - $${(item.precio * item.cantidad).toFixed(2)}\n`;
+            });
+            mensaje += `\n💰 *TOTAL: $${carrito.reduce((sum,item)=>sum+(item.precio*item.cantidad),0).toFixed(2)}*`;
+            window.open(`https://wa.me/18291234567?text=${encodeURIComponent(mensaje)}`, '_blank');
+        }
+
+        function toggleCart() {
+            document.getElementById('cart').classList.toggle('open');
+        }
+
+        // ADMIN
+        function toggleAdmin() {
+            document.getElementById('admin').classList.toggle('active');
+        }
+
+        function entrarAdmin() {
+            if (document.getElementById('admin-pass').value === 'admin123') {
+                adminActivo = true;
+                document.getElementById('admin-area').style.display = 'block';
+                document.getElementById('admin-stats').innerHTML = `
+                    <div>Ventas: ${carrito.length} | Items: ${carrito.reduce((s,i)=>s+i.cantidad,0)}</div>
+                    <div>Total Ganado: $${carrito.reduce((s,i)=>s+(i.precio*i.cantidad),0).toFixed(2)}</div>
+                `;
+                alert('✅ Admin activado!');
+            } else {
+                alert('❌ Contraseña incorrecta!');
+            }
+        }
+
+        function agregarRepuesto() {
+            const nombre = document.getElementById('part-name').value;
+            const precio = parseFloat(document.getElementById('part-price').value);
+            const imagen = document.getElementById('part-img').value || 'https://via.placeholder.com/300x200/059669/fff?text=NUEVO';
+            
+            if
